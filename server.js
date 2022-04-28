@@ -4,8 +4,8 @@ const mongoose = require('mongoose')
 const app = express()
 
 // For development 
-const dotenv = require('dotenv')
-dotenv.config({ path: './config.env' })
+// const dotenv = require('dotenv')
+// dotenv.config({ path: './config.env' })
 
 const morgan = require('morgan')
 app.use(morgan('dev'))
