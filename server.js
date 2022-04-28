@@ -36,16 +36,10 @@ app.use(session({
     /* After 12 hours the user will log out of the site automatically. */
     // expires: 12 * 60 * 60 * 1000
   },
-  // store: new SequelizeStore({
-  //   db: sequelize,
-  //   // Delete cookies from session db `expires` < '2022-04-24 08:30:37'
-  //   //                                 `expires` < '2022-04-24 08:50:40'
-  //   // checkExpirationInterval: 20 * 1000
+  // store: new MongoDBStore({
+  //   uri: process.env.DATABASE_SESSION,
+  //   collection: 'motakaSessions'
   // }),
-  store: new MongoDBStore({
-    uri: process.env.DATABASE_SESSION,
-    collection: 'motakaSessions'
-  }),
   resave: false,
   saveUninitialized: true
 }))
@@ -65,7 +59,7 @@ app.use('/', router)
 // Connections 
 async function connections() {
   try {
-    await mongoose.connect(process.env.DATABASE_LOCAL)
+    await mongoose.connect(process.env.DATABASE_URI)
     console.log('Connection to mongoDB success.')
 
     const port = process.env.PORT || 7007
