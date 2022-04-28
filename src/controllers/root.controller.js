@@ -11,6 +11,14 @@ async function getPhoneToResetPassword(req, res) {
   try {
     const { phone } = req.body
 
+    // Check phone validation
+    if (!phone.match(/\+\d{3}\s\d{2}\s\d{6}/)) {
+      return res.status(400).json({
+        errorType: 'Incorrect data error!',
+        errorMsg: 'Incomplete phone number.'
+      })
+    }
+
     // Check user with such phone exist or not
     const user = await User.findOne({ phone })
 
@@ -72,6 +80,14 @@ async function resetPassword(req, res) {
 async function loginLocal(req, res) {
   try {
     const { phone, password } = req.body
+
+    // Check phone validation
+    if (!phone.match(/\+\d{3}\s\d{2}\s\d{6}/)) {
+      return res.status(400).json({
+        errorType: 'Incorrect data error!',
+        errorMsg: 'Incomplete phone number.'
+      })
+    }
 
     // Search user in DB
     const user = await User.findOne({ phone })

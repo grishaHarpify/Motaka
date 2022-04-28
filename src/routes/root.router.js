@@ -21,9 +21,7 @@ const check = require('../middlewares/isAuthenticated') // Check authentication 
 const rootController = require('../controllers/root.controller')
 
 // Restore password routes
-rootRouter.post('/forgot_password',
-  validatePhone,
-  validationErrorHandler, rootController.getPhoneToResetPassword)
+rootRouter.post('/forgot_password', rootController.getPhoneToResetPassword)
 rootRouter.post('/reset_password',
   checkConfirmCode,
   validatePassword,

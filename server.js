@@ -15,9 +15,9 @@ app.use(morgan('dev'))
 const router = require('./src/routes/index')
 
 // Middlewares
-// const cors = require('cors') // Cross-Origin Resource Sharing ??
+const cors = require('cors') // Cross-Origin Resource Sharing ??
 
-// app.use(cors())
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
