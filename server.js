@@ -2,9 +2,10 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
-require('dotenv').config()
+// require('dotenv').config()
 
 // For development 
+console.log(process.env.NODE_ENV)
 if (process.env.NODE_ENV === 'development') {
   const dotenv = require('dotenv')
   dotenv.config({ path: './config.env' })
