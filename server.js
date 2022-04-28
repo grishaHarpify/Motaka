@@ -2,6 +2,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
+require('dotenv').config()
 
 // For development 
 if (process.env.NODE_ENV === 'development') {
