@@ -20,7 +20,10 @@ const router = require('./src/routes/index')
 // Middlewares
 const cors = require('cors') // Cross-Origin Resource Sharing ??
 
-app.use(cors())
+app.use(cors({
+  origin: '*',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+}))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
