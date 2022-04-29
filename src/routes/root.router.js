@@ -4,7 +4,7 @@ const passport = require('passport')
 /* Import middlewares */
 // Validation
 const {
-  isPhoneEmpty,
+  validateLoginPhone,
   isPasswordEmpty,
   validatePhone,
   validatePassword,
@@ -21,7 +21,9 @@ const check = require('../middlewares/isAuthenticated') // Check authentication 
 const rootController = require('../controllers/root.controller')
 
 // Restore password routes
-rootRouter.post('/forgot_password', rootController.getPhoneToResetPassword)
+rootRouter.post('/forgot_password',
+  validatePhone,
+  validationErrorHandler, rootController.getPhoneToResetPassword)
 rootRouter.post('/reset_password',
   checkConfirmCode,
   validatePassword,
@@ -59,7 +61,7 @@ rootRouter
 // Login with local
 rootRouter
   .post('/login',
-    isPhoneEmpty,
+    validateLoginPhone,
     isPasswordEmpty,
     validationErrorHandler,
     rootController.loginLocal)

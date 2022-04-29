@@ -1,13 +1,15 @@
 const { body, validationResult } = require('express-validator')
 
 // For login data validation
-const isPhoneEmpty = body('phone') // check [phone] filed empty or not 
+const validateLoginPhone = body('phone') // check [phone] filed empty or not 
   .trim()
-  .not().isEmpty().withMessage('Phone number cannot be left blank.')
+  .not().isEmpty().withMessage('Phone number field cannot be left blank.')
+  .matches(/^\+374\s\d{2}\s\d{6}$/)
+  .withMessage('Incomplete or incorrect phone number. Phone number must be in format like (+374 xx xxxxxx).')
 
 const isPasswordEmpty = body('password') // check [password] filed empty or not
   .trim()
-  .not().isEmpty().withMessage('Password cannot be left blank.')
+  .not().isEmpty().withMessage('Password filed cannot be left blank.')
 
 // User data validation 
 const validateName = body('name')
@@ -22,7 +24,7 @@ const validateLastName = body('lastName')
   .trim()
   .not()
   .isEmpty()
-  .withMessage('Last name cannot be empty.')
+  .withMessage('Last name is required field.')
   .matches(/^[A-Za-z]{1,256}$/)
   .withMessage('Last name can contain only small and capital letters.')
 
@@ -30,15 +32,15 @@ const validatePhone = body('phone')
   .trim()
   .not()
   .isEmpty()
-  .withMessage('Phone number cannot be empty.')
+  .withMessage('Phone number is required field.')
   .matches(/^\+374\s\d{2}\s\d{6}$/) // +374 xx xxxxxx
-  .withMessage('Phone number must be in format like [+374 xx xxxxxx].')
+  .withMessage('Phone number must be in format like (+374 xx xxxxxx).')
 
 const validateEmail = body('email')
   .trim()
   .not()
   .isEmpty()
-  .withMessage('Email cannot be empty.')
+  .withMessage('Email is required field.')
   .isEmail()
   .withMessage('Invalid email format.')
 
@@ -46,17 +48,13 @@ const validatePassword = body('password')
   .trim()
   .not()
   .isEmpty()
-  .withMessage('Password cannot be empty.')
+  .withMessage('Password is required field.')
   .isLength({ min: 8, max: 25 })
   .withMessage('Password must contain from 8 to 25 symbols')
   .matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[~!@#$%^&*_+=|-\}]).{0,}$/)
-  .withMessage('Password must contain minimum one capital letter, minimum one small letter, minimum one number and minimum one special symbol.')
+  .withMessage('Password must contain minimum one capital letter, minimum one small letter, minimum one number and minimum one special symbol [~!@#$%^&*_+=|-\].')
 
 const validatePasswordConfirm = body('passwordConfirm')
-  .trim()
-  .not()
-  .isEmpty()
-  .withMessage('Password confirmation cannot be empty.')
   .custom((value, { req }) => {
     if (value !== req.body.password) {
       throw new Error('Password confirmation does not match with password.')
@@ -82,7 +80,7 @@ function validationErrorHandler(req, res, next) {
     }, {})
 
     return res.status(400).json({
-      errorType: 'Validation error!',
+      errorType: 'Incorrect data error!',
       errorMsgObject: validationMsg
     })
   }
@@ -91,7 +89,7 @@ function validationErrorHandler(req, res, next) {
 }
 
 module.exports = {
-  isPhoneEmpty,
+  validateLoginPhone,
   isPasswordEmpty,
   validateName,
   validateLastName,

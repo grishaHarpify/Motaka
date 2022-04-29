@@ -20,7 +20,7 @@ async function checkConfirmCode(req, res, next) {
       // Codes do not match
       return res.status(400).json({
         errorType: 'Confirm code error!',
-        errorMsg: 'User send the wrong Confirm code.'
+        errorMsg: 'User send the wrong confirm code.'
       })
     }
 
@@ -32,13 +32,10 @@ async function checkConfirmCode(req, res, next) {
       // Code valid time expired
       return res.status(400).json({
         errorType: 'Confirm code error!',
-        errorMsg: 'Confirm code valid time expired.'
+        errorMsg: 'Confirm code valid time is expired.'
       })
     }
-    /* User send right code and can change his password. */
-    // Change code status in db
-    codeInfo.isUsed = true
-    await codeInfo.save()
+    /* User send right code and can change his password(if he/she pass validation). */
 
     next()
   } catch (e) {
