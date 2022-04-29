@@ -2,11 +2,10 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
-// require('dotenv').config()
+require('dotenv').config()
 
 // For development 
-console.log(process.env.NODE_ENV)
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV = 'development') {
   const dotenv = require('dotenv')
   dotenv.config({ path: './config.env' })
 
@@ -28,7 +27,6 @@ app.use(express.urlencoded({ extended: true }))
 // Session and Cookie
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
-// const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const MongoDBStore = require('connect-mongodb-session')(session)
 
 
