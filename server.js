@@ -5,7 +5,7 @@ const app = express()
 require('dotenv').config()
 
 // For development 
-if (process.env.NODE_ENV = 'development') {
+if (process.env.NODE_ENV === 'development') {
   const dotenv = require('dotenv')
   dotenv.config({ path: './config.env' })
 
