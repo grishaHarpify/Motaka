@@ -7,6 +7,14 @@ async function checkConfirmCode(req, res, next) {
     // get confirmCode and phone from req.body
     const { confirmCode, phone } = req.body
 
+    // Check we have code or not 
+    if (!confirmCode) {
+      return res.status(400).json({
+        errorType: 'Confirm code error!',
+        errorMsg: 'Please input confirm code.'
+      })
+    }
+
     // find user in DB
     const user = await User.findOne({ phone })
 
