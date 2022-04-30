@@ -22,7 +22,7 @@ const rootController = require('../controllers/root.controller')
 
 // Restore password routes
 rootRouter.post('/forgot_password',
-  validatePhone,
+  validateLoginPhone,
   validationErrorHandler, rootController.getPhoneToResetPassword)
 rootRouter.post('/reset_password',
   checkConfirmCode,

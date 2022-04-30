@@ -6,6 +6,7 @@ require('dotenv').config()
 
 // For development 
 if (process.env.NODE_ENV === 'development') {
+  console.log('Development mode')
   const dotenv = require('dotenv')
   dotenv.config({ path: './config.env' })
 
