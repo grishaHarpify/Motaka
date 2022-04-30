@@ -5,11 +5,10 @@ const nexmo = new Nexmo({
   apiSecret: process.env.NEXMO_SECRET
 })
 
-
 function sendCodeToPhone(to, code) {
   const from = 'Motaka'
   // [to] --> phone number to send SMS  // only in phone which is registered in site 
-  text = `Your verification code: ${code}`
+  text = `Your confirm code: ${code}`
 
   nexmo.message.sendSms(from, to, text)
 }

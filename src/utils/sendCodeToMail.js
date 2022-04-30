@@ -17,11 +17,11 @@ async function sendCodeToPhone(mailAddress, code) {
   const info = await transporter.sendMail({
     from: senderAddress, // sender address
     to: mailAddress,
-    subject: 'Motaka verification',
+    subject: 'Motaka',
     text: 'Verify your email.',
     html: `
       <div style= "text-align: center">
-        <b> Verification code: </b>
+        <b> Confirm code: </b>
         <h1>${code}</h1>
       </div>
     `,
