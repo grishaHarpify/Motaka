@@ -24,7 +24,7 @@ async function getPhoneToResetPassword(req, res) {
 
     // Generate confirmCode, send and put in the DB
     const confirmCode = generateCode()
-    sendCodeToPhone(req.body.phone, confirmCode) // send phone sms [web site money] // 
+    // sendCodeToPhone(req.body.phone, confirmCode) // send phone sms [web site money] // 
     putConfirmCodeToDb(user._id, confirmCode)
     console.log('confirmCode --->', confirmCode, '<---')
 

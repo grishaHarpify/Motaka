@@ -3,12 +3,11 @@ const bcrypt = require('bcrypt')
 
 async function putConfirmCodeToDb(userId, code) {
   try {
-    // const { shoppingCard } = await User.findOne({ _id: req.headers['profile-id'] }).populate('shoppingCard.ticketId')
     const codeFromDb = await ConfirmCode.findOne({ userId }).populate('userId')
 
-    // Code valid 1 minute
+    // Code valid 1 day
     let validTime = new Date()
-    validTime.setMinutes(validTime.getMinutes() + 1)
+    validTime.setHours(validTime.getHours() + 24)
 
     // Hash code
     const hashCode = await bcrypt.hash(code, 10)
