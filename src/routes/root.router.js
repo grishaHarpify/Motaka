@@ -25,7 +25,7 @@ const rootController = require('../controllers/root.controller')
 rootRouter.post('/forgot_password',
   validateLoginPhone,
   validationErrorHandler, rootController.getPhoneToResetPassword)
-rootRouter.put('/reset_password',
+rootRouter.patch('/reset_password',
   checkConfirmCode,
   validatePassword,
   validatePasswordConfirm,
