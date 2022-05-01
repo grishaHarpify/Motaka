@@ -1,5 +1,4 @@
 // For change
-1) forgot password put method
 
 
 // Error

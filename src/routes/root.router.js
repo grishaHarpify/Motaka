@@ -17,7 +17,8 @@ const checkConfirmCode = require('../middlewares/checkConfirmCode')
 const check = require('../middlewares/isAuthenticated') // Check authentication status
 
 /* --- middlewares end --- */
-// Import Controller
+
+// Import Controllers
 const rootController = require('../controllers/root.controller')
 
 // Restore password routes
@@ -29,6 +30,7 @@ rootRouter.put('/reset_password',
   validatePassword,
   validatePasswordConfirm,
   validationErrorHandler, rootController.resetPassword)
+rootRouter.post('/resend_code', rootController.resendConfirmCode)
 
 // Below this middleware routes which is accessible only unauthorized users
 rootRouter.use(check.notAuthenticated)

@@ -59,6 +59,10 @@ require('./src/utils/passportLocal')  // Local
 app.use(passport.initialize())
 app.use(passport.session())
 
+// Use cpUploader [to get data from [form-data]]
+const cpUpload = require('./src/middlewares/cpUpload')
+app.use(cpUpload)
+
 // Routes
 app.use('/', router)
 

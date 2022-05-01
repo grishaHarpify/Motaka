@@ -2,8 +2,8 @@ const ConfirmCode = require('../models/ConfirmCode')
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
 
-const sendCodeToPhone = require('../utils/sendCodeToPhone') // well use before [because no money]
 const generateCode = require('../utils/generateCode')
+const sendCodeToPhone = require('../utils/sendCodeToPhone') // well use before [because no money]
 const putConfirmCodeToDb = require('../utils/putCodeToDb')
 
 
@@ -24,7 +24,7 @@ async function getPhoneToResetPassword(req, res) {
 
     // Generate confirmCode, send and put in the DB
     const confirmCode = generateCode()
-    sendCodeToPhone(req.body.phone, confirmCode) // send phone sms [web site money] // 
+    sendCodeToPhone(req.body.phone, confirmCode)
     putConfirmCodeToDb(user._id, confirmCode)
     console.log('confirmCode --->', confirmCode, '<---')
 
@@ -62,6 +62,33 @@ async function resetPassword(req, res) {
 
     res.json({
       message: 'Password was changed successfully.'
+    })
+
+  } catch (e) {
+    console.log(`Error in file: ${__filename}!`)
+    console.log(e.message)
+    res.status(500).json({
+      errorType: 'Server side error!',
+      errorMsg: e.message
+    })
+  }
+}
+
+async function resendConfirmCode(req, res) {
+  try {
+    const { phone } = req.body
+
+    // Find user
+    const user = await User.findOne({ phone })
+
+    // Generate confirmCode, send and put in the DB
+    const confirmCode = generateCode()
+    sendCodeToPhone(phone, confirmCode)
+    putConfirmCodeToDb(user._id, confirmCode)
+    console.log('confirmCode --->', confirmCode, '<---')
+
+    res.json({
+      message: `A new confirm code has been sent to phone number ${phone}.`
     })
 
   } catch (e) {
@@ -113,6 +140,7 @@ async function loginLocal(req, res) {
 module.exports = {
   getPhoneToResetPassword,
   resetPassword,
+  resendConfirmCode,
   loginLocal
 }
 
