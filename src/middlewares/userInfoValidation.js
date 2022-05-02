@@ -2,7 +2,6 @@ const { body, validationResult } = require('express-validator')
 
 // For login data validation
 const validateLoginPhone = body('phone') // check [phone] filed empty or not 
-  .trim()
   .not().isEmpty().withMessage('Phone number field cannot be left blank.')
   .matches(/^\+374\s\d{2}\s\d{6}$/)
   .withMessage('Incomplete or incorrect phone number. Phone number must be in format like (+374 xx xxxxxx).')
