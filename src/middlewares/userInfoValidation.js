@@ -7,12 +7,10 @@ const validateLoginPhone = body('phone') // check [phone] filed empty or not
   .withMessage('Incomplete or incorrect phone number. Phone number must be in format like (+374 xx xxxxxx).')
 
 const isPasswordEmpty = body('password') // check [password] filed empty or not
-  .trim()
   .not().isEmpty().withMessage('Password filed cannot be left blank.')
 
 // User data validation 
 const validateName = body('name')
-  .trim()
   .not()
   .isEmpty()
   .withMessage('Name cannot be empty.')
@@ -20,7 +18,6 @@ const validateName = body('name')
   .withMessage('Name can contain only small and capital letters.')
 
 const validateLastName = body('lastName')
-  .trim()
   .not()
   .isEmpty()
   .withMessage('Last name is required field.')
@@ -28,7 +25,6 @@ const validateLastName = body('lastName')
   .withMessage('Last name can contain only small and capital letters.')
 
 const validatePhone = body('phone')
-  .trim()
   .not()
   .isEmpty()
   .withMessage('Phone number is required field.')
@@ -36,7 +32,6 @@ const validatePhone = body('phone')
   .withMessage('Phone number must be in format like (+374 xx xxxxxx).')
 
 const validateEmail = body('email')
-  .trim()
   .not()
   .isEmpty()
   .withMessage('Email is required field.')
@@ -44,7 +39,6 @@ const validateEmail = body('email')
   .withMessage('Invalid email format.')
 
 const validatePassword = body('password')
-  .trim()
   .not()
   .isEmpty()
   .withMessage('Password is required field.')
