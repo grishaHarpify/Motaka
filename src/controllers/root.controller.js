@@ -104,6 +104,8 @@ async function resendConfirmCode(req, res) {
 async function loginLocal(req, res) {
   try {
     const { phone, password } = req.body
+    console.log(phone)
+    console.log(password)
 
     // Search user in DB
     const user = await User.findOne({ phone })
@@ -143,84 +145,3 @@ module.exports = {
   resendConfirmCode,
   loginLocal
 }
-
-
-// karoxa petq ga heto 
-
-// ---
-// async function checkRestorePasswordCode(req, res) {
-//   try {
-//     // get confirmCode and user from req
-//     const { confirmCode } = req.body
-//     const user = req.user
-
-//     // get info about code from DB
-//     const codeInfo = await ConfirmCode.findOne({ where: { userId: user.id } })
-
-//     // compare hashedCodeFromDb and confirmCode
-//     const { code: hashedCodeFromDb } = codeInfo
-//     const isMatched = await bcrypt.compare(confirmCode, hashedCodeFromDb)
-
-//     if (isMatched) {
-//       // Codes match
-//       // Check code valid time
-//       const now = new Date()
-
-//       if (now > codeInfo.validTime) {
-//         // Code valid time expired
-//         return res.status(400).json({
-//           errorType: 'Confirm code error!',
-//           errorMsg: 'Confirm code valid time expired.'
-//         })
-//       }
-
-//       // All is ok. User can change your password.
-//       codeInfo.isUsed = true
-//       await codeInfo.save()
-
-//       return res.json({
-//         message: 'Codes match. User can create a new password for himself.'
-//       })
-//     }
-
-//     // codes do not match
-//     res.status(400).json({
-//       errorType: 'Confirm code error!',
-//       errorMsg: 'User send the wrong Confirm code.'
-//     })
-
-//   } catch (e) {
-//     console.log(`Error in file: ${__filename}!`)
-//     console.log(e.message)
-//     res.status(500).json({
-//       errorType: 'Server side error!',
-//       errorMsg: e.message
-//     })
-//   }
-// }
-
-// async function resetPassword(req, res) {
-//   try {
-//     // Get password and hash it
-//     const { password } = req.body
-//     const hashedPassword = await bcrypt.hash(password, 12)
-
-//     // Get user from db and change password
-//     const userFromDB = await User.findOne({
-//       where: { id: req.user.id }
-//     })
-//     userFromDB.password = hashedPassword
-
-//     res.json({
-//       message: 'Password was changed successfully.'
-//     })
-//   } catch (e) {
-//     console.log(`Error in file: ${__filename}!`)
-//     console.log(e.message)
-//     res.status(500).json({
-//       errorType: 'Server side error!',
-//       errorMsg: e.message
-//     })
-//   }
-// }
-// ---
