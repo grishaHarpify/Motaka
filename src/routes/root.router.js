@@ -54,7 +54,9 @@ rootRouter
     passport.authenticate('google', {
       successMessage: 'Login with google success.',
       failureMessage: 'Login with google failed.'
-    }))
+    }), (req, res) => {
+      res.send('login success')
+    })
 
 // Login with local
 rootRouter
