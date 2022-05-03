@@ -52,11 +52,10 @@ rootRouter
     passport.authenticate('google', { scope: ['email', 'profile'] }))
   .get('/google/verify',
     passport.authenticate('google', {
-      successMessage: 'Login with google success.',
-      failureMessage: 'Login with google failed.'
-    }), (req, res) => {
-      res.send('login success')
-    })
+      // successMessage: 'Login with google success.',
+      failureMessage: 'Login with google failed.',
+      successReturnToOrRedirect: '/profile'
+    }))
 
 // Login with local
 rootRouter
