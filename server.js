@@ -54,7 +54,6 @@ app.use(session({
 const passport = require('passport')
 require('./src/utils/passportFacebook') // Facebook
 require('./src/utils/passportGoogle')  // Google
-require('./src/utils/passportLocal')  // Local
 
 app.use(passport.initialize())
 app.use(passport.session())
