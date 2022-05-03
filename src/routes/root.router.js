@@ -44,7 +44,7 @@ rootRouter
     passport.authenticate('facebook', {
       successRedirect: '/select',
       successMessage: 'Login with facebook success.',
-      failureRedirect: '/login',
+      failureRedirect: '/signIn',
       failureMessage: 'Login with facebook failed.'
     }))
 
@@ -56,7 +56,7 @@ rootRouter
     passport.authenticate('google', {
       successRedirect: '/select',
       successMessage: 'Login with google success.',
-      failureRedirect: '/login',
+      failureRedirect: '/signIn',
       failureMessage: 'Login with google failed.'
     }))
 
