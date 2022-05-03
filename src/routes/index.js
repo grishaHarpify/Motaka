@@ -24,7 +24,7 @@ router.post('/create', async (req, res) => {
 
 // Use routes
 router.use('/', rootRouter) // motaka.am/
-router.use('/profile', profileRouter) // motaka.am/profile
+// router.use('/profile', profileRouter) // motaka.am/profile
 
 
 
