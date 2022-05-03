@@ -1,19 +1,20 @@
-// const User = require('../models/User')
+const User = require('../models/User')
 
-// function createNewJob(req, res) {
-//   try {
-//     res.send('New job')
+function createNewJob(req, res) {
+  try {
 
-//   } catch (e) {
-//     console.log(`Error in file: ${__filename}!`)
-//     console.log(e.message)
-//     res.status(500).json({
-//       errorType: 'Server side error!',
-//       errorMsg: e.message
-//     })
-//   }
-// }
+    res.send(`${req.user.phone} can create new job.`)
 
-// module.exports = {
-//   createNewJob
-// }
+  } catch (e) {
+    console.log(`Error in file: ${__filename}!`)
+    console.log(e.message)
+    res.status(500).json({
+      errorType: 'Server side error!',
+      errorMsg: e.message
+    })
+  }
+}
+
+module.exports = {
+  createNewJob
+}

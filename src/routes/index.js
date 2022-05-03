@@ -7,6 +7,7 @@ const profileRouter = require('./profile.router')
 // create user [for deleting]
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
+
 router.post('/create', async (req, res) => {
   const { phone, password } = req.body
 
@@ -24,7 +25,7 @@ router.post('/create', async (req, res) => {
 
 // Use routes
 router.use('/', rootRouter) // motaka.am/
-// router.use('/profile', profileRouter) // motaka.am/profile
+router.use('/profile', profileRouter) // motaka.am/profile
 
 
 

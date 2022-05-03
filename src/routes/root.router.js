@@ -6,7 +6,6 @@ const passport = require('passport')
 const {
   validateLoginPhone,
   isPasswordEmpty,
-  validatePhone,
   validatePassword,
   validatePasswordConfirm,
   validationErrorHandler
@@ -52,18 +51,17 @@ rootRouter
     passport.authenticate('google', { scope: ['email', 'profile'] }))
   .get('/google/verify',
     passport.authenticate('google', {
-      // successMessage: 'Login with google success.',
-      failureMessage: 'Login with google failed.',
-      successReturnToOrRedirect: '/profile'
+      successMessage: 'Login with  google success.',
+      failureMessage: 'Login with google failed.'
     }))
 
-// Login with local
+// Login with phone
 rootRouter
   .post('/login',
     validateLoginPhone,
     isPasswordEmpty,
     validationErrorHandler,
-    rootController.loginLocal)
+    rootController.loginWithPhone)
 
 /* --- login-end --- */
 

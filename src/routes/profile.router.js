@@ -1,21 +1,18 @@
-// const profileRouter = require('express').Router()
+const profileRouter = require('express').Router()
 
 
-// /* Import middlewares */
-// const { isProvider, isUser } = require('../middlewares/checkRole')
+/* Import middlewares */
+const verifyJWT = require('../middlewares/verifyJWT')
+const { isProvider, isUser } = require('../middlewares/checkRole')
 
-// /* --- middlewares end --- */
+/* --- middlewares end --- */
 
-// // Import Controllers
-// const profileController = require('../controllers/profile.controller')
-
-
-// // Routes // 
-// profileRouter.get('/new', (req, res) => {
-//   console.log(req.isAuthenticated())
-//   res.send('ok')
-// })
-// profileRouter.post('/new_job', isProvider, profileController.createNewJob)
+// Import Controllers
+const profileController = require('../controllers/profile.controller')
 
 
-// module.exports = profileRouter
+// Routes // 
+profileRouter.post('/new_job', verifyJWT, isProvider, profileController.createNewJob)
+
+
+module.exports = profileRouter

@@ -1,7 +1,7 @@
 const ConfirmCode = require('../models/ConfirmCode')
-const passport = require('passport')
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 const generateCode = require('../utils/generateCode')
 const sendCodeToPhone = require('../utils/sendCodeToPhone') // well use before [because no money]
@@ -102,7 +102,7 @@ async function resendConfirmCode(req, res) {
   }
 }
 
-async function loginLocal(req, res) {
+async function loginWithPhone(req, res) {
   try {
     const { phone, password } = req.body
 
@@ -127,7 +127,10 @@ async function loginLocal(req, res) {
       })
     }
 
-    res.json({ message: 'Login success.' })
+    // Data is ok. Create JWT. 
+    const accessToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' })
+
+    res.json({ message: 'Login success.', accessToken })
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
     console.log(e.message)
@@ -142,5 +145,5 @@ module.exports = {
   getPhoneToResetPassword,
   resetPassword,
   resendConfirmCode,
-  loginLocal
+  loginWithPhone
 }
