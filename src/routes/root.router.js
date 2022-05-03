@@ -42,9 +42,7 @@ rootRouter
     passport.authenticate('facebook', { authType: 'reauthenticate', scope: 'email' }))
   .get('/facebook/verify',
     passport.authenticate('facebook', {
-      successRedirect: '/select',
       successMessage: 'Login with facebook success.',
-      failureRedirect: '/signIn',
       failureMessage: 'Login with facebook failed.'
     }))
 
@@ -54,9 +52,7 @@ rootRouter
     passport.authenticate('google', { scope: ['email', 'profile'] }))
   .get('/google/verify',
     passport.authenticate('google', {
-      successRedirect: '/select',
       successMessage: 'Login with google success.',
-      failureRedirect: '/signIn',
       failureMessage: 'Login with google failed.'
     }))
 
