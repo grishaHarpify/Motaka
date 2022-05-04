@@ -6,7 +6,10 @@ const passport = require('passport')
 const {
   validateLoginPhone,
   isPasswordEmpty,
+  validateName,
+  validateLastName,
   validatePhone,
+  validateEmail,
   validatePassword,
   validatePasswordConfirm,
   validationErrorHandler
@@ -34,6 +37,20 @@ rootRouter.post('/resend_code', rootController.resendConfirmCode)
 
 // Below this middleware routes which is accessible only unauthorized users
 rootRouter.use(check.notAuthenticated)
+
+//register
+rootRouter.post(
+  '/register',
+  validateName,
+  validateLastName,
+  validatePhone,
+  validateEmail,
+  validatePassword,
+  validatePasswordConfirm,
+  validationErrorHandler,
+  rootController.register
+)
+
 
 /* Login routes */
 // Login with facebook
