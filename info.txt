@@ -10,9 +10,9 @@ ADD JOB
 
 Category
 1) cleaning (maqrutyun)
-2) fixing (norogum)
+2) repairing (norogum)
 3) plumbing (santexnik)
-4) pat walking (kendanineri zbosanq)
+4) petWalking (kendanineri zbosanq)
 5) ironing (arduk)
 6) 
 
