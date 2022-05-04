@@ -1,6 +1,7 @@
 const ConfirmCode = require('../models/ConfirmCode')
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 const generateCode = require('../utils/generateCode')
 const sendCodeToPhone = require('../utils/sendCodeToPhone') // well use before [because no money]
@@ -123,7 +124,7 @@ async function resetPassword(req, res) {
     codeInfo.isUsed = true
     await codeInfo.save()
 
-    res.json({
+    res.status(201).json({
       message: 'Password was changed successfully.',
     })
   } catch (e) {
@@ -162,11 +163,9 @@ async function resendConfirmCode(req, res) {
   }
 }
 
-async function loginLocal(req, res) {
+async function loginWithPhone(req, res) {
   try {
     const { phone, password } = req.body
-    console.log(phone)
-    console.log(password)
 
     // Search user in DB
     const user = await User.findOne({ phone })
@@ -181,7 +180,7 @@ async function loginLocal(req, res) {
 
     // Check password
     const isPasswordCorrect = await bcrypt.compare(password, user.password)
-    console.log()
+
     if (!isPasswordCorrect) {
       return res.status(400).json({
         errorType: 'Incorrect data error!',
@@ -189,7 +188,12 @@ async function loginLocal(req, res) {
       })
     }
 
-    res.json({ message: 'Login success.' })
+    // Data is ok. Create JWT.
+    const accessToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: '7d',
+    })
+
+    res.json({ message: 'Login success.', accessToken })
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
     console.log(e.message)
@@ -204,6 +208,6 @@ module.exports = {
   getPhoneToResetPassword,
   resetPassword,
   resendConfirmCode,
-  loginLocal,
   register,
+  loginWithPhone,
 }

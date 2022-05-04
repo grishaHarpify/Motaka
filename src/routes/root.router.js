@@ -12,11 +12,11 @@ const {
   validateEmail,
   validatePassword,
   validatePasswordConfirm,
-  validationErrorHandler
+  validationErrorHandler,
 } = require('../middlewares/userInfoValidation')
 const checkConfirmCode = require('../middlewares/checkConfirmCode')
 
-// IsAuthenticated 
+// IsAuthenticated
 const check = require('../middlewares/isAuthenticated') // Check authentication status
 
 /* --- middlewares end --- */
@@ -25,14 +25,20 @@ const check = require('../middlewares/isAuthenticated') // Check authentication 
 const rootController = require('../controllers/root.controller')
 
 // Restore password routes
-rootRouter.post('/forgot_password',
+rootRouter.post(
+  '/forgot_password',
   validateLoginPhone,
-  validationErrorHandler, rootController.getPhoneToResetPassword)
-rootRouter.patch('/reset_password',
+  validationErrorHandler,
+  rootController.getPhoneToResetPassword
+)
+rootRouter.patch(
+  '/reset_password',
   checkConfirmCode,
   validatePassword,
   validatePasswordConfirm,
-  validationErrorHandler, rootController.resetPassword)
+  validationErrorHandler,
+  rootController.resetPassword
+)
 rootRouter.post('/resend_code', rootController.resendConfirmCode)
 
 // Below this middleware routes which is accessible only unauthorized users
@@ -51,41 +57,47 @@ rootRouter.post(
   rootController.register
 )
 
-
 /* Login routes */
 // Login with facebook
 rootRouter
-  .get('/facebook',
-    passport.authenticate('facebook', { authType: 'reauthenticate', scope: 'email' }))
-  .get('/facebook/verify',
+  .get(
+    '/facebook',
     passport.authenticate('facebook', {
-      successRedirect: '/select',
+      authType: 'reauthenticate',
+      scope: 'email',
+    })
+  )
+  .get(
+    '/facebook/verify',
+    passport.authenticate('facebook', {
       successMessage: 'Login with facebook success.',
-      failureRedirect: '/login',
-      failureMessage: 'Login with facebook failed.'
-    }))
+      failureMessage: 'Login with facebook failed.',
+    })
+  )
 
 // Login with google
 rootRouter
-  .get('/google',
-    passport.authenticate('google', { scope: ['email', 'profile'] }))
-  .get('/google/verify',
+  .get(
+    '/google',
+    passport.authenticate('google', { scope: ['email', 'profile'] })
+  )
+  .get(
+    '/google/verify',
     passport.authenticate('google', {
-      successRedirect: '/select',
-      successMessage: 'Login with google success.',
-      failureRedirect: '/login',
-      failureMessage: 'Login with google failed.'
-    }))
+      successMessage: 'Login with  google success.',
+      failureMessage: 'Login with google failed.',
+    })
+  )
 
-// Login with local
-rootRouter
-  .post('/login',
-    validateLoginPhone,
-    isPasswordEmpty,
-    validationErrorHandler,
-    rootController.loginLocal)
+// Login with phone
+rootRouter.post(
+  '/login',
+  validateLoginPhone,
+  isPasswordEmpty,
+  validationErrorHandler,
+  rootController.loginWithPhone
+)
 
 /* --- login-end --- */
-
 
 module.exports = rootRouter

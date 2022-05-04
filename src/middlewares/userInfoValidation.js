@@ -48,6 +48,8 @@ const validatePassword = body('password')
   .not()
   .isEmpty()
   .withMessage('Password is required field.')
+  .custom(value => !/\s/.test(value))
+  .withMessage('No spaces are allowed in the password.')
   .isLength({ min: 8, max: 25 })
   .withMessage('Password must contain from 8 to 25 symbols')
   .matches(
