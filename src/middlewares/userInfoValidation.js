@@ -19,15 +19,15 @@ const isPasswordEmpty = body('password') // check [password] filed empty or not
 const validateName = body('name')
   .not()
   .isEmpty()
-  .withMessage('Name cannot be empty.')
-  .matches(/^[A-Za-z]{1,20}$/)
+  .withMessage('Name is required field.')
+  .matches(/^[A-Za-z]{2,20}$/)
   .withMessage('Name can contain only small and capital letters.')
 
 const validateLastName = body('lastName')
   .not()
   .isEmpty()
   .withMessage('Last name is required field.')
-  .matches(/^[A-Za-z]{1,25}$/)
+  .matches(/^[A-Za-z]{2,25}$/)
   .withMessage('Last name can contain only small and capital letters.')
 
 const validatePhone = body('phone')
@@ -68,6 +68,15 @@ const validatePasswordConfirm = body('passwordConfirm').custom(
   }
 )
 
+// Reset role
+const validateResetRole = body('role')
+  .not()
+  .isEmpty()
+  .withMessage(`You must send role (only 'user' or 'provider').`)
+  .isIn(['user', 'provider'])
+  .withMessage(`Role can be 'user' or 'provider'.`)
+
+
 function validationErrorHandler(req, res, next) {
   const valErrors = validationResult(req).errors
 
@@ -103,5 +112,6 @@ module.exports = {
   validateEmail,
   validatePassword,
   validatePasswordConfirm,
+  validateResetRole,
   validationErrorHandler,
 }

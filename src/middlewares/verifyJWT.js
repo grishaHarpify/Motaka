@@ -32,7 +32,6 @@ async function verifyJWT(req, res, next) {
 
       // Get userId from token 
       const { userId } = userInfo
-
       // Check (Argument passed in must be a string of 12 bytes or a string of 24 hex characters)
       if (userId.length === 12 || userId.length === 24) {
         // Id correct
