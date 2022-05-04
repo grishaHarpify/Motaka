@@ -62,7 +62,7 @@ async function register(req, res) {
     res.status(201).json({
       message: 'Registration success. Confirm code was sended in your phone number.',
     })
-  } catch (err) {
+  } catch (e) {
     console.log(`Error in file: ${__filename}!`)
     console.log(e.message)
     res.status(500).json({

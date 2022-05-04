@@ -48,7 +48,7 @@ const validatePassword = body('password')
   .not()
   .isEmpty()
   .withMessage('Password is required field.')
-  .custom(value => !/\s/.test(value))
+  .custom((value) => !/\s/.test(value))
   .withMessage('No spaces are allowed in the password.')
   .isLength({ min: 8, max: 25 })
   .withMessage('Password must contain from 8 to 25 symbols')
@@ -69,6 +69,20 @@ const validatePasswordConfirm = body('passwordConfirm').custom(
 )
 
 // Reset role
+const validateRoleUser = body('isUser')
+  .not()
+  .isEmpty()
+  .withMessage('isUser filed must be boolean(true or false).')
+  .isBoolean()
+  .withMessage('isUser filed must be boolean(true or false).')
+
+const validateRoleProvider = body('isProvider')
+  .not()
+  .isEmpty()
+  .withMessage('isProvider filed must be boolean(true or false).')
+  .isBoolean()
+  .withMessage('isProvider filed must be boolean(true or false).')
+
 const validateResetRole = body('role')
   .not()
   .isEmpty()
@@ -104,6 +118,8 @@ function validationErrorHandler(req, res, next) {
 }
 
 module.exports = {
+  validateRoleUser,
+  validateRoleProvider,
   validateLoginPhone,
   isPasswordEmpty,
   validateName,

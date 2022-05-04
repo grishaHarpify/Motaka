@@ -14,6 +14,10 @@ const {
   validatePasswordConfirm,
   validateResetRole,
   validationErrorHandler,
+  isProvider,
+  isUser,
+  validateRoleProvider,
+  validateRoleUser,
 } = require('../middlewares/userInfoValidation')
 const checkConfirmCode = require('../middlewares/checkConfirmCode')
 
@@ -51,6 +55,8 @@ rootRouter.use(check.notAuthenticated)
 //register
 rootRouter.post(
   '/register',
+  validateRoleProvider,
+  validateRoleUser,
   validateName,
   validateLastName,
   validatePhone,

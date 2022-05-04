@@ -12,18 +12,18 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
 }
 
-
-
 // Import routes
 const router = require('./src/routes/index')
 
 // Middlewares
 const cors = require('cors') // Cross-Origin Resource Sharing ??
 
-app.use(cors({
-  origin: '*',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-}))
+app.use(
+  cors({
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  })
+)
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
@@ -32,27 +32,28 @@ const session = require('express-session')
 const cookieParser = require('cookie-parser')
 const MongoDBStore = require('connect-mongodb-session')(session)
 
-
 app.use(cookieParser())
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  cookie: {
-    secure: false,
-    /* After 12 hours the user will log out of the site automatically. */
-    // expires: 12 * 60 * 60 * 1000
-  },
-  // store: new MongoDBStore({
-  //   uri: process.env.DATABASE_SESSION,
-  //   collection: 'motakaSessions'
-  // }),
-  resave: false,
-  saveUninitialized: true
-}))
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    cookie: {
+      secure: false,
+      /* After 12 hours the user will log out of the site automatically. */
+      // expires: 12 * 60 * 60 * 1000
+    },
+    // store: new MongoDBStore({
+    //   uri: process.env.DATABASE_SESSION,
+    //   collection: 'motakaSessions'
+    // }),
+    resave: false,
+    saveUninitialized: true,
+  })
+)
 
-// Passport 
+// Passport
 const passport = require('passport')
 require('./src/utils/passportFacebook') // Facebook
-require('./src/utils/passportGoogle')  // Google
+require('./src/utils/passportGoogle') // Google
 
 app.use(passport.initialize())
 app.use(passport.session())
@@ -64,7 +65,7 @@ app.use(cpUpload)
 // Routes
 app.use('/', router)
 
-// Connections 
+// Connections
 async function connections() {
   try {
     await mongoose.connect(process.env.DATABASE_URI)
