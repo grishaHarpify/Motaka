@@ -10,6 +10,20 @@ const validateLoginPhone = body('phone') // check [phone] filed empty or not
     'Incomplete or incorrect phone number. Phone number must be in format like (+374 xx xxxxxx).'
   )
 
+const validateRoleUser = body('isUser')
+  .not()
+  .isEmpty()
+  .withMessage('isUser filed must be boolean(true or false).')
+  .isBoolean()
+  .withMessage('isUser filed must be boolean(true or false).')
+
+const validateRoleProvider = body('isProvider')
+  .not()
+  .isEmpty()
+  .withMessage('isProvider filed must be boolean(true or false).')
+  .isBoolean()
+  .withMessage('isProvider filed must be boolean(true or false).')
+
 const isPasswordEmpty = body('password') // check [password] filed empty or not
   .not()
   .isEmpty()
@@ -20,14 +34,14 @@ const validateName = body('name')
   .not()
   .isEmpty()
   .withMessage('Name cannot be empty.')
-  .matches(/^[A-Za-z]{1,20}$/)
+  .matches(/^[A-Za-z]{2,20}$/)
   .withMessage('Name can contain only small and capital letters.')
 
 const validateLastName = body('lastName')
   .not()
   .isEmpty()
   .withMessage('Last name is required field.')
-  .matches(/^[A-Za-z]{1,25}$/)
+  .matches(/^[A-Za-z]{2,25}$/)
   .withMessage('Last name can contain only small and capital letters.')
 
 const validatePhone = body('phone')
@@ -48,7 +62,7 @@ const validatePassword = body('password')
   .not()
   .isEmpty()
   .withMessage('Password is required field.')
-  .custom(value => !/\s/.test(value))
+  .custom((value) => !/\s/.test(value))
   .withMessage('No spaces are allowed in the password.')
   .isLength({ min: 8, max: 25 })
   .withMessage('Password must contain from 8 to 25 symbols')
@@ -95,6 +109,8 @@ function validationErrorHandler(req, res, next) {
 }
 
 module.exports = {
+  validateRoleUser,
+  validateRoleProvider,
   validateLoginPhone,
   isPasswordEmpty,
   validateName,
