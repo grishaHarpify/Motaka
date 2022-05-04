@@ -61,7 +61,7 @@ async function resetPassword(req, res) {
     codeInfo.isUsed = true
     await codeInfo.save()
 
-    res.json({
+    res.status(201).json({
       message: 'Password was changed successfully.'
     })
 
