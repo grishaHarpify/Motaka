@@ -2,13 +2,13 @@ const router = require('express').Router()
 
 // Import routes
 const rootRouter = require('./root.router')
-const profileRouter = require('./profile.router')
+const homeRouter = require('./home.router')
 
 // create user [for deleting]
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
 
-router.post('/create', async (req, res) => {
+router.post('/createUser', async (req, res) => {
   const { phone, password } = req.body
 
   await User.create({
@@ -21,11 +21,26 @@ router.post('/create', async (req, res) => {
     phone
   })
 })
+
+//create category
+const Category = require('../models/Category')
+router.post('/createCategory', async (req, res) => {
+  const { category } = req.body
+
+  await Category.create({
+    name: category
+  })
+
+  res.json({
+    status: 'Category created!',
+    category
+  })
+})
 // -----------
 
 // Use routes
 router.use('/', rootRouter) // motaka.am/
-router.use('/profile', profileRouter) // motaka.am/profile
+router.use('/home', homeRouter) // motaka.am/home
 
 
 
