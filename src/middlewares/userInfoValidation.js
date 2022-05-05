@@ -35,7 +35,7 @@ const validatePhone = body('phone')
   .isEmpty()
   .withMessage('Phone number is required field.')
   .matches(/^\+374\s\d{2}\s\d{6}$/) // +374 xx xxxxxx
-  .withMessage('Phone number must be in format like (+374 xx xxxxxx).')
+  .withMessage('Phone number must be in format like (+374 xx xxxxxx): Ex. +374 77 456789.')
 
 const validateEmail = body('email')
   .not()
