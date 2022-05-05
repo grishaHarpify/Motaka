@@ -1,6 +1,6 @@
 
 function isProvider(req, res, next) {
-  if (req.user.role.isProvider) {
+  if (req.user.activeRole === 'provider') {
     return next()
   }
 
@@ -12,7 +12,7 @@ function isProvider(req, res, next) {
 
 
 function isUser(req, res, next) {
-  if (req.user.role.isUser) {
+  if (req.user.activeRole === 'user') {
     return next()
   }
 

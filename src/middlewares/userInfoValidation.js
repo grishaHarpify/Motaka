@@ -10,20 +10,6 @@ const validateLoginPhone = body('phone') // check [phone] filed empty or not
     'Incomplete or incorrect phone number. Phone number must be in format like (+374 xx xxxxxx).'
   )
 
-const validateRoleUser = body('isUser')
-  .not()
-  .isEmpty()
-  .withMessage('isUser filed must be boolean(true or false).')
-  .isBoolean()
-  .withMessage('isUser filed must be boolean(true or false).')
-
-const validateRoleProvider = body('isProvider')
-  .not()
-  .isEmpty()
-  .withMessage('isProvider filed must be boolean(true or false).')
-  .isBoolean()
-  .withMessage('isProvider filed must be boolean(true or false).')
-
 const isPasswordEmpty = body('password') // check [password] filed empty or not
   .not()
   .isEmpty()
@@ -33,7 +19,7 @@ const isPasswordEmpty = body('password') // check [password] filed empty or not
 const validateName = body('name')
   .not()
   .isEmpty()
-  .withMessage('Name cannot be empty.')
+  .withMessage('Name is required field.')
   .matches(/^[A-Za-z]{2,20}$/)
   .withMessage('Name can contain only small and capital letters.')
 
@@ -82,6 +68,29 @@ const validatePasswordConfirm = body('passwordConfirm').custom(
   }
 )
 
+// Reset role
+const validateRoleUser = body('isUser')
+  .not()
+  .isEmpty()
+  .withMessage('isUser filed must be boolean(true or false).')
+  .isBoolean()
+  .withMessage('isUser filed must be boolean(true or false).')
+
+const validateRoleProvider = body('isProvider')
+  .not()
+  .isEmpty()
+  .withMessage('isProvider filed must be boolean(true or false).')
+  .isBoolean()
+  .withMessage('isProvider filed must be boolean(true or false).')
+
+const validateResetRole = body('role')
+  .not()
+  .isEmpty()
+  .withMessage(`You must send role (only 'user' or 'provider').`)
+  .isIn(['user', 'provider'])
+  .withMessage(`Role can be 'user' or 'provider'.`)
+
+
 function validationErrorHandler(req, res, next) {
   const valErrors = validationResult(req).errors
 
@@ -119,5 +128,6 @@ module.exports = {
   validateEmail,
   validatePassword,
   validatePasswordConfirm,
+  validateResetRole,
   validationErrorHandler,
 }

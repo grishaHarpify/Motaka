@@ -3,12 +3,14 @@ const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
 
-console.log('Development mode')
-const dotenv = require('dotenv')
-dotenv.config({ path: './config.env' })
+if (process.env.NODE_ENV === 'development') {
+  console.log('======= Development mode =======')
+  const dotenv = require('dotenv')
+  dotenv.config({ path: './config.env' })
 
-const morgan = require('morgan')
-app.use(morgan('dev'))
+  const morgan = require('morgan')
+  app.use(morgan('dev'))
+}
 
 // Import routes
 const router = require('./src/routes/index')

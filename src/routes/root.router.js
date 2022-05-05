@@ -12,6 +12,7 @@ const {
   validateEmail,
   validatePassword,
   validatePasswordConfirm,
+  validateResetRole,
   validationErrorHandler,
   isProvider,
   isUser,
@@ -19,6 +20,9 @@ const {
   validateRoleUser,
 } = require('../middlewares/userInfoValidation')
 const checkConfirmCode = require('../middlewares/checkConfirmCode')
+
+// VerifyJWT
+const verifyJWT = require('../middlewares/verifyJWT')
 
 // IsAuthenticated
 const check = require('../middlewares/isAuthenticated') // Check authentication status
@@ -103,6 +107,11 @@ rootRouter.post(
   validationErrorHandler,
   rootController.loginWithPhone
 )
+
+rootRouter.post('/set_role',
+  verifyJWT,
+  validateResetRole,
+  validationErrorHandler, rootController.setActiveRole)
 
 /* --- login-end --- */
 

@@ -12,6 +12,10 @@ const userSchema = new Schema(
       isProvider: { type: Boolean, default: false },
       isUser: { type: Boolean, default: false },
     },
+    activeRole: {
+      type: String,
+      enum: ['user', 'provider']
+    },
     password: { type: String },
     isEmailVerified: { type: Boolean, default: false },
     isPhoneVerified: { type: Boolean, default: false },

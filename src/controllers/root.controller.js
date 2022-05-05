@@ -44,6 +44,8 @@ async function register(req, res) {
 
     const hashedPassword = await bcrypt.hash(password, 12)
 
+    // Set active role [for default value without set_role]
+    const activeRole = isProvider ? 'provider' : 'user'
     const newUser = await User.create({
       firstName: name,
       lastName,
@@ -54,17 +56,17 @@ async function register(req, res) {
         isUser: isUser,
         isProvider: isProvider,
       },
+      activeRole // default 'provider'
     })
 
     // Generate code and put in DB
     const code = generateCode()
-    sendCodeToPhone(phone, code)
+    // sendCodeToPhone(phone, code)
     putConfirmCodeToDb(newUser._id, code)
     console.log('confirmCode --->', code, '<---')
 
     res.status(201).json({
-      message:
-        'Registration success.Confirm code was sended in your phone number',
+      message: 'Registration success. Confirm code was sended in your phone number.',
     })
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
@@ -194,12 +196,53 @@ async function loginWithPhone(req, res) {
       })
     }
 
-    // Data is ok. Create JWT.
+    // Get available roles
+    const availableRoles = []
+    if (user.role.isUser) {
+      availableRoles.push('user')
+    }
+    if (user.role.isProvider) {
+      availableRoles.push('provider')
+    }
+
+    // Create JWT.(default role [activeRole])
     const accessToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: '7d',
     })
 
-    res.json({ message: 'Login success.', accessToken })
+    res.json({ message: 'Login success.', accessToken, availableRoles })
+  } catch (e) {
+    console.log(`Error in file: ${__filename}!`)
+    console.log(e.message)
+    res.status(500).json({
+      errorType: 'Server side error!',
+      errorMsg: e.message,
+    })
+  }
+}
+
+async function setActiveRole(req, res) {
+  try {
+    const { role } = req.body
+
+    // Get user and check role available or not 
+    const user = req.user
+    const isRole = `is${role.charAt(0).toUpperCase() + role.slice(1)}` // isRole = isUser \ isProvider
+
+    if (!user.role[isRole]) {
+      return res.status(400).json({
+        errorType: 'Incorrect data error!',
+        errorMsg: 'The user is not registered with such role.',
+      })
+    }
+
+    // set active role
+    user.activeRole = role
+    await user.save()
+
+    res.json({
+      message: `User active role was changed to ${role}.`
+    })
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
     console.log(e.message)
@@ -216,4 +259,5 @@ module.exports = {
   resendConfirmCode,
   register,
   loginWithPhone,
+  setActiveRole
 }
