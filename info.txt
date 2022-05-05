@@ -3,7 +3,8 @@ home
 ============================
 ADD JOB
 1) start date 
-2) clock   
+*) strat clock ??? 
+2) duration   
 3) money
 4) address
 5) category
@@ -19,4 +20,8 @@ Category
 
 // Error
 id-i het kapvac error kara lini passportFacebook um u google um
+
+
+// Questions
+uxarkem validation-i verjin message te sax irar het ????
 
