@@ -7,21 +7,44 @@ const validateStartDate = body('startDate')
   .isDate()
   .withMessage('Such date format is not valid.')
 
-// const validateStartTime = body('startTime')
-//   .not()
-//   .isEmpty()
-//   .withMessage('Job start time is required field.')
-//   .
+const validateStartTime = body('startTime')
+  .not()
+  .isEmpty()
+  .withMessage('Job start time is required field.')
+// urish inch validation anel ? 
 
 const validateDuration = body('duration')
   .not()
   .isEmpty()
-  .withMessage('Job duration date is required field.') // ???
+  .withMessage('Job duration date is required field.')
   .matches(/^\d+\s(minute|hour|day|week)$/)
   .withMessage('Job duration must be in format like (number minute/hour/day/week): Ex. 4 hour, 2 day, 1 week.')
 
+const validateCost = body('cost')
+  .not()
+  .isEmpty()
+  .withMessage('Job cost is required field.')
+  .matches(/^\d+\s(AMD)$/)
+  .withMessage('Job cost must be in format like (number AMD): Ex. 2000 AMD.')
 
+const validateAddress = body('address')
+  .not()
+  .isEmpty()
+  .withMessage('Job address is required field.')
+// urish inch validation anel ?
 
+const validateCategory = body('category')
+  .not()
+  .isEmpty()
+  .withMessage('Job category is required field.')
+  .isIn(['cleaning', 'repairing', 'plumbing', 'petWalking', 'ironing'])
+  .withMessage('Incorrect job category. Allowed job category is cleaning, repairing, plumbing, petWalking and ironing')
+
+const validateSubCategories = body('subCategories')
+  .not()
+  .isEmpty()
+  .withMessage('Job sub categories is required field.')
+// ??
 
 function jobValidationErrorHandler(req, res, next) {
   const valErrors = validationResult(req).errors
@@ -51,6 +74,11 @@ function jobValidationErrorHandler(req, res, next) {
 
 module.exports = {
   validateStartDate,
+  validateStartTime, // ??
   validateDuration,
+  validateCost,
+  validateAddress, // ??
+  validateCategory,
+  validateSubCategories,
   jobValidationErrorHandler
 }
