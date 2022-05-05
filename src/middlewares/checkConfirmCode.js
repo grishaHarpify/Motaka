@@ -41,7 +41,7 @@ async function checkConfirmCode(req, res, next) {
       })
     }
 
-    /* Codes match */
+    // Codes match //
     // Check code valid time
     const now = new Date()
     if (now > codeInfo.validTime) {
@@ -61,7 +61,7 @@ async function checkConfirmCode(req, res, next) {
       })
     }
 
-    /* User send right code and can change his password(if he/she pass validation). */
+    // User send right code and can change his password(if he/she pass validation). //
     next()
 
   } catch (e) {

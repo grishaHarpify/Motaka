@@ -117,7 +117,7 @@ async function resetPassword(req, res) {
     // Get phone and password from req.body
     const { phone, password } = req.body
 
-    /* Here phone number we get from frontend and we now what it is right number */
+    // Here phone number we get from frontend and we now what it is right number //
     // Find user in DB
     const user = await User.findOne({ phone })
     // Change user password

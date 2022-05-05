@@ -20,7 +20,7 @@ passport.use(new GoogleStrategy({
       firstName: user.given_name,
       lastName: user.family_name,
       email: user.email,
-      /*user.picture */
+      // user.picture //
       isEmailVerified: user.email_verified
     })
   }

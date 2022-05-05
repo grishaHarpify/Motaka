@@ -1,7 +1,7 @@
 const rootRouter = require('express').Router()
 const passport = require('passport')
 
-/* Import middlewares */
+// Import middlewares //
 // Validation
 const {
   validateLoginPhone,
@@ -27,7 +27,7 @@ const verifyJWT = require('../middlewares/verifyJWT')
 // IsAuthenticated
 const check = require('../middlewares/isAuthenticated') // Check authentication status
 
-/* --- middlewares end --- */
+// --- middlewares end --- //
 
 // Import Controllers
 const rootController = require('../controllers/root.controller')
@@ -67,7 +67,7 @@ rootRouter.post(
   rootController.register
 )
 
-/* Login routes */
+// Login routes //
 // Login with facebook
 rootRouter
   .get(
@@ -113,6 +113,6 @@ rootRouter.post('/set_role',
   validateResetRole,
   validationErrorHandler, rootController.setActiveRole)
 
-/* --- login-end --- */
+// --- login-end --- //
 
 module.exports = rootRouter

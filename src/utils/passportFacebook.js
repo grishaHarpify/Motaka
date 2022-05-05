@@ -14,7 +14,7 @@ passport.use(new FacebookStrategy({
   const userFromDb = await User.findOne({ fbId: user.id })
 
   if (!userFromDb) {
-    /* We have also user.picture */
+    // We have also user.picture //
     await User.create({
       fbId: user.id,
       firstName: user.first_name,

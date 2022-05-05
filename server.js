@@ -38,7 +38,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     cookie: {
       secure: false,
-      /* After 12 hours the user will log out of the site automatically. */
+      // After 12 hours the user will log out of the site automatically. //
       // expires: 12 * 60 * 60 * 1000
     },
     // store: new MongoDBStore({

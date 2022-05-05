@@ -1,7 +1,7 @@
 const homeRouter = require('express').Router()
 
 
-/* Import middlewares */
+// Import middlewares //
 const verifyJWT = require('../middlewares/verifyJWT')
 const { isProvider, isUser } = require('../middlewares/checkRole')
 
@@ -12,7 +12,7 @@ const {
   jobValidationErrorHandler
 } = require('../middlewares/jobInfoValidation')
 
-/* --- middlewares end --- */
+// --- middlewares end --- //
 
 // Import Controllers
 const homeController = require('../controllers/home.controller')
