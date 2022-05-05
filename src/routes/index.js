@@ -4,7 +4,8 @@ const router = require('express').Router()
 const rootRouter = require('./root.router')
 const homeRouter = require('./home.router')
 
-// create user [for deleting]
+// ======= [for deleting] ======= //
+// create user 
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
 
@@ -36,7 +37,24 @@ router.post('/createCategory', async (req, res) => {
     category
   })
 })
-// -----------
+
+router.post('/deleteUser', async (req, res) => {
+  const { phone } = req.body
+
+  const user = await User.findOne({ phone })
+  if (!user) {
+    return res.json({
+      message: `${phone} already deleted.`
+    })
+  }
+
+  await User.deleteOne({ phone })
+
+  res.json({
+    message: `User with phone ${phone} was deleted.`
+  })
+})
+// ----------- // 
 
 // Use routes
 router.use('/', rootRouter) // motaka.am/
