@@ -2,8 +2,10 @@ const User = require('../models/User')
 
 function createNewJob(req, res) {
   try {
-    const { startDate, startTime, duration, cost, address, category } = req.body
+    const { startDate, startTime, duration, cost, address, category, subCategories } = req.body
 
+    // const test = new Date(`T${startTime}`)
+    // console.log(test)
 
     res.json({
       startDate,
@@ -11,7 +13,8 @@ function createNewJob(req, res) {
       duration,
       cost,
       address,
-      category
+      category,
+      subCategories
     })
 
   } catch (e) {

@@ -8,7 +8,12 @@ const { isProvider, isUser } = require('../middlewares/checkRole')
 // Validation
 const {
   validateStartDate,
+  validateStartTime,
   validateDuration,
+  validateCost,
+  validateAddress,
+  validateCategory,
+  validateSubCategories,
   jobValidationErrorHandler
 } = require('../middlewares/jobInfoValidation')
 
@@ -17,12 +22,16 @@ const {
 // Import Controllers
 const homeController = require('../controllers/home.controller')
 
-
 // Routes // 
 homeRouter.post('/new_job',
   verifyJWT, isProvider,
   validateStartDate,
+  validateStartTime,
   validateDuration,
+  validateCost,
+  validateAddress,
+  validateCategory,
+  validateSubCategories,
   jobValidationErrorHandler, homeController.createNewJob)
 
 
