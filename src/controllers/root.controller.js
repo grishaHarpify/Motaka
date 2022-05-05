@@ -1,8 +1,8 @@
-const ConfirmCode = require('../models/ConfirmCode')
-const User = require('../models/User')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
+const ConfirmCode = require('../models/ConfirmCode')
+const User = require('../models/User')
 const generateCode = require('../utils/generateCode')
 const sendCodeToPhone = require('../utils/sendCodeToPhone') // well use before [because no money]
 const putConfirmCodeToDb = require('../utils/putCodeToDb')
