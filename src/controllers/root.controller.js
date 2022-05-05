@@ -36,6 +36,12 @@ async function register(req, res) {
       })
     }
 
+    if (!isUser && !isProvider) {
+      return res.status(400).json({
+        message: 'One of isUser or isProvider fields must be true.',
+      })
+    }
+
     const hashedPassword = await bcrypt.hash(password, 12)
 
     const newUser = await User.create({
