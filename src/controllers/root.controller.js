@@ -9,7 +9,7 @@ const putConfirmCodeToDb = require('../utils/putCodeToDb')
 
 async function register(req, res) {
   try {
-    const { name, lastName, password, phone, email, isUser, isProvider } =
+    const { firstName, lastName, password, phone, email, isUser, isProvider } =
       req.body
 
     // Check if exist user with such phone
@@ -47,7 +47,7 @@ async function register(req, res) {
     // Set active role [for default value without set_role]
     const activeRole = isProvider ? 'provider' : 'user'
     const newUser = await User.create({
-      firstName: name,
+      firstName,
       lastName,
       password: hashedPassword,
       phone,
@@ -56,7 +56,7 @@ async function register(req, res) {
         isUser: isUser,
         isProvider: isProvider,
       },
-      activeRole // default 'provider'
+      activeRole, // default 'provider'
     })
 
     // Generate code and put in DB
@@ -66,7 +66,8 @@ async function register(req, res) {
     console.log('confirmCode --->', code, '<---')
 
     res.status(201).json({
-      message: 'Registration success. Confirm code was sended in your phone number.',
+      message:
+        'Registration success. Confirm code was sended in your phone number.',
     })
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
@@ -225,7 +226,7 @@ async function setActiveRole(req, res) {
   try {
     const { role } = req.body
 
-    // Get user and check role available or not 
+    // Get user and check role available or not
     const user = req.user
     const isRole = `is${role.charAt(0).toUpperCase() + role.slice(1)}` // isRole = isUser \ isProvider
 
@@ -241,7 +242,7 @@ async function setActiveRole(req, res) {
     await user.save()
 
     res.json({
-      message: `User active role was changed to ${role}.`
+      message: `User active role was changed to ${role}.`,
     })
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
@@ -259,5 +260,5 @@ module.exports = {
   resendConfirmCode,
   register,
   loginWithPhone,
-  setActiveRole
+  setActiveRole,
 }
