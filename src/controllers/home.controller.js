@@ -2,8 +2,17 @@ const User = require('../models/User')
 
 function createNewJob(req, res) {
   try {
+    const { startDate, startTime, duration, cost, address, category } = req.body
 
-    res.send(`${req.user.phone} can create new job.`)
+
+    res.json({
+      startDate,
+      startTime,
+      duration,
+      cost,
+      address,
+      category
+    })
 
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)

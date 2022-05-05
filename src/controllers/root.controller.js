@@ -55,7 +55,7 @@ async function register(req, res) {
 
     // Generate code and put in DB
     const code = generateCode()
-    // sendCodeToPhone(phone, code)
+    sendCodeToPhone(phone, code)
     putConfirmCodeToDb(newUser._id, code)
     console.log('confirmCode --->', code, '<---')
 
