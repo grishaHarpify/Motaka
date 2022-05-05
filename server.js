@@ -58,9 +58,9 @@ require('./src/utils/passportGoogle') // Google
 app.use(passport.initialize())
 app.use(passport.session())
 
-// Use cpUploader [to get data from [form-data]]
-const cpUpload = require('./src/middlewares/cpUpload')
-app.use(cpUpload)
+// Use fileUploader [to get data from [FormData]]
+const fileUploader = require('express-fileupload')
+app.use(fileUploader())
 
 // Routes
 app.use('/', router)

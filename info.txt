@@ -3,11 +3,11 @@ home
 ============================
 ADD JOB
 1) start date 
-*) strat clock ??? 
-2) duration   
-3) money
-4) address
-5) category
+2) start time ??? 
+3) duration   
+4) money
+5) address
+6) category
 
 Category
 1) cleaning (maqrutyun)
