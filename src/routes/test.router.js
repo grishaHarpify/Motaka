@@ -1,8 +1,11 @@
 const testRouter = require('express').Router()
 const bcrypt = require('bcrypt')
 
-const Category = require('../models/Category')
 const User = require('../models/User')
+const ConfirmCode = require('../models/ConfirmCode')
+const Category = require('../models/Category')
+const Job = require('../models/Job')
+
 
 
 // create user 
@@ -52,10 +55,98 @@ testRouter.post('/deleteUser', async (req, res) => {
   })
 })
 
-// renderDB
-testRouter.get('/dbs', (req, res) => {
-  res.render('dbHome')
+// Render test pages //
+// Render db
+testRouter.get('/dbs/:dbName', async (req, res) => {
+  if (req.params.dbName === 'users') {
+    let users = await getAllUsers()
+    if (users.length === 0) {
+      users = ''
+    }
+
+    return res.render('dbHome', {
+      message: 'Users',
+      data: users
+    })
+  }
+
+  if (req.params.dbName === 'confirmCodes') {
+    const confirmCodes = await getAllConfirmCodes()
+    if (confirmCodes.length === 0) {
+      confirmCodes = ''
+    }
+
+    return res.render('dbHome', {
+      message: 'Confirm Codes',
+      data: confirmCodes
+    })
+  }
+
+  if (req.params.dbName === 'categories') {
+    const categories = await getAllCategories()
+    if (categories.length === 0) {
+      categories = ''
+    }
+
+    return res.render('dbHome', {
+      message: 'Categories',
+      data: categories
+    })
+  }
+
+  if (req.params.dbName === 'jobs') {
+    let jobs = await getAllJob()
+    if (jobs.length === 0) {
+      jobs = ''
+    }
+
+    return res.render('dbHome', {
+      message: 'Jobs',
+      data: jobs
+    })
+  }
+
+  // else //
+  return res.render('dbHome', {
+    message: 'Choose DataBase to see data'
+  })
 })
 
+// functions
+async function getAllUsers() {
+  const users = await User.find()
+  users.forEach((eachUser) => {
+    return JSON.stringify(eachUser, undefined, 2)
+  })
+
+  console.log(users)
+  return users
+}
+async function getAllConfirmCodes() {
+  const confirmCodes = await ConfirmCode.find()
+  confirmCodes.forEach((eachCode) => {
+    return JSON.stringify(eachCode, undefined, 2)
+  })
+
+  return confirmCodes
+}
+async function getAllCategories() {
+  const categories = await Category.find({}, 'name subCategories')
+
+  categories.forEach((eachCat) => {
+    return JSON.stringify(eachCat, undefined, 2)
+  })
+
+  return categories
+}
+async function getAllJob() {
+  const jobs = await Job.find()
+
+  jobs.forEach((eachJob) => {
+    return JSON.stringify(eachJob, undefined, 2)
+  })
+
+  return jobs
+}
 
 module.exports = testRouter 
