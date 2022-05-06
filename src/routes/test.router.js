@@ -71,7 +71,7 @@ testRouter.get('/dbs/:dbName', async (req, res) => {
   }
 
   if (req.params.dbName === 'confirmCodes') {
-    const confirmCodes = await getAllConfirmCodes()
+    let confirmCodes = await getAllConfirmCodes()
     if (confirmCodes.length === 0) {
       confirmCodes = ''
     }
@@ -83,7 +83,7 @@ testRouter.get('/dbs/:dbName', async (req, res) => {
   }
 
   if (req.params.dbName === 'categories') {
-    const categories = await getAllCategories()
+    let categories = await getAllCategories()
     if (categories.length === 0) {
       categories = ''
     }
