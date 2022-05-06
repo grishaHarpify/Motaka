@@ -7,10 +7,21 @@ const jobSchema = new Schema({
   address: { type: String },
   category: {
     type: String,
-    // karanq sarqenq poqr root vor vra fronty request ani uxarki category-n stana subCategories
+    //  poqr root sarqenq vori vra fronty request ani: uxarki category-n stana subCategories
     enum: ['cleaning', 'repairing', 'plumbing', 'petWalking', 'ironing']
   },
-  subCategories: [{ type: String }]
+  subCategories: [{ type: String }],
+  // provider and user 
+  providerId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }
+
 }, {
   collection: 'jobs', strict: false
 })
