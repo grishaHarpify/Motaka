@@ -2,6 +2,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
+
 // dotenv
 const dotenv = require('dotenv')
 dotenv.config({ path: './config.env' })
@@ -12,12 +13,16 @@ if (process.env.NODE_ENV === 'development') {
   const morgan = require('morgan')
   app.use(morgan('dev'))
 }
+app.set('view engine', 'pug')
+app.use(express.static('public'))
 
 // Import routes
 const router = require('./src/routes/index')
 
 // Middlewares
 const cors = require('cors') // Cross-Origin Resource Sharing ??
+// Use fileUploader [to get data from [FormData]]
+const fileUploader = require('express-fileupload')
 
 app.use(
   cors({
@@ -25,6 +30,7 @@ app.use(
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   })
 )
+app.use(fileUploader())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
@@ -58,10 +64,6 @@ require('./src/utils/passportGoogle') // Google
 
 app.use(passport.initialize())
 app.use(passport.session())
-
-// Use fileUploader [to get data from [FormData]]
-const fileUploader = require('express-fileupload')
-app.use(fileUploader())
 
 // Routes
 app.use('/', router)
