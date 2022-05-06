@@ -19,9 +19,9 @@ const isPasswordEmpty = body('password') // check [password] filed empty or not
 const validateFirstName = body('firstName')
   .not()
   .isEmpty()
-  .withMessage('Name is required field.')
+  .withMessage('First name is required field.')
   .matches(/^[a-zA-Z\s\.]{2,20}$/)
-  .withMessage('Name can contain only small and capital letters.')
+  .withMessage('First name can contain only small and capital letters.')
 
 const validateLastName = body('lastName')
   .not()

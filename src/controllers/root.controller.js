@@ -9,8 +9,7 @@ const putConfirmCodeToDb = require('../utils/putCodeToDb')
 
 async function register(req, res) {
   try {
-    const { firstName, lastName, password, phone, email, isUser, isProvider } =
-      req.body
+    const { firstName, lastName, password, phone, email, isUser, isProvider } = req.body
 
     // Check if exist user with such phone
     const existingUserPhone = await User.findOne({
