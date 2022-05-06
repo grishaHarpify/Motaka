@@ -4,12 +4,10 @@ function createNewJob(req, res) {
   try {
     const { startDate, startTime, duration, cost, address, category, subCategories } = req.body
 
-    // const test = new Date(`T${startTime}`)
-    // console.log(test)
+    console.log(new Date(`${startDate}T${startTime}`))
 
     res.json({
-      startDate,
-      startTime,
+      startDateAndTime: `${startDate}T${startTime}`,
       duration,
       cost,
       address,
