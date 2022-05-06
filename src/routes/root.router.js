@@ -32,13 +32,14 @@ const check = require('../middlewares/isAuthenticated') // Check authentication 
 // Import Controllers
 const rootController = require('../controllers/root.controller')
 
-// Restore password routes
+// Send phone and get code to change password
 rootRouter.post(
   '/forgot_password',
   validateLoginPhone,
   validationErrorHandler,
   rootController.getPhoneToResetPassword
 )
+// Send code ad reset password
 rootRouter.patch(
   '/reset_password',
   checkConfirmCode,
@@ -47,12 +48,10 @@ rootRouter.patch(
   validationErrorHandler,
   rootController.resetPassword
 )
+// Resend confirm code
 rootRouter.post('/resend_code', rootController.resendConfirmCode)
 
-// Below this middleware routes which is accessible only unauthorized users
-rootRouter.use(check.notAuthenticated)
-
-//register
+// Register
 rootRouter.post(
   '/register',
   validateRoleProvider,
@@ -67,7 +66,6 @@ rootRouter.post(
   rootController.register
 )
 
-// Login routes //
 // Login with facebook
 rootRouter
   .get(
@@ -108,11 +106,12 @@ rootRouter.post(
   rootController.loginWithPhone
 )
 
+// Set user active role (select page)
 rootRouter.post('/set_role',
   verifyJWT,
   validateResetRole,
   validationErrorHandler, rootController.setActiveRole)
 
-// --- login-end --- //
+
 
 module.exports = rootRouter
