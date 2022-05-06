@@ -7,11 +7,11 @@ async function checkConfirmCode(req, res, next) {
     // get confirmCode and phone from req.body
     const { confirmCode, phone } = req.body
 
-    // Check we have code or not 
+    // Check we have code or not
     if (!confirmCode) {
       return res.status(400).json({
         errorType: 'Confirm code error!',
-        errorMsg: 'Please input confirm code.'
+        errorMsg: 'Please input confirm code.',
       })
     }
 
@@ -19,13 +19,16 @@ async function checkConfirmCode(req, res, next) {
     const user = await User.findOne({ phone })
 
     // get info about code from DB
-    const codeInfo = await ConfirmCode.findOne({ userId: user._id }).populate('userId')
+    const codeInfo = await ConfirmCode.findOne({ userId: user._id }).populate(
+      'userId'
+    )
 
     // codeInfo === null -> no code in db -> user dont send code
     if (!codeInfo) {
       return res.status(400).json({
         errorType: 'Confirm code error!',
-        errorMsg: 'In first you need to send confirm code in your phone number.'
+        errorMsg:
+          'In first you need to send confirm code in your phone number.',
       })
     }
 
@@ -34,10 +37,10 @@ async function checkConfirmCode(req, res, next) {
     const isMatched = await bcrypt.compare(confirmCode, hashedCodeFromDb)
 
     if (!isMatched) {
-      // Codes do not match
+      // Codes does not match
       return res.status(400).json({
         errorType: 'Confirm code error!',
-        errorMsg: 'User send the wrong confirm code.'
+        errorMsg: 'User send the wrong confirm code.',
       })
     }
 
@@ -48,7 +51,7 @@ async function checkConfirmCode(req, res, next) {
       // Code valid time expired
       return res.status(400).json({
         errorType: 'Confirm code error!',
-        errorMsg: 'Confirm code valid time is expired. Please send a new one.'
+        errorMsg: 'Confirm code valid time is expired. Please send a new one.',
       })
     }
 
@@ -57,19 +60,19 @@ async function checkConfirmCode(req, res, next) {
       // This code already used
       return res.status(400).json({
         errorType: 'Confirm code error!',
-        errorMsg: 'You have already used this code to change/recover your password. Please send a new one.'
+        errorMsg:
+          'You have already used this code to change/recover your password. Please send a new one.',
       })
     }
 
-    // User send right code and can change his password(if he/she pass validation). //
+    // User send right code //
     next()
-
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
     console.log(e.message)
     res.status(500).json({
       errorType: 'Server side error!',
-      errorMsg: e.message
+      errorMsg: e.message,
     })
   }
 }

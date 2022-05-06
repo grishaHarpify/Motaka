@@ -119,8 +119,6 @@ function validationErrorHandler(req, res, next) {
 }
 
 module.exports = {
-  validateRoleUser,
-  validateRoleProvider,
   validateLoginPhone,
   isPasswordEmpty,
   validateFirstName,
@@ -130,5 +128,7 @@ module.exports = {
   validatePassword,
   validatePasswordConfirm,
   validateResetRole,
+  validateRoleUser,
+  validateRoleProvider,
   validationErrorHandler,
 }
