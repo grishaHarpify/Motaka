@@ -16,18 +16,18 @@ const isPasswordEmpty = body('password') // check [password] filed empty or not
   .withMessage('Password filed cannot be left blank.')
 
 // User data validation
-const validateName = body('name')
+const validateFirstName = body('firstName')
   .not()
   .isEmpty()
   .withMessage('Name is required field.')
-  .matches(/^[A-Za-z]{2,20}$/)
+  .matches(/^[a-zA-Z\s\.]{2,20}$/)
   .withMessage('Name can contain only small and capital letters.')
 
 const validateLastName = body('lastName')
   .not()
   .isEmpty()
   .withMessage('Last name is required field.')
-  .matches(/^[A-Za-z]{2,25}$/)
+  .matches(/^[a-zA-Z-]{2,20}$/)
   .withMessage('Last name can contain only small and capital letters.')
 
 const validatePhone = body('phone')
@@ -35,7 +35,9 @@ const validatePhone = body('phone')
   .isEmpty()
   .withMessage('Phone number is required field.')
   .matches(/^\+374\s\d{2}\s\d{6}$/) // +374 xx xxxxxx
-  .withMessage('Phone number must be in format like (+374 xx xxxxxx): Ex. +374 77 456789.')
+  .withMessage(
+    'Phone number must be in format like (+374 xx xxxxxx): Ex. +374 77 456789.'
+  )
 
 const validateEmail = body('email')
   .not()
@@ -52,7 +54,9 @@ const validatePassword = body('password')
   .withMessage('No spaces are allowed in the password.')
   .isLength({ min: 8, max: 25 })
   .withMessage('Password must contain from 8 to 25 symbols')
-  .matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[~!@#$%^&*_+=|-\}]).{0,}$/)
+  .matches(
+    /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[~!@#$%^&*_+=|-\}]).{0,}$/
+  )
   .withMessage(
     'Password must contain minimum one capital letter, minimum one small letter, minimum one number and minimum one special symbol [~!@#$%^&*_+=|-].'
   )
@@ -88,7 +92,6 @@ const validateResetRole = body('role')
   .isIn(['user', 'provider'])
   .withMessage(`Role can be 'user' or 'provider'.`)
 
-
 function validationErrorHandler(req, res, next) {
   const valErrors = validationResult(req).errors
 
@@ -120,7 +123,7 @@ module.exports = {
   validateRoleProvider,
   validateLoginPhone,
   isPasswordEmpty,
-  validateName,
+  validateFirstName,
   validateLastName,
   validatePhone,
   validateEmail,

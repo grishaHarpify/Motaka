@@ -6,7 +6,7 @@ const passport = require('passport')
 const {
   validateLoginPhone,
   isPasswordEmpty,
-  validateName,
+  validateFirstName,
   validateLastName,
   validatePhone,
   validateEmail,
@@ -56,7 +56,7 @@ rootRouter.post(
   '/register',
   validateRoleProvider,
   validateRoleUser,
-  validateName,
+  validateFirstName,
   validateLastName,
   validatePhone,
   validateEmail,
@@ -107,10 +107,13 @@ rootRouter.post(
 )
 
 // Set user active role (select page)
-rootRouter.post('/set_role',
+rootRouter.post(
+  '/set_role',
   verifyJWT,
   validateResetRole,
-  validationErrorHandler, rootController.setActiveRole)
+  validationErrorHandler,
+  rootController.setActiveRole
+)
 
 
 
