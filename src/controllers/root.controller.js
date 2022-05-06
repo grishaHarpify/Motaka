@@ -79,6 +79,36 @@ async function register(req, res) {
   }
 }
 
+async function phoneVerificationCode(req, res) {
+  try {
+    // const phone = req.body.phone
+    const { phone } = req.body
+
+    // change user phone info in DB
+    const user = await User.findOne({ phone })
+    user.isPhoneVerified = true
+    await user.save()
+
+    // Change confirm code status in DB
+    const codeInfo = await ConfirmCode.findOne({ userId: user._id }).populate(
+      'userId'
+    )
+    codeInfo.isUsed = true
+    await codeInfo.save()
+
+    res.json({
+      message: 'User send right code and his phone number has been verified.',
+    })
+  } catch (e) {
+    console.log(`Error in file: ${__filename}!`)
+    console.log(e.message)
+    res.status(500).json({
+      errorType: 'Server side error!',
+      errorMsg: e.message,
+    })
+  }
+}
+
 async function getPhoneToResetPassword(req, res) {
   try {
     const { phone } = req.body
@@ -255,10 +285,11 @@ async function setActiveRole(req, res) {
 }
 
 module.exports = {
+  register,
+  phoneVerificationCode,
   getPhoneToResetPassword,
   resetPassword,
   resendConfirmCode,
-  register,
   loginWithPhone,
   setActiveRole,
 }

@@ -13,11 +13,9 @@ const {
   validatePassword,
   validatePasswordConfirm,
   validateResetRole,
-  validationErrorHandler,
-  isProvider,
-  isUser,
-  validateRoleProvider,
   validateRoleUser,
+  validateRoleProvider,
+  validationErrorHandler,
 } = require('../middlewares/userInfoValidation')
 const checkConfirmCode = require('../middlewares/checkConfirmCode')
 
@@ -51,6 +49,13 @@ rootRouter.post('/resend_code', rootController.resendConfirmCode)
 
 // Below this middleware routes which is accessible only unauthorized users
 rootRouter.use(check.notAuthenticated)
+
+//phoneVerification code
+rootRouter.post(
+  '/phone_verification_code',
+  checkConfirmCode,
+  rootController.phoneVerificationCode
+)
 
 //register
 rootRouter.post(
