@@ -54,11 +54,9 @@ const validatePassword = body('password')
   .withMessage('No spaces are allowed in the password.')
   .isLength({ min: 8, max: 25 })
   .withMessage('Password must contain from 8 to 25 symbols')
-  .matches(
-    /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[~!@#$%^&*_+=|-\}]).{0,}$/
-  )
+  .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?=+-])([A-Za-z\d#$@!%&*?=+-]){8,30}$/)
   .withMessage(
-    'Password must contain minimum one capital letter, minimum one small letter, minimum one number and minimum one special symbol [~!@#$%^&*_+=|-].'
+    'Password must contain minimum one capital letter, minimum one small letter, minimum one number and minimum one special symbol like [#$@!%&*?=+-].'
   )
 
 const validatePasswordConfirm = body('passwordConfirm').custom(
