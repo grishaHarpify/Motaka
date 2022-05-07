@@ -20,10 +20,48 @@ html
 
         form(action="/help/requestsInfo/Mamikon" method="get") 
           button(type="submit") Mamikon
+
+        form(action="/help/requestsInfo/helperRequests" method="get") 
+          button(type="submit") Helper Requests
         
       div.content 
         h4.description= message
 
-        div.content-data  hello world                      
-        div.content-data  hello world
+        //- ABOUT
+        if isAboutPage  
+          //- BACK URI
+          div(style="color: rgba(2, 1, 1, 0.932)").content-data
+            div =================================================================================================== 
+            div | Back-end URI ==> 
+              a(href="https://motaka.herokuapp.com/" style="color: white") https://motaka.herokuapp.com/
+            div =================================================================================================== 
 
+          //- AUTHORIZATION
+          div.content-data If URI starts with [AUTH] ===> in time request it must contain AUTHORIZATION header
+
+          //- ? COMMENT
+          div.content-data If field comment contain [?] ===> you can't test it
+
+        //- Grisha
+        if isGrishaPage                    
+          div.content-data  Grisha page
+
+
+        //- Mamikon
+        if isMamikonPage                    
+          div.content-data  Mamikon page
+
+
+        //- Helper Requests
+        if isHelperRequestsPage                    
+          div.content-data  Helper requests
+
+
+
+//-           ==========================================================================
+//- *) DELETE USER WITH PHONE NUMBER						    |==> URL/test/deleteUser [POST]
+//- ==========================================================================
+//- {
+//- 	"phone": "+374 77 630905"
+//- } 
+//- ==========================================================================

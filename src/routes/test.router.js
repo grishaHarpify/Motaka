@@ -118,17 +118,34 @@ testRouter.get('/dbs/:dbName', async (req, res) => {
     message: 'Choose DataBase to see data'
   })
 })
+
 // Render requestsInfo
 testRouter.get('/requestsInfo/:name', (req, res) => {
+  if (req.params.name === 'about') {
+    return res.render('requestsInfo', {
+      message: 'About Requests Symbols',
+      isAboutPage: true
+    })
+  }
+
   if (req.params.name === 'Grisha') {
     return res.render('requestsInfo', {
-      message: 'Grisha'
+      message: 'Info About Requests [Grisha]',
+      isGrishaPage: true
     })
   }
 
   if (req.params.name === 'Mamikon') {
     return res.render('requestsInfo', {
-      message: 'Mamikon'
+      message: 'Info About Requests [Mamikon]',
+      isMamikonPage: true
+    })
+  }
+
+  if (req.params.name === 'helperRequests') {
+    return res.render('requestsInfo', {
+      message: 'Info About Helper Requests',
+      isHelperRequestsPage: true
     })
   }
 

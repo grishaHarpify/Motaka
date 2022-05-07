@@ -39,7 +39,7 @@ body {
   color: wheat;
 
   text-align: center;
-  max-block-size: 150px;
+  max-block-size: 190px;
   padding-top: 6px;
   display: block;
 }
@@ -60,7 +60,7 @@ body {
 .content-data {
   border: 2px solid rgba(255, 255, 255, 0.308);
   margin: 8px;
-  padding: 30px;
+  padding: 15px;
   color: white;
   font-size: 18px;
 }
