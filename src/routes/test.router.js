@@ -7,7 +7,7 @@ const Category = require('../models/Category')
 const Job = require('../models/Job')
 
 
-
+// Create, delete ..... // 
 // create user 
 testRouter.post('/createUser', async (req, res) => {
   const { phone, password } = req.body
@@ -54,9 +54,22 @@ testRouter.post('/deleteUser', async (req, res) => {
     message: `User with phone ${phone} was deleted.`
   })
 })
+// =================================== // 
 
-// Render test pages //
-// Render db
+
+// ======= Render test pages ======= //
+// Render test home
+testRouter.get('/', async (req, res) => {
+  res.render('testHome', {
+    message: 'Available helper routes'
+  })
+})
+
+// Render requestsInfo
+testRouter.get('/requestsInfo/:name', (req, res) => {
+  res.render('requestsInfo')
+})
+// Render dbs
 testRouter.get('/dbs/:dbName', async (req, res) => {
   if (req.params.dbName === 'users') {
     let users = await getAllUsers()
@@ -111,15 +124,20 @@ testRouter.get('/dbs/:dbName', async (req, res) => {
     message: 'Choose DataBase to see data'
   })
 })
+// =================================== // 
 
-// functions
+
+
+
+
+
+// Functions for db //
 async function getAllUsers() {
   const users = await User.find()
   users.forEach((eachUser) => {
     return JSON.stringify(eachUser, undefined, 2)
   })
 
-  console.log(users)
   return users
 }
 async function getAllConfirmCodes() {
@@ -132,7 +150,6 @@ async function getAllConfirmCodes() {
 }
 async function getAllCategories() {
   const categories = await Category.find({}, 'name subCategories')
-
   categories.forEach((eachCat) => {
     return JSON.stringify(eachCat, undefined, 2)
   })
@@ -141,12 +158,12 @@ async function getAllCategories() {
 }
 async function getAllJob() {
   const jobs = await Job.find()
-
   jobs.forEach((eachJob) => {
     return JSON.stringify(eachJob, undefined, 2)
   })
 
   return jobs
 }
+// ========================== // 
 
 module.exports = testRouter 
