@@ -26,26 +26,11 @@ body {
 .content {
   grid-area: content;
   grid-row: 3 / 4;
-  display: grid;
-
-  grid-template-areas:
-    'content-uris'
-    'content-buttons';
-
   background-color: rgba(255, 255, 255, 0.308);
   color: wheat;
 
   text-align: center;
   padding: 4px 10px 4px 10px;
-}
-
-.content-uris {
-  grid-area: content-uris;
-  max-height: 300;
-}
-
-.content-buttons {
-  grid-area: content-buttons;
 }
 
 .content-uris-data,

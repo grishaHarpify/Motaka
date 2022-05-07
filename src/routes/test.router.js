@@ -60,7 +60,7 @@ testRouter.post('/deleteUser', async (req, res) => {
 // ======= Render test pages ======= //
 // Render test home
 testRouter.get('/', async (req, res) => {
-  res.render('testHome')
+  res.render('helpHome')
 })
 
 // Render dbs
