@@ -3,9 +3,8 @@ const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
 
-console.log(process.env.NODE_ENV)
+console.log(`======= ${process.env.NODE_ENV} mode =======`)
 if (process.env.NODE_ENV === 'development') {
-  console.log('======= Development mode =======')
   // dotenv
   require('dotenv').config()
 
