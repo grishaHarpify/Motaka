@@ -29,20 +29,27 @@ body {
   display: grid;
 
   grid-template-areas:
-    'content-header'
-    'content-data';
+    'content-uris'
+    'content-buttons';
 
   background-color: rgba(255, 255, 255, 0.308);
   color: wheat;
 
+  text-align: center;
   padding: 4px 10px 4px 10px;
 }
-.content-header {
-  grid-area: content-header;
+
+.content-uris {
+  grid-area: content-uris;
+  max-height: 300;
 }
 
-.content-data {
-  grid-area: content-data;
+.content-buttons {
+  grid-area: content-buttons;
+}
+
+.content-uris-data,
+.content-buttons-data {
   border: 2px solid rgba(255, 255, 255, 0.308);
   background-color: rgba(77, 68, 68, 0.26);
   text-align: center;
@@ -52,14 +59,33 @@ body {
   font-size: 18px;
 }
 
-/* ==================================== */
-button {
-  width: 180px;
-}
-
-.dbDescription {
+.content-uris-header,
+.content-buttons-header {
   text-align: center;
   background-color: rgba(77, 68, 68, 0.795);
   border: 1px solid wheat;
   padding: 4px;
+}
+
+.uris-data-left {
+  float: left;
+}
+
+.uris-data-right {
+  float: right;
+}
+
+input {
+  /* margin-left: 15px; */
+  text-align: center;
+  width: 700px;
+}
+
+/* ==================================== */
+button {
+  width: 230px;
+}
+
+.copy-btn {
+  width: 150px;
 }

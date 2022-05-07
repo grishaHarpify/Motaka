@@ -8,24 +8,24 @@ html
       div.header 
         div.header-1 Motaka Databases
         div.header-2 
-          form(action="/test") 
-            button(type="submit") Test Home
+          form(action="/help") 
+            button(type="submit") Main
 
       div.nav
-        form(action="/test/dbs/users") 
+        form(action="/help/dbs/users") 
           button(type="submit") Users
 
-        form(action="/test/dbs/confirmCodes" method="get") 
+        form(action="/help/dbs/confirmCodes" method="get") 
           button(type="submit") Confirm Codes
 
-        form(action="/test/dbs/categories" method="get") 
+        form(action="/help/dbs/categories" method="get") 
           button(type="submit") Categories
 
-        form(action="/test/dbs/jobs" method="get") 
+        form(action="/help/dbs/jobs" method="get") 
           button(type="submit") Jobs
         
       div.content 
-        h4.dbDescription= message
+        h4.description= message
 
         //- if we have data
         if data 

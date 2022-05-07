@@ -39,7 +39,7 @@ body {
   color: wheat;
 
   text-align: center;
-  max-block-size: 190px;
+  max-block-size: 150px;
   padding-top: 6px;
   display: block;
 }
@@ -53,13 +53,6 @@ body {
   color: wheat;
 
   padding: 4px 10px 4px 10px;
-}
-
-.left,
-.right {
-  background-color: rgba(77, 68, 68, 0.795);
-  border: 1px solid wheat;
-  padding: 2px;
 }
 
 /* ==================================== */
@@ -76,7 +69,7 @@ button {
   width: 180px;
 }
 
-.dbDescription {
+.description {
   text-align: center;
   background-color: rgba(77, 68, 68, 0.795);
   border: 1px solid wheat;

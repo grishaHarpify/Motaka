@@ -60,15 +60,9 @@ testRouter.post('/deleteUser', async (req, res) => {
 // ======= Render test pages ======= //
 // Render test home
 testRouter.get('/', async (req, res) => {
-  res.render('testHome', {
-    message: 'Available helper routes'
-  })
+  res.render('testHome')
 })
 
-// Render requestsInfo
-testRouter.get('/requestsInfo/:name', (req, res) => {
-  res.render('requestsInfo')
-})
 // Render dbs
 testRouter.get('/dbs/:dbName', async (req, res) => {
   if (req.params.dbName === 'users') {
@@ -122,6 +116,24 @@ testRouter.get('/dbs/:dbName', async (req, res) => {
   // else //
   return res.render('dbHome', {
     message: 'Choose DataBase to see data'
+  })
+})
+// Render requestsInfo
+testRouter.get('/requestsInfo/:name', (req, res) => {
+  if (req.params.name === 'Grisha') {
+    return res.render('requestsInfo', {
+      message: 'Grisha'
+    })
+  }
+
+  if (req.params.name === 'Mamikon') {
+    return res.render('requestsInfo', {
+      message: 'Mamikon'
+    })
+  }
+
+  res.render('requestsInfo', {
+    message: 'Choose a developer to see info'
   })
 })
 // =================================== // 

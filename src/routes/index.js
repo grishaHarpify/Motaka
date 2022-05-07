@@ -12,7 +12,7 @@ router.use('/home', homeRouter) // motaka.am/home
 
 // For testing
 const testRouter = require('./test.router')
-router.use('/test', testRouter)
+router.use('/help', testRouter)
 
 
 
