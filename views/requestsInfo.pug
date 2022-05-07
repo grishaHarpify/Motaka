@@ -53,13 +53,21 @@ html
 
 
         //- Helper Requests
-        if isHelperRequestsPage                    
-          div.content-data  Helper requests
+        if isHelperRequestsPage  
+          //- Delete User                  
+          div.content-data  
+            div Description ===> Delete user with phone number
+            div URI ===> URI/help/deleteUser
+            div Request Method ===> [DELETE] 
+            div Request Body [JSON] {
+            div &emsp;&emsp;"phone": "+374 77 630905"
+            div }
+            
 
 
 
 //-           ==========================================================================
-//- *) DELETE USER WITH PHONE NUMBER						    |==> URL/test/deleteUser [POST]
+//- *) DELETE USER WITH PHONE NUMBER						    |==> URL/test/deleteUser [DELETE]
 //- ==========================================================================
 //- {
 //- 	"phone": "+374 77 630905"

@@ -38,7 +38,7 @@ testRouter.post('/createCategory', async (req, res) => {
 })
 
 // delete user
-testRouter.post('/deleteUser', async (req, res) => {
+testRouter.delete('/deleteUser', async (req, res) => {
   const { phone } = req.body
 
   const user = await User.findOne({ phone })
