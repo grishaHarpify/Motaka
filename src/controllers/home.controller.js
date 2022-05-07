@@ -1,18 +1,24 @@
 const User = require('../models/User')
+const Job = require('../models/Job')
 
-function createNewJob(req, res) {
+async function createNewJob(req, res) {
   try {
     const { startDate, startTime, duration, cost, address, category, subCategories } = req.body
+    const user = req.user
 
-    console.log(new Date(`${startDate}T${startTime}`))
-
-    res.json({
-      startDateAndTime: `${startDate}T${startTime}`,
+    // Put job data to DB
+    await Job.create({
+      startDate: `${startDate}T${startTime}`,
       duration,
       cost,
       address,
       category,
-      subCategories
+      subCategories,
+      providerId: user._id
+    })
+
+    res.json({
+      message: 'Job successfully crated.'
     })
 
   } catch (e) {

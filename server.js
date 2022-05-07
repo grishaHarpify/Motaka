@@ -3,12 +3,11 @@ const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
 
-// dotenv
-const dotenv = require('dotenv')
-dotenv.config({ path: './config.env' })
-
+console.log(process.env.NODE_ENV)
 if (process.env.NODE_ENV === 'development') {
   console.log('======= Development mode =======')
+  // dotenv
+  require('dotenv').config()
 
   const morgan = require('morgan')
   app.use(morgan('dev'))

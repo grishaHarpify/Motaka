@@ -1,5 +1,5 @@
 {
-  "name": "motaka",
+  "name": "motaka-backend",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -9,7 +9,7 @@
     "ngrok": "ngrok http 7000"
   },
   "keywords": [],
-  "author": "Grisha",
+  "author": "Grisha&Mamikon",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "connect-mongodb-session": "^3.1.1",
