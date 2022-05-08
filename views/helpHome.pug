@@ -14,37 +14,37 @@ html
           h4.content-uris-header Back-end and Front-end URIs
 
           div.content-uris-data
-              //- Back-end
-              div.uris-data-left  Back -end URI
-              input(type="text" value="https://motaka.herokuapp.com/" id="backUri" disabled)
-              script.
-                function copyBackUrl() {
-                  let copyText = document.getElementById("backUri")
-                  copyText.select()
-                  copyText.setSelectionRange(0, 99999) /* For mobile devices */
-                  navigator.clipboard.writeText(copyText.value)
-                }
+            //- Back-end
+            div.uris-data-left  Back -end URI
+            input(type="text" value="https://motaka.herokuapp.com/" id="backUri" disabled)
+            script.
+              function copyBackUrl() {
+                let copyText = document.getElementById("backUri")
+                copyText.select()
+                copyText.setSelectionRange(0, 99999) /* For mobile devices */
+                navigator.clipboard.writeText(copyText.value)
+              }
 
-              div.uris-data-right
-                button(onclick="copyBackUrl()" title="Back-end").copy-btn Copy URI
-              //- Back-end finish
+            div.uris-data-right
+              button(onclick="copyBackUrl()" title="Back-end").copy-btn Copy URI
+            //- Back-end finish
               
-              //- Front-end
-              br
-              hr
-              div.uris-data-left Front-end URI
-              input(type="text" value="http://motaka.xyz/" id="frontUri" disabled)
-              script.
-                function copyFrontUrl() {
-                  let copyText = document.getElementById("frontUri")
-                  copyText.select()
-                  copyText.setSelectionRange(0, 99999) /* For mobile devices */
-                  navigator.clipboard.writeText(copyText.value)
-                }
+            //- Front-end
+            br
+            hr
+            div.uris-data-left Front-end URI
+            input(type="text" value="http://motaka.xyz/" id="frontUri" disabled)
+            script.
+              function copyFrontUrl() {
+                let copyText = document.getElementById("frontUri")
+                copyText.select()
+                copyText.setSelectionRange(0, 99999) /* For mobile devices */
+                navigator.clipboard.writeText(copyText.value)
+              }
 
-              div.uris-data-right
-                button(onclick="copyFrontUrl()" title="Front-end").copy-btn Copy URI
-              //- Front-end finish
+            div.uris-data-right
+              button(onclick="copyFrontUrl()" title="Front-end").copy-btn Copy URI
+            //- Front-end finish
             
         //- Helper
         div.content-buttons
