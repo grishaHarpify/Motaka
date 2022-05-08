@@ -5,12 +5,14 @@ html
   link(rel="stylesheet", href="/dbHome.css")
   body 
     div.app-wrapper 
+      //- Header ============================
       div.header 
         div.header-1 Motaka Databases
         div.header-2 
           form(action="/help") 
             button(type="submit") Main
 
+      //- Navbar ============================
       div.nav
         form(action="/help/dbs/users") 
           button(type="submit") Users
@@ -24,40 +26,25 @@ html
         form(action="/help/dbs/jobs" method="get") 
           button(type="submit") Jobs
         
+      //- Content ============================
       div.content 
         h4.description= message
 
-        //- if we have data
+        //- if we have data in DB
         if data 
-          - var temp = true
-          - var leftDiv
-          - var rightDiv
+          - var divContent
           - var newDataDiv
           - var eachData
 
-          div.left#left-content 
-          div.right#right-content 
+          div.div-content#div-content
 
+          //- Draw each data
           each d in data 
-            //- Left part
-            if temp === true 
-              script.
-                leftDiv = document.getElementById('left-content')
-                newDataDiv = document.createElement('div')
-                eachData = `#{d}` 
-                newDataDiv.innerHTML = eachData
-                newDataDiv.classList.add('content-data')
-                leftDiv.appendChild(newDataDiv)
+            script.
+              divContent = document.getElementById('div-content')
+              newDataDiv = document.createElement('div')
+              eachData = `#{d}` 
+              newDataDiv.innerHTML = eachData
+              newDataDiv.classList.add('content-data')
+              divContent.appendChild(newDataDiv)
 
-            //- Right part
-            if temp === false
-              script. 
-                rightDiv = document.getElementById('right-content')
-                newDataDiv = document.createElement('div')
-                eachData = `#{d}` 
-                newDataDiv.innerHTML = eachData
-                newDataDiv.classList.add('content-data')
-                rightDiv.appendChild(newDataDiv)
-
-            - temp = !temp
-        
