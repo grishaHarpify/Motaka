@@ -5,17 +5,19 @@ html
   link(rel="stylesheet", href="/helpHome.css")
   body
     div.app-wrapper
+      //- Header ============================
       div.header
         div(style="font-size: 25px") Motaka Helper
 
+      //- Content ============================
       div.content 
-        //- URIs
+        //- Content - URIs ========================================================
         div.content-uris
           h4.content-uris-header Back-end and Front-end URIs
 
           div.content-uris-data
-            //- Back-end
-            div.uris-data-left  Back -end URI
+            //- ============================ Back-end ============================
+            div.uris-data-left  Back-end URI&nbsp;
             input(type="text" value="https://motaka.herokuapp.com/" id="backUri" disabled)
             script.
               function copyBackUrl() {
@@ -27,9 +29,9 @@ html
 
             div.uris-data-right
               button(onclick="copyBackUrl()" title="Back-end").copy-btn Copy URI
-            //- Back-end finish
+            //- ============================ Back-end finish ============================
               
-            //- Front-end
+            //- ============================ Front-end ============================
             br
             hr
             div.uris-data-left Front-end URI
@@ -44,11 +46,12 @@ html
 
             div.uris-data-right
               button(onclick="copyFrontUrl()" title="Front-end").copy-btn Copy URI
-            //- Front-end finish
+            //- ============================ Front-end finish ============================
             
-        //- Helper
+        //- Content HelperRoutes ========================================================
         div.content-buttons
           h4.content-buttons-header Available Helper Routes
+          
           div.content-buttons-data
             form(action="/help/dbs/all")
               button(type="submit") Databases

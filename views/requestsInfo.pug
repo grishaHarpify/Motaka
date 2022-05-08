@@ -5,15 +5,17 @@ html
   link(rel="stylesheet", href="/requestsInfo.css")
   body 
     div.app-wrapper 
+      //- Header ============================
       div.header 
         div.header-1 Motaka API Requests Info 
         div.header-2 
           form(action="/help") 
             button(type="submit") Main 
 
+      //- Navbar ============================
       div.nav
         form(action="/help/requestsInfo/about" method="get") 
-          button(type="submit") About requests
+          button(type="submit") About Requests
 
         form(action="/help/requestsInfo/Grisha" method="get") 
           button(type="submit") Grisha
@@ -23,7 +25,8 @@ html
 
         form(action="/help/requestsInfo/helperRequests" method="get") 
           button(type="submit") Help Requests
-        
+
+      //- Content ============================  
       div.content 
         h4.description= message
 
@@ -36,6 +39,9 @@ html
               a(href="https://motaka.herokuapp.com/" style="color: white") https://motaka.herokuapp.com/
             div =================================================================================================== 
 
+          //- NEW DESCRIPTION
+          div.content-data If full description is black ==> NEW
+
           //- AUTHORIZATION
           div.content-data If URI starts with [AUTH] ==> request must contain AUTHORIZATION header
 
@@ -45,11 +51,8 @@ html
           //- FIELD COMMENT !!
           div.content-data If field comment contain [!!] ==> no need to test
 
-          //- DESCRIPTION COMMENT !!
+          //- DESCRIPTION COMMENT &&
           div.content-data If description ends with [&&] ==> still in progress
-
-          //- NEW DESCRIPTION
-          div.content-data If full description is black ==> new
 
           //- 
 
@@ -154,7 +157,7 @@ html
         if isMamikonPage                    
           //- Register                
           div.content-data
-            div Description ==> Register to site
+            div Description ==> Register to the site
             div URI ==> URI/register
             div Request Method ==> 
               span(style="color: black") [POST] 
@@ -190,3 +193,8 @@ html
 
           //- 
             
+
+
+
+
+
