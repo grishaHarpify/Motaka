@@ -24,7 +24,7 @@ const homeController = require('../controllers/home.controller')
 
 // Routes // 
 homeRouter.post('/new_job',
-  verifyJWT, isProvider,
+  verifyJWT, isUser,
   validateStartDate,
   validateStartTime,
   validateDuration,
