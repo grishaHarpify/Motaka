@@ -44,7 +44,7 @@ async function register(req, res) {
     const hashedPassword = await bcrypt.hash(password, 12)
 
     // Set active role [for default value without set_role]
-    const activeRole = isProvider ? 'provider' : 'user'
+    const activeRole = isUser ? 'user' : 'provider'
     const newUser = await User.create({
       firstName,
       lastName,
@@ -55,7 +55,7 @@ async function register(req, res) {
         isUser: isUser,
         isProvider: isProvider,
       },
-      activeRole, // default 'provider'
+      activeRole, // default 'user'
     })
 
     // Generate code and put in DB

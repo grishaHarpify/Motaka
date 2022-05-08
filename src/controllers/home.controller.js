@@ -18,7 +18,7 @@ async function createNewJob(req, res) {
     })
 
     res.json({
-      message: 'Job successfully crated.'
+      message: 'Job successfully created.'
     })
 
   } catch (e) {
