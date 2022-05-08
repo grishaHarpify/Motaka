@@ -27,7 +27,7 @@ html
       div.content 
         h4.description= message
 
-        //- ABOUT
+        //- ABOUT ==================================================
         if isAboutPage  
           //- BACK URI
           div(style="color: rgba(2, 1, 1, 0.932)").content-data
@@ -37,39 +37,156 @@ html
             div =================================================================================================== 
 
           //- AUTHORIZATION
-          div.content-data If URI starts with [AUTH] ===> in time request it must contain AUTHORIZATION header
+          div.content-data If URI starts with [AUTH] ==> request must contain AUTHORIZATION header
 
-          //- ? COMMENT
-          div.content-data If field comment contain [?] ===> you can't test it
+          //- FIELD COMMENT ?
+          div.content-data If field comment contain [?] ==> not ready for testing 
 
-        //- Grisha
-        if isGrishaPage                    
-          div.content-data  Grisha page
+          //- FIELD COMMENT !!
+          div.content-data If field comment contain [!!] ==> no need to test
+
+          //- DESCRIPTION COMMENT !!
+          div.content-data If description ends with [&&] ==> still in progress
+
+          //- NEW DESCRIPTION
+          div.content-data If full description is black ==> new
+
+          //- 
 
 
-        //- Mamikon
+
+
+
+        //- Grisha ==================================================
+        if isGrishaPage  
+          //- Login to the site                   
+          div.content-data  
+            div Description ==> Login to the site
+            div URI ==> URI/login
+            div Request Method ==> 
+              span(style="color: black") [POST] 
+
+            div Request Body [JSON] ==> {
+            div &emsp;&emsp;"phone": "+374 ** ******"
+            div &emsp;&emsp;"password": "********"
+            div }
+
+          //- Send sms to phone to reset password 	                   
+          div.content-data  
+            div Description ==> Send sms to phone to reset password
+            div URI ==> URI/forgot_password
+            div Request Method ==> 
+              span(style="color: black") [POST] 
+
+            div Request Body [JSON] ==> {
+            div &emsp;&emsp;"phone": "+374 ** ******"
+            div }
+
+          //- Send the code and set a new password 	                   
+          div.content-data  
+            div Description ==> Send the code and set a new password
+            div URI ==> URI/reset_password
+            div Request Method ==> 
+              span(style="color: black") [PATCH] 
+
+            div Request Body [JSON] ==> {
+            div &emsp;&emsp;"phone": "+374 ** ******" , // [!!]
+            div &emsp;&emsp;"confirmCode": "******" ,
+            div &emsp;&emsp;"password": "********" ,
+            div &emsp;&emsp;"passwordConfirm": "********"
+            div }
+          
+          //- Send confirm code again 	                   
+          div.content-data  
+            div Description ==> Send confirm code again
+            div URI ==> URI/resend_code
+            div Request Method ==> 
+              span(style="color: black") [POST] 
+
+            div Request Body [JSON] ==> {
+            div &emsp;&emsp;"phone": "+374 ** ******" , // [!!]
+            div }
+
+          //- Change active role [BLACK]
+          div.content-data(style="color: black")  
+            div Description ==> Change active role
+            div URI ==> [AUTH]URI/set_role
+            div Request Method ==> 
+              span(style="color: black") [POST] 
+
+            div Request Body [JSON] ==> {
+            div &emsp;&emsp;"role": "provider" , 
+            div }
+
+            div Request Headers ==> {
+            div &emsp;&emsp;"Authorization": "Bearer accessToken" , 
+            div }
+          
+          //- Create new job [BLACK]                
+          div.content-data(style="color: black") 
+            div Description [&&] ==> Create new job 
+            div URI ==> [AUTH]URI/home/new_job
+            div Have access ==> [USER]
+            div Request Method ==> 
+              span(style="color: black") [POST] 
+
+            div Request Body [JSON] ==> {
+            div &emsp;&emsp;"startDate": "2000-10-21" ,
+            div &emsp;&emsp;"startTime": "10:30:00" , 
+            div &emsp;&emsp;"duration": "2 week" , 
+            div &emsp;&emsp;"cost": "20000 AMD" ,
+            div &emsp;&emsp;"address": "something" , // [?]
+            div &emsp;&emsp;"category": "petWalking" ,
+            div &emsp;&emsp;"subCategories": ["subCat1", "subCat2"] // [?]
+            div }
+
+            div Request Headers ==> {
+            div &emsp;&emsp;"Authorization": "Bearer accessToken" , 
+            div }
+
+          //-  
+
+
+
+
+
+        //- Mamikon ==================================================
         if isMamikonPage                    
-          div.content-data  Mamikon page
+          //- Register                
+          div.content-data
+            div Description ==> Register to site
+            div URI ==> URI/register
+            div Request Method ==> 
+              span(style="color: black") [POST] 
+
+            div Request Body [JSON] ==> {
+            div &emsp;&emsp;"fistName": "*****" ,
+            div &emsp;&emsp;"lastName": "*****" , 
+            div &emsp;&emsp;"password": "********" , 
+            div &emsp;&emsp;"passwordConfirm": "********" ,
+            div &emsp;&emsp;"phone": "+374 ** ******" , 
+            div &emsp;&emsp;"email": "*****@mail.ru" ,
+            div &emsp;&emsp;"isUser": true ,
+            div &emsp;&emsp;"isProvider": false    
+            div }
+          
+          //-
 
 
-        //- Helper Requests
+
+
+
+        //- Helper Requests ==================================================
         if isHelperRequestsPage  
           //- Delete User                  
           div.content-data  
-            div Description ===> Delete user with phone number
-            div URI ===> URI/help/deleteUser
-            div Request Method ===> [DELETE] 
-            div Request Body [JSON] {
-            div &emsp;&emsp;"phone": "+374 77 630905"
+            div Description ==> Delete user with phone number
+            div URI ==> URI/help/deleteUser
+            div Request Method ==> 
+              span(style="color: black") [DELETE] 
+            div Request Body [JSON] ==> {
+            div &emsp;&emsp;"phone": "+374 ** ******"
             div }
+
+          //- 
             
-
-
-
-//-           ==========================================================================
-//- *) DELETE USER WITH PHONE NUMBER						    |==> URL/test/deleteUser [DELETE]
-//- ==========================================================================
-//- {
-//- 	"phone": "+374 77 630905"
-//- } 
-//- ==========================================================================
