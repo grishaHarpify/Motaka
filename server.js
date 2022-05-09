@@ -52,14 +52,6 @@ app.use(
   })
 )
 
-// Passport
-const passport = require('passport')
-require('./src/utils/passportFacebook') // Facebook
-require('./src/utils/passportGoogle') // Google
-
-app.use(passport.initialize())
-app.use(passport.session())
-
 // Use Routes
 app.use('/', router)
 

@@ -1,5 +1,5 @@
 const rootRouter = require('express').Router()
-const passport = require('passport')
+
 
 // Import middlewares //
 // Validation
@@ -21,9 +21,6 @@ const checkConfirmCode = require('../middlewares/checkConfirmCode')
 
 // VerifyJWT
 const verifyJWT = require('../middlewares/verifyJWT')
-
-// IsAuthenticated
-// const check = require('../middlewares/isAuthenticated') // Check authentication status
 
 // --- middlewares end --- //
 
@@ -74,31 +71,6 @@ rootRouter.post(
   validationErrorHandler,
   rootController.register
 )
-
-// Login with facebook
-rootRouter
-  .get('/facebook',
-    passport.authenticate('facebook', {
-      authType: 'reauthenticate',
-      scope: 'email',
-    }))
-  .get('/facebook/verify',
-    passport.authenticate('facebook', {
-      successMessage: 'Login with facebook success.',
-      failureMessage: 'Login with facebook failed.',
-    }))
-
-// Login with google
-rootRouter
-  .get('/google',
-    passport.authenticate('google', { scope: ['email', 'profile'] })
-  )
-  .get('/google/verify',
-    passport.authenticate('google', {
-      successMessage: 'Login with  google success.',
-      failureMessage: 'Login with google failed.',
-    })
-  )
 
 // Login with phone
 rootRouter.post(
