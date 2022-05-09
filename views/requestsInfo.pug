@@ -65,7 +65,7 @@ html
           //- Login to the site                   
           div.content-data  
             div Description ==> Login to the site
-            div URI ==> URI/login
+            div Request URI ==> URI/login
             div Request Method ==> 
               span(style="color: black") [POST] 
 
@@ -77,7 +77,7 @@ html
           //- Send sms to phone to reset password 	                   
           div.content-data  
             div Description ==> Send sms to phone to reset password
-            div URI ==> URI/forgot_password
+            div Request URI ==> URI/forgot_password
             div Request Method ==> 
               span(style="color: black") [POST] 
 
@@ -88,7 +88,7 @@ html
           //- Send the code and set a new password 	                   
           div.content-data  
             div Description ==> Send the code and set a new password
-            div URI ==> URI/reset_password
+            div Request URI ==> URI/reset_password
             div Request Method ==> 
               span(style="color: black") [PATCH] 
 
@@ -102,7 +102,7 @@ html
           //- Send confirm code again 	                   
           div.content-data  
             div Description ==> Send confirm code again
-            div URI ==> URI/resend_code
+            div Request URI ==> URI/resend_code
             div Request Method ==> 
               span(style="color: black") [POST] 
 
@@ -113,7 +113,7 @@ html
           //- Change active role [BLACK]
           div.content-data(style="color: black")  
             div Description ==> Change active role
-            div URI ==> [AUTH]URI/set_role
+            div Request URI ==> [AUTH]URI/set_role
             div Request Method ==> 
               span(style="color: black") [POST] 
 
@@ -125,10 +125,17 @@ html
             div &emsp;&emsp;"Authorization": "Bearer accessToken" , 
             div }
           
+          //- Get job data with ID
+          div.content-data(style="color: black") 
+            div Description ==> Get data about job with id 
+            div Request URI ==> URI/job/:id
+            div Request Method ==> 
+              span(style="color: black") [GET] 
+
           //- Create new job [BLACK]                
           div.content-data(style="color: black") 
             div Description [&&] ==> Create new job 
-            div URI ==> [AUTH]URI/job
+            div Request URI ==> [AUTH]URI/job
             div Have access ==> [USER]
             div Request Method ==> 
               span(style="color: black") [POST] 
@@ -147,7 +154,7 @@ html
             div &emsp;&emsp;"Authorization": "Bearer accessToken" , 
             div }
 
-          //-  
+          
 
 
 
@@ -158,7 +165,7 @@ html
           //- Register                
           div.content-data
             div Description ==> Register to the site
-            div URI ==> URI/register
+            div Request URI ==> URI/register
             div Request Method ==> 
               span(style="color: black") [POST] 
 
@@ -184,7 +191,7 @@ html
           //- Delete User                  
           div.content-data  
             div Description ==> Delete user with phone number
-            div URI ==> URI/help/deleteUser
+            div Request URI ==> URI/help/deleteUser
             div Request Method ==> 
               span(style="color: black") [DELETE] 
             div Request Body [JSON] ==> {

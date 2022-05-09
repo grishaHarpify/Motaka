@@ -1,13 +1,25 @@
 const User = require('../models/User')
 const Job = require('../models/Job')
+const _ = require('lodash')
 
 // Get job data with id
 async function getJobDataWithId(req, res) {
   try {
-    const { jobId } = req.params
+    const { id: jobId } = req.params
+
+    // Find job with id 
+    let jobData = await Job.findById(jobId)
+
+    // Check job with such id exist or not
+    if (!jobData) {
+      return res.status(400).json({
+        errorType: 'Incorrect ID error!',
+        errorMsg: 'Job with such ID does not exist.',
+      })
+    }
 
     res.json({
-      message: `Job data with id: ${jobId}`
+      jobData
     })
 
   } catch (e) {
@@ -54,7 +66,7 @@ async function createNewJob(req, res) {
 // Edit job data [USER]
 async function editJobWithId(req, res) {
   try {
-    const { jobId } = req.params
+    const { id: jobId } = req.params
 
     // Get job data form DB
     const jobData = await Job.findById(jobId)
