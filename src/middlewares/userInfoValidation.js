@@ -76,14 +76,14 @@ const validatePasswordConfirm = body('passwordConfirm').custom(
 const validateRoleUser = body('isUser')
   .not()
   .isEmpty()
-  .withMessage('isUser filed must be boolean(true or false).')
+  .withMessage('isUser is required field.')
   .isBoolean()
   .withMessage('isUser filed must be boolean(true or false).')
 
 const validateRoleProvider = body('isProvider')
   .not()
   .isEmpty()
-  .withMessage('isProvider filed must be boolean(true or false).')
+  .withMessage('isProvider is required field.')
   .isBoolean()
   .withMessage('isProvider filed must be boolean(true or false).')
 

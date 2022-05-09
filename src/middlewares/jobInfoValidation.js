@@ -38,7 +38,7 @@ const validateAddress = body('address')
 const validateCategory = body('category')
   .not()
   .isEmpty()
-  .withMessage('Job category is required field. Categories ([cleaning] [repairing] [plumbing] [petWalking] [ironing])')
+  .withMessage('Job category is required field. Categories: ([cleaning] [repairing] [plumbing] [petWalking] [ironing])')
   .isIn(['cleaning', 'repairing', 'plumbing', 'petWalking', 'ironing'])
   .withMessage('Incorrect job category. Allowed job categories is cleaning, repairing, plumbing, petWalking and ironing.')
 
