@@ -2,12 +2,12 @@ const router = require('express').Router()
 
 // Import routes
 const rootRouter = require('./root.router')
-const homeRouter = require('./home.router')
+const jobRouter = require('./job.router')
 
 
 // Use routes
 router.use('/', rootRouter) // motaka.am/
-router.use('/home', homeRouter) // motaka.am/home
+router.use('/job', jobRouter) // motaka.am/home
 
 
 // For testing

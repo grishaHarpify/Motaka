@@ -20,10 +20,17 @@ const {
 // --- middlewares end --- //
 
 // Import Controllers
-const homeController = require('../controllers/home.controller')
+const homeController = require('../controllers/job.controller')
 
 // Routes // 
-homeRouter.post('/new_job',
+
+// Get job data with id
+homeRouter.get('/:jobId',
+  // verifyJWT, isUser,
+  homeController.getJobDataWithId)
+
+// Create new job [USER]
+homeRouter.post('/',
   verifyJWT, isUser,
   validateStartDate,
   validateStartTime,
@@ -32,7 +39,13 @@ homeRouter.post('/new_job',
   validateAddress,
   validateCategory,
   validateSubCategories,
-  jobValidationErrorHandler, homeController.createNewJob)
+  jobValidationErrorHandler,
+  homeController.createNewJob)
+
+// Edit job 
+homeRouter.patch('/:jobId',
+  verifyJWT,
+  homeController.editJobWithId)
 
 
 module.exports = homeRouter
