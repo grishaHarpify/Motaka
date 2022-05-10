@@ -31,27 +31,6 @@ app.use(fileUploader())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-// Session and Cookie
-const session = require('express-session')
-const cookieParser = require('cookie-parser')
-// const MongoDBStore = require('connect-mongodb-session')(session)
-
-app.use(cookieParser())
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    cookie: {
-      secure: false,
-    },
-    // store: new MongoDBStore({
-    //   uri: process.env.DATABASE_SESSION,
-    //   collection: 'motakaSessions'
-    // }),
-    resave: false,
-    saveUninitialized: true,
-  })
-)
-
 // Use Routes
 app.use('/', router)
 
