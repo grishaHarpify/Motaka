@@ -19,6 +19,8 @@ const {
   validateRoleProvider,
   validationErrorHandler,
 } = require('../middlewares/userInfoValidation')
+
+// Check confirm code right or no
 const checkConfirmCode = require('../middlewares/checkConfirmCode')
 
 // VerifyJWT

@@ -20,7 +20,7 @@ const {
 } = require('../middlewares/jobInfoValidation')
 
 // ID validation
-const idValidation = require('../middlewares/validateId')
+const idValidation = require('../middlewares/IDValidation')
 
 // --- middlewares end --- //
 
