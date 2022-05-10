@@ -1,11 +1,13 @@
 const homeRouter = require('express').Router()
 
+// Import Controller
+const homeController = require('../controllers/job.controller')
 
 // Import middlewares //
 const verifyJWT = require('../middlewares/verifyJWT')
 const { isProvider, isUser } = require('../middlewares/checkRole')
 
-// Job data alidation
+// Job data validation
 const {
   validateStartDate,
   validateStartTime,
@@ -22,11 +24,8 @@ const idValidation = require('../middlewares/validateId')
 
 // --- middlewares end --- //
 
-// Import Controllers
-const homeController = require('../controllers/job.controller')
 
 // Routes // 
-
 // Get job data with id
 homeRouter.get('/:id',
   idValidation,

@@ -251,6 +251,32 @@ async function loginWithPhone(req, res) {
   }
 }
 
+async function loginWithGoogle(req, res) {
+  try {
+    res.json({ message: 'ok' })
+  } catch (e) {
+    console.log(`Error in file: ${__filename}!`)
+    console.log(e.message)
+    res.status(500).json({
+      errorType: 'Server side error!',
+      errorMsg: e.message,
+    })
+  }
+}
+
+async function loginWithFacebook(req, res) {
+  try {
+    res.json({ message: 'ok' })
+  } catch (e) {
+    console.log(`Error in file: ${__filename}!`)
+    console.log(e.message)
+    res.status(500).json({
+      errorType: 'Server side error!',
+      errorMsg: e.message,
+    })
+  }
+}
+
 async function setActiveRole(req, res) {
   try {
     const { role } = req.body
@@ -290,5 +316,7 @@ module.exports = {
   resetPassword,
   resendConfirmCode,
   loginWithPhone,
-  setActiveRole,
+  loginWithGoogle,
+  loginWithFacebook,
+  setActiveRole
 }

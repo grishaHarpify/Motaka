@@ -1,5 +1,7 @@
 const rootRouter = require('express').Router()
 
+// Import Controller
+const rootController = require('../controllers/root.controller')
 
 // Import middlewares //
 // Validation
@@ -23,10 +25,6 @@ const checkConfirmCode = require('../middlewares/checkConfirmCode')
 const verifyJWT = require('../middlewares/verifyJWT')
 
 // --- middlewares end --- //
-
-// Import Controllers
-const rootController = require('../controllers/root.controller')
-
 
 // Routes //
 // Send phone to get code to change password
@@ -80,6 +78,13 @@ rootRouter.post(
   validationErrorHandler,
   rootController.loginWithPhone
 )
+
+// Google login
+rootRouter.post('/googleLogin', rootController.loginWithGoogle)
+
+//Facebook login
+rootRouter.post('/facebookLogin', rootController.loginWithFacebook)
+
 
 // Set user active role (select page)
 rootRouter.post(
