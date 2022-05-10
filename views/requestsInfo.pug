@@ -180,7 +180,17 @@ html
             div &emsp;&emsp;"isProvider": false    
             div }
           
-          //-
+          //- Phone verification after register [BLACK]
+          div.content-data(style="color: black")
+            div Description ==> Phone verification after register
+            div Request URI ==> URI/phone_verification_code
+            div Request Method ==> 
+              span(style="color: black") [POST] 
+
+            div Request Body [JSON] ==> {
+            div &emsp;&emsp;"phone": "+374 ** ******", // [!!]
+            div &emsp;&emsp;"confirmCode": "******" 
+            div }
 
 
 
