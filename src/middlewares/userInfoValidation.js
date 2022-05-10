@@ -30,7 +30,7 @@ const validateLastName = body('lastName')
   .isEmpty()
   .withMessage('Last name is required field.')
   .isLength({ min: 2, max: 25 })
-  .withMessage('Last name must contain from 2 to 20 symbols')
+  .withMessage('Last name must contain from 2 to 25 symbols')
   .matches(/^([a-zA-Z]+-)*[a-zA-Z]+$/)
   .withMessage('Last name must be only letters and one line.')
 
