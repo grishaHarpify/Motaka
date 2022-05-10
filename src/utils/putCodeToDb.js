@@ -18,7 +18,7 @@ async function putConfirmCodeToDb(userId, code) {
         userId,
         code: hashCode,
         validTime,
-        // isUser: false [default]
+        // isUser: false // [default]
       })
     }
 

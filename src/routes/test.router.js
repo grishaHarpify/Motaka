@@ -7,7 +7,7 @@ const Category = require('../models/Category')
 const Job = require('../models/Job')
 
 
-
+// Create, delete ..... // 
 // create user 
 testRouter.post('/createUser', async (req, res) => {
   const { phone, password } = req.body
@@ -38,7 +38,7 @@ testRouter.post('/createCategory', async (req, res) => {
 })
 
 // delete user
-testRouter.post('/deleteUser', async (req, res) => {
+testRouter.delete('/deleteUser', async (req, res) => {
   const { phone } = req.body
 
   const user = await User.findOne({ phone })
@@ -54,9 +54,16 @@ testRouter.post('/deleteUser', async (req, res) => {
     message: `User with phone ${phone} was deleted.`
   })
 })
+// =================================== // 
 
-// Render test pages //
-// Render db
+
+// ======= Render test pages ======= //
+// Render test home
+testRouter.get('/', async (req, res) => {
+  res.render('helpHome')
+})
+
+// Render dbs
 testRouter.get('/dbs/:dbName', async (req, res) => {
   if (req.params.dbName === 'users') {
     let users = await getAllUsers()
@@ -71,7 +78,7 @@ testRouter.get('/dbs/:dbName', async (req, res) => {
   }
 
   if (req.params.dbName === 'confirmCodes') {
-    const confirmCodes = await getAllConfirmCodes()
+    let confirmCodes = await getAllConfirmCodes()
     if (confirmCodes.length === 0) {
       confirmCodes = ''
     }
@@ -83,7 +90,7 @@ testRouter.get('/dbs/:dbName', async (req, res) => {
   }
 
   if (req.params.dbName === 'categories') {
-    const categories = await getAllCategories()
+    let categories = await getAllCategories()
     if (categories.length === 0) {
       categories = ''
     }
@@ -112,14 +119,54 @@ testRouter.get('/dbs/:dbName', async (req, res) => {
   })
 })
 
-// functions
+// Render requestsInfo
+testRouter.get('/requestsInfo/:name', (req, res) => {
+  if (req.params.name === 'about') {
+    return res.render('requestsInfo', {
+      message: 'About Requests Symbols',
+      isAboutPage: true
+    })
+  }
+
+  if (req.params.name === 'Grisha') {
+    return res.render('requestsInfo', {
+      message: 'Info About Requests [Grisha]',
+      isGrishaPage: true
+    })
+  }
+
+  if (req.params.name === 'Mamikon') {
+    return res.render('requestsInfo', {
+      message: 'Info About Requests [Mamikon]',
+      isMamikonPage: true
+    })
+  }
+
+  if (req.params.name === 'helperRequests') {
+    return res.render('requestsInfo', {
+      message: 'Info About Helper Requests',
+      isHelperRequestsPage: true
+    })
+  }
+
+  res.render('requestsInfo', {
+    message: 'Choose a developer to see info'
+  })
+})
+// =================================== // 
+
+
+
+
+
+
+// Functions for db //
 async function getAllUsers() {
   const users = await User.find()
   users.forEach((eachUser) => {
     return JSON.stringify(eachUser, undefined, 2)
   })
 
-  console.log(users)
   return users
 }
 async function getAllConfirmCodes() {
@@ -132,7 +179,6 @@ async function getAllConfirmCodes() {
 }
 async function getAllCategories() {
   const categories = await Category.find({}, 'name subCategories')
-
   categories.forEach((eachCat) => {
     return JSON.stringify(eachCat, undefined, 2)
   })
@@ -141,12 +187,12 @@ async function getAllCategories() {
 }
 async function getAllJob() {
   const jobs = await Job.find()
-
   jobs.forEach((eachJob) => {
     return JSON.stringify(eachJob, undefined, 2)
   })
 
   return jobs
 }
+// ========================== // 
 
 module.exports = testRouter 

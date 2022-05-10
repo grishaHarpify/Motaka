@@ -1,5 +1,5 @@
 const rootRouter = require('express').Router()
-const passport = require('passport')
+
 
 // Import middlewares //
 // Validation
@@ -22,22 +22,22 @@ const checkConfirmCode = require('../middlewares/checkConfirmCode')
 // VerifyJWT
 const verifyJWT = require('../middlewares/verifyJWT')
 
-// IsAuthenticated
-const check = require('../middlewares/isAuthenticated') // Check authentication status
-
 // --- middlewares end --- //
 
 // Import Controllers
 const rootController = require('../controllers/root.controller')
 
-// Send phone and get code to change password
+
+// Routes //
+// Send phone to get code to change password
 rootRouter.post(
   '/forgot_password',
   validateLoginPhone,
   validationErrorHandler,
   rootController.getPhoneToResetPassword
 )
-// Send code ad reset password
+
+// Send code and reset password
 rootRouter.patch(
   '/reset_password',
   checkConfirmCode,
@@ -46,11 +46,9 @@ rootRouter.patch(
   validationErrorHandler,
   rootController.resetPassword
 )
+
 // Resend confirm code
 rootRouter.post('/resend_code', rootController.resendConfirmCode)
-
-// Below this middleware routes which is accessible only unauthorized users
-rootRouter.use(check.notAuthenticated)
 
 // PhoneVerification code
 rootRouter.post(
@@ -73,37 +71,6 @@ rootRouter.post(
   validationErrorHandler,
   rootController.register
 )
-
-// Login with facebook
-rootRouter
-  .get(
-    '/facebook',
-    passport.authenticate('facebook', {
-      authType: 'reauthenticate',
-      scope: 'email',
-    })
-  )
-  .get(
-    '/facebook/verify',
-    passport.authenticate('facebook', {
-      successMessage: 'Login with facebook success.',
-      failureMessage: 'Login with facebook failed.',
-    })
-  )
-
-// Login with google
-rootRouter
-  .get(
-    '/google',
-    passport.authenticate('google', { scope: ['email', 'profile'] })
-  )
-  .get(
-    '/google/verify',
-    passport.authenticate('google', {
-      successMessage: 'Login with  google success.',
-      failureMessage: 'Login with google failed.',
-    })
-  )
 
 // Login with phone
 rootRouter.post(

@@ -7,13 +7,26 @@ const validateStartDate = body('startDate')
   .isDate()
   .withMessage('Such date format is not valid. Valid date format is (yyyy-mm-dd).')
 
+
 const validateStartTime = body('startTime')
   .not()
   .isEmpty()
   .withMessage('Job start time is required field.')
   .matches(/^(2[0-3]|[01]?[0-9]):([0-5]?[0-9]):([0-5]?[0-9])$/)
   .withMessage('Job start time must be in format like (hh:mm:ss): Ex. 15:30:00')
-// urish inch validation anel ? 
+  .custom((time, { req }) => {
+    const now = new Date()
+    const dateAndTimeString = `${req.body.startDate}T${time}`
+    const jobStartDate = new Date(dateAndTimeString)
+
+    if (now > jobStartDate) {
+      const dateNow = now.toISOString().split('T')[0]
+      const timeNow = now.toLocaleTimeString()
+      throw new Error(`Job start date must be after then ${dateNow} ${timeNow}.`)
+    }
+
+    return true
+  })
 
 const validateDuration = body('duration')
   .not()
@@ -38,7 +51,7 @@ const validateAddress = body('address')
 const validateCategory = body('category')
   .not()
   .isEmpty()
-  .withMessage('Job category is required field. Categories ([cleaning] [repairing] [plumbing] [petWalking] [ironing])')
+  .withMessage('Job category is required field. Categories: ([cleaning] [repairing] [plumbing] [petWalking] [ironing])')
   .isIn(['cleaning', 'repairing', 'plumbing', 'petWalking', 'ironing'])
   .withMessage('Incorrect job category. Allowed job categories is cleaning, repairing, plumbing, petWalking and ironing.')
 
@@ -76,11 +89,11 @@ function jobValidationErrorHandler(req, res, next) {
 
 module.exports = {
   validateStartDate,
-  validateStartTime, // ??
+  validateStartTime,
   validateDuration,
   validateCost,
   validateAddress, // ??
   validateCategory,
-  validateSubCategories,
+  validateSubCategories, // ??
   jobValidationErrorHandler
 }

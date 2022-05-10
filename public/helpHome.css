@@ -1,0 +1,77 @@
+body {
+  background-color: rgba(2, 1, 1, 0.932);
+}
+
+.app-wrapper {
+  display: grid;
+
+  grid-template-areas:
+    'header header header'
+    'content content content';
+
+  grid-template-rows: 60px 1fr;
+  grid-template-columns: 2fr 10fr;
+  grid-gap: 6px;
+}
+
+/* Header */
+.header {
+  grid-area: header;
+  background-color: rgba(77, 68, 68, 0.26);
+  color: rgba(245, 222, 179, 0.788);
+
+  padding: 14px 14px;
+}
+
+/* Content */
+.content {
+  grid-area: content;
+  grid-row: 3 / 4;
+  background-color: rgba(255, 255, 255, 0.308);
+  color: wheat;
+
+  text-align: center;
+  padding: 4px 10px 4px 10px;
+}
+
+.content-uris-data,
+.content-buttons-data {
+  border: 2px solid rgba(255, 255, 255, 0.308);
+  background-color: rgba(77, 68, 68, 0.26);
+  text-align: center;
+  margin: 8px;
+  padding: 30px;
+  color: white;
+  font-size: 18px;
+}
+
+.content-uris-header,
+.content-buttons-header {
+  text-align: center;
+  background-color: rgba(77, 68, 68, 0.795);
+  border: 1px solid wheat;
+  padding: 4px;
+}
+
+.uris-data-left {
+  float: left;
+}
+
+.uris-data-right {
+  float: right;
+}
+
+/* Inputs */
+input {
+  /* margin-left: 15px; */
+  text-align: center;
+  width: 700px;
+}
+
+button {
+  width: 230px;
+}
+
+.copy-btn {
+  width: 150px;
+}

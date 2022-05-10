@@ -58,11 +58,9 @@ const validatePassword = body('password')
   .withMessage('No spaces are allowed in the password.')
   .isLength({ min: 8, max: 25 })
   .withMessage('Password must contain from 8 to 25 symbols')
-  .matches(
-    /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[~!@#$%^&*_+=|-\}]).{0,}$/
-  )
+  .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?=+-])([A-Za-z\d#$@!%&*?=+-]){8,30}$/)
   .withMessage(
-    'Password must contain minimum one capital letter, minimum one small letter, minimum one number and minimum one special symbol [~!@#$%^&*_+=|-].'
+    'Password must contain minimum one capital letter, minimum one small letter, minimum one number and minimum one special symbol like [#$@!%&*?=+-].'
   )
 
 const validatePasswordConfirm = body('passwordConfirm').custom(
@@ -78,14 +76,14 @@ const validatePasswordConfirm = body('passwordConfirm').custom(
 const validateRoleUser = body('isUser')
   .not()
   .isEmpty()
-  .withMessage('isUser filed must be boolean(true or false).')
+  .withMessage('isUser is required field.')
   .isBoolean()
   .withMessage('isUser filed must be boolean(true or false).')
 
 const validateRoleProvider = body('isProvider')
   .not()
   .isEmpty()
-  .withMessage('isProvider filed must be boolean(true or false).')
+  .withMessage('isProvider is required field.')
   .isBoolean()
   .withMessage('isProvider filed must be boolean(true or false).')
 
