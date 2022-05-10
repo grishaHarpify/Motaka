@@ -14,7 +14,6 @@ if (process.env.NODE_ENV === 'development') {
 }
 app.set('view engine', 'pug')
 app.use(express.static('public'))
-console.log(process.env.TEST)
 
 // Import routes
 const router = require('./src/routes/index')
