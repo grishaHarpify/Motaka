@@ -1,7 +1,7 @@
-const homeRouter = require('express').Router()
+const jobsRouter = require('express').Router()
 
 // Import Controller
-const homeController = require('../controllers/job.controller')
+const jobsController = require('../controllers/jobs.controller')
 
 // Import middlewares //
 const verifyJWT = require('../middlewares/verifyJWT')
@@ -27,13 +27,13 @@ const idValidation = require('../middlewares/validateId')
 
 // Routes // 
 // Get job data with id
-homeRouter.get('/:id',
+jobsRouter.get('/:id',
   idValidation,
   // verifyJWT, isUser,
-  homeController.getJobDataWithId)
+  jobsController.getJobDataWithId)
 
 // Create new job [USER]
-homeRouter.post('/',
+jobsRouter.post('/',
   verifyJWT, isUser,
   validateStartDate,
   validateStartTime,
@@ -43,13 +43,13 @@ homeRouter.post('/',
   validateCategory,
   validateSubCategories,
   jobValidationErrorHandler,
-  homeController.createNewJob)
+  jobsController.createNewJob)
 
 // Edit job 
-homeRouter.patch('/:id',
+jobsRouter.patch('/:id',
   idValidation,
   verifyJWT,
-  homeController.editJobWithId)
+  jobsController.editJobWithId)
 
 
-module.exports = homeRouter
+module.exports = jobsRouter

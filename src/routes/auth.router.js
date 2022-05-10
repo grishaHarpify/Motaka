@@ -1,7 +1,7 @@
-const rootRouter = require('express').Router()
+const authRouter = require('express').Router()
 
 // Import Controller
-const rootController = require('../controllers/root.controller')
+const authController = require('../controllers/auth.controller')
 
 // Import middlewares //
 // Validation
@@ -28,35 +28,35 @@ const verifyJWT = require('../middlewares/verifyJWT')
 
 // Routes //
 // Send phone to get code to change password
-rootRouter.post(
+authRouter.post(
   '/forgot_password',
   validateLoginPhone,
   validationErrorHandler,
-  rootController.getPhoneToResetPassword
+  authController.getPhoneToResetPassword
 )
 
 // Send code and reset password
-rootRouter.patch(
+authRouter.patch(
   '/reset_password',
   checkConfirmCode,
   validatePassword,
   validatePasswordConfirm,
   validationErrorHandler,
-  rootController.resetPassword
+  authController.resetPassword
 )
 
 // Resend confirm code
-rootRouter.post('/resend_code', rootController.resendConfirmCode)
+authRouter.post('/resend_code', authController.resendConfirmCode)
 
 // PhoneVerification code
-rootRouter.post(
+authRouter.post(
   '/phone_verification_code',
   checkConfirmCode,
-  rootController.phoneVerificationCode
+  authController.phoneVerificationCode
 )
 
 // Register
-rootRouter.post(
+authRouter.post(
   '/register',
   validateRoleProvider,
   validateRoleUser,
@@ -67,32 +67,32 @@ rootRouter.post(
   validatePassword,
   validatePasswordConfirm,
   validationErrorHandler,
-  rootController.register
+  authController.register
 )
 
 // Login with phone
-rootRouter.post(
+authRouter.post(
   '/login',
   validateLoginPhone,
   isPasswordEmpty,
   validationErrorHandler,
-  rootController.loginWithPhone
+  authController.loginWithPhone
 )
 
 // Google login
-rootRouter.post('/googleLogin', rootController.loginWithGoogle)
+authRouter.post('/googleLogin', authController.loginWithGoogle)
 
 //Facebook login
-rootRouter.post('/facebookLogin', rootController.loginWithFacebook)
+authRouter.post('/facebookLogin', authController.loginWithFacebook)
 
 
 // Set user active role (select page)
-rootRouter.post(
+authRouter.post(
   '/set_role',
   verifyJWT,
   validateResetRole,
   validationErrorHandler,
-  rootController.setActiveRole
+  authController.setActiveRole
 )
 
-module.exports = rootRouter
+module.exports = authRouter
