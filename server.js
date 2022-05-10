@@ -15,9 +15,6 @@ if (process.env.NODE_ENV === 'development') {
 app.set('view engine', 'pug')
 app.use(express.static('public'))
 
-// Import routes
-const router = require('./src/routes/index')
-
 // Cors and Middlewares
 const cors = require('cors') // Cross-Origin Resource Sharing 
 const fileUploader = require('express-fileupload') // [to get data from [FormData]]
@@ -33,6 +30,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 // Use Routes
+const router = require('./src/routes/index')
 app.use('/', router)
 
 // Connections
