@@ -1,11 +1,17 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
+const { OAuth2Client } = require('google-auth-library')
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
+
+const fetch = require('node-fetch')
+
 const ConfirmCode = require('../models/ConfirmCode')
 const User = require('../models/User')
 const generateCode = require('../utils/generateCode')
-const sendCodeToPhone = require('../utils/sendCodeToPhone') // well use before [because no money]
+const sendCodeToPhone = require('../utils/sendCodeToPhone')
 const putConfirmCodeToDb = require('../utils/putCodeToDb')
+const getUserAvailableRoles = require('../services/getAvailableRoles')
 
 async function register(req, res) {
   try {
@@ -227,13 +233,7 @@ async function loginWithPhone(req, res) {
     }
 
     // Get available roles
-    const availableRoles = []
-    if (user.role.isUser) {
-      availableRoles.push('user')
-    }
-    if (user.role.isProvider) {
-      availableRoles.push('provider')
-    }
+    const availableRoles = getUserAvailableRoles(userFromDb)
 
     // Create JWT.(default role [activeRole])
     const accessToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
@@ -253,7 +253,45 @@ async function loginWithPhone(req, res) {
 
 async function loginWithGoogle(req, res) {
   try {
-    res.json({ message: 'ok' })
+    const { tokenId } = req.body
+
+    // Get user data from token
+    const clientObject = await googleClient.verifyIdToken({
+      idToken: tokenId, audience: process.env.GOOGLE_CLIENT_ID
+    })
+    const googleUserData = clientObject.payload
+
+    // Get user data from db
+    let userFromDb = await User.findOne({ googleId: googleUserData.sub })
+
+    // Check user exist in db or no
+    if (!userFromDb) {
+      // If user registered first time
+      userFromDb = await User.create({
+        googleId: googleUserData.sub,
+        firstName: googleUserData.given_name,
+        lastName: googleUserData.family_name,
+        email: googleUserData.email,
+        // role: {
+        //   isProvider: '',
+        //   isUser: ''
+        // },
+        // activeRole: '',
+        isEmailVerified: googleUserData.email_verified,
+        avatar: googleUserData.picture
+      })
+    }
+
+    // Get available roles
+    const availableRoles = getUserAvailableRoles(userFromDb)
+
+    // Create JWT.(default role [activeRole])
+    const accessToken = jwt.sign({ userId: userFromDb._id }, process.env.JWT_SECRET, {
+      expiresIn: '7d',
+    })
+
+    res.json({ message: 'Login with google success.', accessToken, availableRoles })
+
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
     console.log(e.message)
@@ -266,7 +304,44 @@ async function loginWithGoogle(req, res) {
 
 async function loginWithFacebook(req, res) {
   try {
-    res.json({ message: 'ok' })
+    const { accessToken: facebookAccessToken, userId } = req.body
+
+    const requestUrl = `https://graph.facebook.com/${userId}?fields=id,name,email,first_name,last_name,picture&access_token=${facebookAccessToken}`
+
+    // Get user data from facebook
+    const requestData = await fetch(requestUrl)
+    const fbUserData = await requestData.json()
+
+    // Find user in DB
+    let userFromDb = await User.findOne({ fbId: fbUserData.id })
+
+    // Check user exist in db or no
+    if (!userFromDb) {
+      // If user registered first time
+      userFromDb = await User.create({
+        fbId: fbUserData.id,
+        firstName: fbUserData.first_name,
+        lastName: fbUserData.last_name,
+        email: fbUserData.email,
+        // role: {
+        //   isProvider: '',
+        //   isUser: ''
+        // },
+        // activeRole: '',
+        avatar: fbUserData.picture.data.url
+      })
+    }
+
+    // Get available roles
+    const availableRoles = getUserAvailableRoles(userFromDb)
+
+    // Create JWT.(default role [activeRole])
+    const accessToken = jwt.sign({ userId: userFromDb._id }, process.env.JWT_SECRET, {
+      expiresIn: '7d',
+    })
+
+    res.json({ message: 'Login with facebook success.', accessToken, availableRoles })
+
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
     console.log(e.message)

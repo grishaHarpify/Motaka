@@ -19,6 +19,7 @@ const userSchema = new Schema(
     password: { type: String },
     isEmailVerified: { type: Boolean, default: false },
     isPhoneVerified: { type: Boolean, default: false },
+    avatar: { type: String }
   },
   {
     collection: 'users',
