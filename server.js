@@ -6,13 +6,15 @@ const app = express()
 // Dotenv
 console.log(`======= ${process.env.NODE_ENV} mode =======`)
 if (process.env.NODE_ENV === 'development') {
-  require('dotenv').config()
+  const dotenv = require('dotenv')
+  dotenv.config({ path: './config.env' })
 
   const morgan = require('morgan')
   app.use(morgan('dev'))
 }
 app.set('view engine', 'pug')
 app.use(express.static('public'))
+console.log(process.env.TEST)
 
 // Import routes
 const router = require('./src/routes/index')
