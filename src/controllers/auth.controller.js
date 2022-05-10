@@ -6,8 +6,8 @@ const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 
 const fetch = require('node-fetch')
 
-const ConfirmCode = require('../models/ConfirmCode')
-const User = require('../models/User')
+const ConfirmCodeModel = require('../models/ConfirmCode')
+const UserModel = require('../models/User')
 const generateCode = require('../utils/generateCode')
 const sendCodeToPhone = require('../utils/sendCodeToPhone')
 const putConfirmCodeToDb = require('../utils/putCodeToDb')
@@ -18,7 +18,7 @@ async function register(req, res) {
     const { firstName, lastName, password, phone, email, isUser, isProvider } = req.body
 
     // Check if exist user with such phone
-    const existingUserPhone = await User.findOne({
+    const existingUserPhone = await UserModel.findOne({
       phone,
     })
     const usernameExistsPhone = existingUserPhone !== null
@@ -30,7 +30,7 @@ async function register(req, res) {
     }
 
     // Check if exist user with such mail
-    const existingUser = await User.findOne({
+    const existingUser = await UserModel.findOne({
       email,
     })
     const usernameExists = existingUser !== null
@@ -51,7 +51,7 @@ async function register(req, res) {
 
     // Set active role [for default value without set_role]
     const activeRole = isUser ? 'user' : 'provider'
-    const newUser = await User.create({
+    const newUser = await UserModel.create({
       firstName,
       lastName,
       password: hashedPassword,
@@ -90,14 +90,12 @@ async function phoneVerificationCode(req, res) {
     const { phone } = req.body
 
     // change user phone info in DB
-    const user = await User.findOne({ phone })
+    const user = await UserModel.findOne({ phone })
     user.isPhoneVerified = true
     await user.save()
 
     // Change confirm code status in DB
-    const codeInfo = await ConfirmCode.findOne({ userId: user._id }).populate(
-      'userId'
-    )
+    const codeInfo = await ConfirmCodeModel.findOne({ userId: user._id }).populate('userId')
     codeInfo.isUsed = true
     await codeInfo.save()
 
@@ -119,7 +117,7 @@ async function getPhoneToResetPassword(req, res) {
     const { phone } = req.body
 
     // Check user with such phone exist or not
-    const user = await User.findOne({ phone })
+    const user = await UserModel.findOne({ phone })
 
     if (!user) {
       // No such user case
@@ -155,16 +153,14 @@ async function resetPassword(req, res) {
 
     // Here phone number we get from frontend and we now what it is right number //
     // Find user in DB
-    const user = await User.findOne({ phone })
+    const user = await UserModel.findOne({ phone })
     // Change user password
     const hashedPassword = await bcrypt.hash(password, 12)
     user.password = hashedPassword
     await user.save()
 
     // Change confirm code status in DB
-    const codeInfo = await ConfirmCode.findOne({ userId: user._id }).populate(
-      'userId'
-    )
+    const codeInfo = await ConfirmCodeModel.findOne({ userId: user._id }).populate('userId')
     codeInfo.isUsed = true
     await codeInfo.save()
 
@@ -186,7 +182,7 @@ async function resendConfirmCode(req, res) {
     const { phone } = req.body
 
     // Find user
-    const user = await User.findOne({ phone })
+    const user = await UserModel.findOne({ phone })
 
     // Generate confirmCode, send and put in the DB
     const confirmCode = generateCode()
@@ -212,7 +208,7 @@ async function loginWithPhone(req, res) {
     const { phone, password } = req.body
 
     // Search user in DB
-    const user = await User.findOne({ phone })
+    const user = await UserModel.findOne({ phone })
     // Check such username[phone] registered or not
     if (!user) {
       // User with such username[phone] not exist
@@ -262,12 +258,12 @@ async function loginWithGoogle(req, res) {
     const googleUserData = clientObject.payload
 
     // Get user data from db
-    let userFromDb = await User.findOne({ googleId: googleUserData.sub })
+    let userFromDb = await UserModel.findOne({ googleId: googleUserData.sub })
 
     // Check user exist in db or no
     if (!userFromDb) {
       // If user registered first time
-      userFromDb = await User.create({
+      userFromDb = await UserModel.create({
         googleId: googleUserData.sub,
         firstName: googleUserData.given_name,
         lastName: googleUserData.family_name,
@@ -313,12 +309,12 @@ async function loginWithFacebook(req, res) {
     const fbUserData = await requestData.json()
 
     // Find user in DB
-    let userFromDb = await User.findOne({ fbId: fbUserData.id })
+    let userFromDb = await UserModel.findOne({ fbId: fbUserData.id })
 
     // Check user exist in db or no
     if (!userFromDb) {
       // If user registered first time
-      userFromDb = await User.create({
+      userFromDb = await UserModel.create({
         fbId: fbUserData.id,
         firstName: fbUserData.first_name,
         lastName: fbUserData.last_name,

@@ -1,4 +1,4 @@
-const User = require('../models/User')
+const UserModel = require('../models/User')
 const jwt = require('jsonwebtoken')
 
 // Get user data from JWT
@@ -36,7 +36,7 @@ async function verifyJWT(req, res, next) {
       if (userId.length === 12 || userId.length === 24) {
         // Id correct
         // Get user data from DB
-        const userFromDb = await User.findOne({ _id: userId })
+        const userFromDb = await UserModel.findOne({ _id: userId })
 
         if (!userFromDb) {
           // in JWT incorrect ID
