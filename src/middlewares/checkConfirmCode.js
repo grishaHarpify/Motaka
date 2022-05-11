@@ -1,5 +1,5 @@
-const User = require('../models/User')
-const ConfirmCode = require('../models/ConfirmCode')
+const UserModel = require('../models/User')
+const ConfirmCodeModel = require('../models/ConfirmCode')
 const bcrypt = require('bcrypt')
 
 async function checkConfirmCode(req, res, next) {
@@ -16,10 +16,10 @@ async function checkConfirmCode(req, res, next) {
     }
 
     // find user in DB
-    const user = await User.findOne({ phone })
+    const user = await UserModel.findOne({ phone })
 
     // get info about code from DB
-    const codeInfo = await ConfirmCode.findOne({ userId: user._id }).populate(
+    const codeInfo = await ConfirmCodeModel.findOne({ userId: user._id }).populate(
       'userId'
     )
 

@@ -26,5 +26,6 @@ id-i het kapvac error kara lini passportFacebook um u google um
 
 
 // Questions
+facebook-ov u google-ov login-i jamanak inch voroshecinq role-y ??
 uxarkem validation-i verjin message te sax irar het ????
 

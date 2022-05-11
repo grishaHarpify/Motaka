@@ -1,5 +1,5 @@
-const User = require('../models/User')
-const Job = require('../models/Job')
+const UserModel = require('../models/User')
+const JobModel = require('../models/Job')
 const _ = require('lodash')
 
 // Get job data with id
@@ -8,7 +8,7 @@ async function getJobDataWithId(req, res) {
     const { id: jobId } = req.params
 
     // Find job with id 
-    let jobData = await Job.findById(jobId)
+    let jobData = await JobModel.findById(jobId)
 
     // Check job with such id exist or not
     if (!jobData) {
@@ -39,7 +39,7 @@ async function createNewJob(req, res) {
     const user = req.user
 
     // Put job data to DB
-    await Job.create({
+    await JobModel.create({
       startDate: `${startDate}T${startTime}`,
       duration,
       cost,
@@ -69,7 +69,7 @@ async function editJobWithId(req, res) {
     const { id: jobId } = req.params
 
     // Get job data form DB
-    const jobData = await Job.findById(jobId)
+    const jobData = await JobModel.findById(jobId)
 
 
     res.json({

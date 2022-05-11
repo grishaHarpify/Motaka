@@ -1,9 +1,9 @@
-const ConfirmCode = require('../models/ConfirmCode')
+const ConfirmCodeModel = require('../models/ConfirmCode')
 const bcrypt = require('bcrypt')
 
 async function putConfirmCodeToDb(userId, code) {
   try {
-    const codeFromDb = await ConfirmCode.findOne({ userId }).populate('userId')
+    const codeFromDb = await ConfirmCodeModel.findOne({ userId }).populate('userId')
 
     // Code valid 1 day
     let validTime = new Date()
@@ -14,7 +14,7 @@ async function putConfirmCodeToDb(userId, code) {
 
     // Then we send code to user first time
     if (!codeFromDb) { // codeFromDb === null 
-      return await ConfirmCode.create({
+      return await ConfirmCodeModel.create({
         userId,
         code: hashCode,
         validTime,
@@ -23,7 +23,7 @@ async function putConfirmCodeToDb(userId, code) {
     }
 
     // Update code and valid time in db 
-    await ConfirmCode.findOneAndUpdate({ userId }, { code: hashCode, validTime, isUsed: false })
+    await ConfirmCodeModel.findOneAndUpdate({ userId }, { code: hashCode, validTime, isUsed: false })
 
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
