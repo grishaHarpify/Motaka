@@ -88,10 +88,10 @@ async function register(req, res) {
 async function phoneVerificationCode(req, res) {
   try {
     // const phone = req.body.phone
-    const { phone1 } = req.body
+    const { phone } = req.body
 
     // change user phone info in DB
-    const user = await UserModel.findOne({ phone: phone1 })
+    const user = await UserModel.findOne({ phone })
     user.isPhoneVerified = true
     await user.save()
 
@@ -103,7 +103,7 @@ async function phoneVerificationCode(req, res) {
     await codeInfo.save()
 
     res.json({
-      message: 'User send right code and his phone number has been verified.',
+      message: 'User send right code and his phone number has been verified.'
     })
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)

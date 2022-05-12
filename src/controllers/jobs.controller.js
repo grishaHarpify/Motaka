@@ -1,7 +1,6 @@
 const UserModel = require('../models/User')
 const JobModel = require('../models/Job')
 const _ = require('lodash')
-const { find } = require('../models/User')
 
 async function getAllJobs(req, res) {
   try {
