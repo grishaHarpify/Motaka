@@ -35,12 +35,17 @@ const validateDuration = body('duration')
   .matches(/^\d+\s(minute|hour|day|week)$/)
   .withMessage('Job duration must be in format like (number minute/hour/day/week): Ex. 4 hour, 2 day, 1 week.')
 
-const validateCost = body('cost')
+// const validateSalaryCurrency = body('salary.currency')
+//   .not()
+//   .isEmpty()
+//   .withMessage('Job salary currency is required field.')
+
+const validateSalaryCost = body('salary.cost')
   .not()
   .isEmpty()
-  .withMessage('Job cost is required field.')
-  .matches(/^\d+\s(AMD)$/)
-  .withMessage('Job cost must be in format like (cost AMD): Ex. 2000 AMD.')
+  .withMessage('Job salary cost is required field.')
+  .matches(/^\d+$/)
+  .withMessage('Job salary cost must be positive number.')
 
 const validateAddress = body('address')
   .not()
@@ -51,9 +56,9 @@ const validateAddress = body('address')
 const validateCategory = body('category')
   .not()
   .isEmpty()
-  .withMessage('Job category is required field. Categories: ([cleaning] [repairing] [plumbing] [petWalking] [ironing])')
+  .withMessage('Job category is required field. Allowed job categories: ([cleaning] [repairing] [plumbing] [petWalking] [ironing])')
   .isIn(['cleaning', 'repairing', 'plumbing', 'petWalking', 'ironing'])
-  .withMessage('Incorrect job category. Allowed job categories is cleaning, repairing, plumbing, petWalking and ironing.')
+  .withMessage('Incorrect job category. Allowed job categories: ([cleaning] [repairing] [plumbing] [petWalking] [ironing])')
 
 const validateSubCategories = body('subCategories')
   .not()
@@ -91,7 +96,8 @@ module.exports = {
   validateStartDate,
   validateStartTime,
   validateDuration,
-  validateCost,
+  // validateSalaryCurrency,
+  validateSalaryCost,
   validateAddress, // ??
   validateCategory,
   validateSubCategories, // ??

@@ -21,6 +21,9 @@ Category
 6) 
 
 
+sarqenq obj vor mejy linen sax querinery u function vor veradarcni modeli vra find(obj) array
+
+
 // Error
 id-i het kapvac error kara lini passportFacebook um u google um
 

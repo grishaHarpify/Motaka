@@ -2,13 +2,27 @@ const UserModel = require('../models/User')
 const JobModel = require('../models/Job')
 const _ = require('lodash')
 
+const { QueryHandler } = require('../services/queryHandler')
+
 async function getAllJobs(req, res) {
   try {
-    const allJobs = await JobModel.find()
+    // const allJobs = await JobModel.find({}).populate('providerId', 'firstName lastName email avatar')
 
-    res.json({
-      data: allJobs,
-    })
+    // const test = new QueryHandler(req.query, JobModel /*, populateField = 'providerId'*/)
+    //   .costHandler()
+    //   .getResult()
+
+
+    // const result = await test
+    // res.json({ result })
+
+    // res.json({
+    //   data: allJobs,
+    // })
+
+    // ================
+
+
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
     console.log(e.message)
@@ -18,6 +32,7 @@ async function getAllJobs(req, res) {
     })
   }
 }
+
 // Get job data with id
 async function getJobDataWithId(req, res) {
   try {
@@ -50,22 +65,14 @@ async function getJobDataWithId(req, res) {
 // Create new job [USER]
 async function createNewJob(req, res) {
   try {
-    const {
-      startDate,
-      startTime,
-      duration,
-      cost,
-      address,
-      category,
-      subCategories,
-    } = req.body
+    const { startDate, startTime, duration, salary, address, category, subCategories } = req.body
     const user = req.user
 
     // Put job data to DB
     await JobModel.create({
       startDate: `${startDate}T${startTime}`,
       duration,
-      cost,
+      salary,
       address,
       category,
       subCategories,
