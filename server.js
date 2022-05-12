@@ -14,12 +14,6 @@ if (process.env.NODE_ENV === 'development') {
 }
 app.set('view engine', 'pug')
 app.use(express.static('public'))
-<<<<<<< HEAD
-
-// Import routes
-const router = require('./src/routes/index')
-=======
->>>>>>> 7f2484ed8212a9589f2029edf32e6371a96b59df
 
 // Cors and Middlewares
 const cors = require('cors') // Cross-Origin Resource Sharing

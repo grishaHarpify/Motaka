@@ -16,7 +16,7 @@ const {
   validateAddress,
   validateCategory,
   validateSubCategories,
-  jobValidationErrorHandler
+  jobValidationErrorHandler,
 } = require('../middlewares/jobInfoValidation')
 
 // ID validation
@@ -24,17 +24,22 @@ const idValidation = require('../middlewares/IDValidation')
 
 // --- middlewares end --- //
 
+// Routes //
+jobsRouter.get('/', jobsController.getAllJobs)
 
-// Routes // 
 // Get job data with id
-jobsRouter.get('/:id',
+jobsRouter.get(
+  '/:id',
   idValidation,
   // verifyJWT, isUser,
-  jobsController.getJobDataWithId)
+  jobsController.getJobDataWithId
+)
 
 // Create new job [USER]
-jobsRouter.post('/',
-  verifyJWT, isUser,
+jobsRouter.post(
+  '/',
+  verifyJWT,
+  isUser,
   validateStartDate,
   validateStartTime,
   validateDuration,
@@ -43,13 +48,10 @@ jobsRouter.post('/',
   validateCategory,
   validateSubCategories,
   jobValidationErrorHandler,
-  jobsController.createNewJob)
+  jobsController.createNewJob
+)
 
-// Edit job 
-jobsRouter.patch('/:id',
-  idValidation,
-  verifyJWT,
-  jobsController.editJobWithId)
-
+// Edit job
+jobsRouter.patch('/:id', idValidation, verifyJWT, jobsController.editJobWithId)
 
 module.exports = jobsRouter

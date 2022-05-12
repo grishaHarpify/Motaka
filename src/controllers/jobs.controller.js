@@ -1,13 +1,30 @@
 const UserModel = require('../models/User')
 const JobModel = require('../models/Job')
 const _ = require('lodash')
+const { find } = require('../models/User')
 
+async function getAllJobs(req, res) {
+  try {
+    const allJobs = await JobModel.find()
+
+    res.json({
+      data: allJobs,
+    })
+  } catch (e) {
+    console.log(`Error in file: ${__filename}!`)
+    console.log(e.message)
+    res.status(500).json({
+      errorType: 'Server side error!',
+      errorMsg: e.message,
+    })
+  }
+}
 // Get job data with id
 async function getJobDataWithId(req, res) {
   try {
     const { id: jobId } = req.params
 
-    // Find job with id 
+    // Find job with id
     let jobData = await JobModel.findById(jobId)
 
     // Check job with such id exist or not
@@ -19,15 +36,14 @@ async function getJobDataWithId(req, res) {
     }
 
     res.json({
-      jobData
+      jobData,
     })
-
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
     console.log(e.message)
     res.status(500).json({
       errorType: 'Server side error!',
-      errorMsg: e.message
+      errorMsg: e.message,
     })
   }
 }
@@ -35,7 +51,15 @@ async function getJobDataWithId(req, res) {
 // Create new job [USER]
 async function createNewJob(req, res) {
   try {
-    const { startDate, startTime, duration, cost, address, category, subCategories } = req.body
+    const {
+      startDate,
+      startTime,
+      duration,
+      cost,
+      address,
+      category,
+      subCategories,
+    } = req.body
     const user = req.user
 
     // Put job data to DB
@@ -46,19 +70,18 @@ async function createNewJob(req, res) {
       address,
       category,
       subCategories,
-      providerId: user._id
+      providerId: user._id,
     })
 
     res.json({
-      message: 'Job successfully created.'
+      message: 'Job successfully created.',
     })
-
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
     console.log(e.message)
     res.status(500).json({
       errorType: 'Server side error!',
-      errorMsg: e.message
+      errorMsg: e.message,
     })
   }
 }
@@ -71,24 +94,23 @@ async function editJobWithId(req, res) {
     // Get job data form DB
     const jobData = await JobModel.findById(jobId)
 
-
     res.json({
       message: 'Job editing in progress.',
-      data: jobData
+      data: jobData,
     })
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
     console.log(e.message)
     res.status(500).json({
       errorType: 'Server side error!',
-      errorMsg: e.message
+      errorMsg: e.message,
     })
   }
 }
 
-
 module.exports = {
+  getAllJobs,
   getJobDataWithId,
   createNewJob,
-  editJobWithId
+  editJobWithId,
 }

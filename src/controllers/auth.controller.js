@@ -15,7 +15,8 @@ const getUserAvailableRoles = require('../services/getAvailableRoles')
 
 async function register(req, res) {
   try {
-    const { firstName, lastName, password, phone, email, isUser, isProvider } = req.body
+    const { firstName, lastName, password, phone, email, isUser, isProvider } =
+      req.body
 
     // Check if exist user with such phone
     const existingUserPhone = await UserModel.findOne({
@@ -87,15 +88,17 @@ async function register(req, res) {
 async function phoneVerificationCode(req, res) {
   try {
     // const phone = req.body.phone
-    const { phone } = req.body
+    const { phone1 } = req.body
 
     // change user phone info in DB
-    const user = await UserModel.findOne({ phone })
+    const user = await UserModel.findOne({ phone: phone1 })
     user.isPhoneVerified = true
     await user.save()
 
     // Change confirm code status in DB
-    const codeInfo = await ConfirmCodeModel.findOne({ userId: user._id }).populate('userId')
+    const codeInfo = await ConfirmCodeModel.findOne({
+      userId: user._id,
+    }).populate('userId')
     codeInfo.isUsed = true
     await codeInfo.save()
 
@@ -160,7 +163,9 @@ async function resetPassword(req, res) {
     await user.save()
 
     // Change confirm code status in DB
-    const codeInfo = await ConfirmCodeModel.findOne({ userId: user._id }).populate('userId')
+    const codeInfo = await ConfirmCodeModel.findOne({
+      userId: user._id,
+    }).populate('userId')
     codeInfo.isUsed = true
     await codeInfo.save()
 
@@ -253,7 +258,8 @@ async function loginWithGoogle(req, res) {
 
     // Get user data from token
     const clientObject = await googleClient.verifyIdToken({
-      idToken: tokenId, audience: process.env.GOOGLE_CLIENT_ID
+      idToken: tokenId,
+      audience: process.env.GOOGLE_CLIENT_ID,
     })
     const googleUserData = clientObject.payload
 
@@ -274,7 +280,7 @@ async function loginWithGoogle(req, res) {
         // },
         // activeRole: '',
         isEmailVerified: googleUserData.email_verified,
-        avatar: googleUserData.picture
+        avatar: googleUserData.picture,
       })
     }
 
@@ -282,12 +288,19 @@ async function loginWithGoogle(req, res) {
     const availableRoles = getUserAvailableRoles(userFromDb)
 
     // Create JWT.(default role [activeRole])
-    const accessToken = jwt.sign({ userId: userFromDb._id }, process.env.JWT_SECRET, {
-      expiresIn: '7d',
+    const accessToken = jwt.sign(
+      { userId: userFromDb._id },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: '7d',
+      }
+    )
+
+    res.json({
+      message: 'Login with google success.',
+      accessToken,
+      availableRoles,
     })
-
-    res.json({ message: 'Login with google success.', accessToken, availableRoles })
-
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
     console.log(e.message)
@@ -324,7 +337,7 @@ async function loginWithFacebook(req, res) {
         //   isUser: ''
         // },
         // activeRole: '',
-        avatar: fbUserData.picture.data.url
+        avatar: fbUserData.picture.data.url,
       })
     }
 
@@ -332,12 +345,19 @@ async function loginWithFacebook(req, res) {
     const availableRoles = getUserAvailableRoles(userFromDb)
 
     // Create JWT.(default role [activeRole])
-    const accessToken = jwt.sign({ userId: userFromDb._id }, process.env.JWT_SECRET, {
-      expiresIn: '7d',
+    const accessToken = jwt.sign(
+      { userId: userFromDb._id },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: '7d',
+      }
+    )
+
+    res.json({
+      message: 'Login with facebook success.',
+      accessToken,
+      availableRoles,
     })
-
-    res.json({ message: 'Login with facebook success.', accessToken, availableRoles })
-
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
     console.log(e.message)
@@ -389,5 +409,5 @@ module.exports = {
   loginWithPhone,
   loginWithGoogle,
   loginWithFacebook,
-  setActiveRole
+  setActiveRole,
 }
