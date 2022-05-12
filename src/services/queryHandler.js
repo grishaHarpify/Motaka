@@ -17,7 +17,6 @@ class JobQueryHandler {
   // by cost [salcost]
   salaryCostHandler() {
     if (this.queryString.includes('salcost')) {
-      console.log('from salaryCostHandler')
       // Add $ after [gt, gte, lt, lte]
       this.queryString = this.queryString.replace(
         /\b(gte|gt|lte|lt)\b/g,
@@ -50,7 +49,7 @@ class JobQueryHandler {
 
   async getRequestResult() {
     const queryObject = JSON.parse(this.queryString)
-    console.log(queryObject)
+    console.log(queryObject, 'query object after filter')
     const requestResult = await this.DBmodel.find(queryObject)
       .select(this.requestSelect)
       .populate(this.populateFiled, this.populateSelect)
