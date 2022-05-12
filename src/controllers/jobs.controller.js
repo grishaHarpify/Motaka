@@ -2,26 +2,28 @@ const UserModel = require('../models/User')
 const JobModel = require('../models/Job')
 const _ = require('lodash')
 
-const { QueryHandler } = require('../services/queryHandler')
+const { JobQueryHandler } = require('../services/queryHandler')
 
 async function getAllJobs(req, res) {
   try {
-    // const allJobs = await JobModel.find({}).populate('providerId', 'firstName lastName email avatar')
+    const allJobs = await JobModel.find({}).populate('userId', 'firstName lastName email avatar')
 
-    // const test = new QueryHandler(req.query, JobModel /*, populateField = 'providerId'*/)
-    //   .costHandler()
-    //   .getResult()
+    const test = new JobQueryHandler(
+      req.query,
+      JobModel,
+      'salary.cost category', // requestSelect
+      'userId',// populateField 
+      'firstName lastName email avatar' // populateSelect  
+    ).salaryCostHandler()
+      .getRequestResult()
 
 
-    // const result = await test
-    // res.json({ result })
+    const result = await test
+    res.json({ result })
 
     // res.json({
     //   data: allJobs,
     // })
-
-    // ================
-
 
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
@@ -39,7 +41,7 @@ async function getJobDataWithId(req, res) {
     const { id: jobId } = req.params
 
     // Find job with id
-    let jobData = await JobModel.findById(jobId)
+    let jobData = await JobModel.findById(jobId).populate('userId', 'firstName lastName email avatar')
 
     // Check job with such id exist or not
     if (!jobData) {
@@ -76,7 +78,7 @@ async function createNewJob(req, res) {
       address,
       category,
       subCategories,
-      providerId: user._id,
+      userId: user._id,
     })
 
     res.json({
@@ -92,13 +94,13 @@ async function createNewJob(req, res) {
   }
 }
 
-// Edit job data [USER]
+// Edit job data [USER] // in progress 
 async function editJobWithId(req, res) {
   try {
     const { id: jobId } = req.params
 
     // Get job data form DB
-    const jobData = await JobModel.findById(jobId)
+    const jobData = await JobModel.findById(jobId).populate('userId', 'firstName lastName email avatar')
 
     res.json({
       message: 'Job editing in progress.',

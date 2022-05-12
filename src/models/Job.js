@@ -10,17 +10,16 @@ const jobSchema = new Schema({
   address: { type: String },
   category: {
     type: String,
-    //  poqr root sarqenq vori vra fronty request ani: uxarki category-n stana subCategories
     enum: ['cleaning', 'repairing', 'plumbing', 'petWalking', 'ironing']
   },
   subCategories: [{ type: String }],
   // provider and user 
-  providerId: {
+  userId: {
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true
   },
-  userId: {
+  providerId: {
     type: Schema.Types.ObjectId,
     ref: 'User'
   }
