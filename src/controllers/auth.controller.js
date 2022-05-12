@@ -234,7 +234,7 @@ async function loginWithPhone(req, res) {
     }
 
     // Get available roles
-    const availableRoles = getUserAvailableRoles(userFromDb)
+    const availableRoles = getUserAvailableRoles(user)
 
     // Create JWT.(default role [activeRole])
     const accessToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
