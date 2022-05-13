@@ -6,24 +6,20 @@ const { JobQueryHandler } = require('../services/queryHandler')
 
 async function getAllJobs(req, res) {
   try {
-    const allJobs = await JobModel.find({}).populate('userId', 'firstName lastName email avatar')
-
-    const test = new JobQueryHandler(
+    // get from query important info and paginate
+    const filterQueryObject = await (new JobQueryHandler(
       req.query,
       JobModel,
-      'salary.cost category', // requestSelect
+      '',// 'salary.cost category', // requestSelect
       'userId',// populateField 
       'firstName lastName email avatar' // populateSelect  
     ).salaryCostHandler()
-      .getRequestResult()
+      .pagination())
 
+    // get from db data 
+    const allJobsAfterQuery = await filterQueryObject.getRequestResult()
 
-    const result = await test
-    res.json({ result })
-
-    // res.json({
-    //   data: allJobs,
-    // })
+    res.json(allJobsAfterQuery)
 
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
