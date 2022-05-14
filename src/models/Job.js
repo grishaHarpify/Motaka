@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose')
 
 const jobSchema = new Schema({
-  startDate: { type: Date }, // date and time
+  startDate: { type: String }, // date and time
   duration: { type: String },
   salary: {
     currency: { type: String, default: 'AMD' },
