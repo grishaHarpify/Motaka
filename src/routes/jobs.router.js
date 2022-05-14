@@ -22,10 +22,15 @@ const {
 // ID validation
 const idValidation = require('../middlewares/IDValidation')
 
+// QueryFilter
+const { filterGetAllJobsQuery } = require('../middlewares/filterRequestQuery')
+
 // --- middlewares end --- //
 
 // Routes //
-jobsRouter.get('/', jobsController.getAllJobs)
+jobsRouter.get('/',
+  filterGetAllJobsQuery,
+  jobsController.getAllJobs)
 
 // Get job data with id
 jobsRouter.get(

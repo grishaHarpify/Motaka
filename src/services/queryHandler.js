@@ -1,5 +1,6 @@
 const UserModel = require('../models/User')
 const JobModel = require('../models/Job')
+const { query } = require('express')
 
 class JobQueryHandler {
   _page
@@ -21,13 +22,13 @@ class JobQueryHandler {
 
   // by cost [salcost]
   salaryCostHandler() {
-    if (this.queryString.includes('salcost')) {
-      // Add $ after all [gt, gte, lt, lte]
-      this.queryString = this.queryString.replace(
-        /\b(gte|gt|lte|lt)\b/g,
-        (match) => `$${match}`
-      )
+    // Add $ after all [gt, gte, lt, lte]
+    this.queryString = this.queryString.replace(
+      /\b(gte|gt|lte|lt)\b/g,
+      (match) => `$${match}`
+    )
 
+    if (this.queryString.includes('salcost')) {
       // change salcost to salary.cost
       this.queryString = this.queryString.replace(
         /"salcost"/g,
@@ -58,16 +59,30 @@ class JobQueryHandler {
     return this
   }
 
-  // by date [date]
+  // by startDate [date]
   startDateHandler() {
     if (this.queryString.includes('date')) {
+      // change date to startDate
+      this.queryString = this.queryString.replace(
+        /"date"/g,
+        (match) => `"startDate"`
+      )
+
+      // add T23:59:59 after LTE date
+      const queryObject = JSON.parse(this.queryString)
+      if (queryObject.startDate && queryObject.startDate['$lte']) {
+        queryObject.startDate['$lte'] = `${queryObject.startDate['$lte']}T23:59:59`
+      }
+
+      // return queryString
+      this.queryString = JSON.stringify(queryObject)
 
     }
 
     return this
   }
 
-  // by duration [dur]
+  // by duration [dur] // ???
   durationHandler() {
     if (this.queryString.includes('dur')) {
       // change dur to duration
@@ -85,7 +100,7 @@ class JobQueryHandler {
   async pagination() {
     const queryObject = JSON.parse(this.queryString)
 
-    // get page and limit from query
+    // get page and limit from query, calculate skip
     this._page = parseInt(queryObject.page) || 1
     this._limit = parseInt(queryObject.limit) || 20
     this._skip = (this._page - 1) * this._limit
@@ -107,7 +122,7 @@ class JobQueryHandler {
 
     // next page
     if (this._page * this._limit < dataCount) {
-      // for last age 
+      // for last page 
       // if(dataCount = 8 && [page = 2 & limit = 3])=> next.limit = 2
       let limitForNext = this._limit
       if (dataCount - this._page * this._limit < this._limit) {
