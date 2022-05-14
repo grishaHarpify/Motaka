@@ -22,13 +22,17 @@ class JobQueryHandler {
   // by cost [salcost]
   salaryCostHandler() {
     if (this.queryString.includes('salcost')) {
-      // Add $ after [gt, gte, lt, lte]
+      // Add $ after all [gt, gte, lt, lte]
       this.queryString = this.queryString.replace(
         /\b(gte|gt|lte|lt)\b/g,
         (match) => `$${match}`
       )
 
-      this.queryString = this.queryString.replace('salcost', 'salary.cost')
+      // change salcost to salary.cost
+      this.queryString = this.queryString.replace(
+        /"salcost"/g,
+        (match) => `"salary.cost"`
+      )
     }
 
     return this
@@ -37,7 +41,18 @@ class JobQueryHandler {
   // by categories [caties]
   categoriesHandler() {
     if (this.queryString.includes('caties')) {
+      // change caties to category
+      this.queryString = this.queryString.replace(
+        /"caties"/g,
+        (match) => `"category"`
+      )
 
+      // Convert category=petWalking,ironing to category = ['petWalking', 'ironing']
+      const queryObject = JSON.parse(this.queryString)
+      queryObject.category = queryObject.category.split(',')
+
+      // Return queryString 
+      this.queryString = JSON.stringify(queryObject)
     }
 
     return this
@@ -55,6 +70,11 @@ class JobQueryHandler {
   // by duration [dur]
   durationHandler() {
     if (this.queryString.includes('dur')) {
+      // change dur to duration
+      this.queryString = this.queryString.replace(
+        /"dur"/g,
+        (match) => `"duration"`
+      )
 
     }
 

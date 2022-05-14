@@ -31,14 +31,12 @@ jobsRouter.get('/', jobsController.getAllJobs)
 jobsRouter.get(
   '/:id',
   idValidation,
-  // verifyJWT, isUser,
   jobsController.getJobDataWithId
 )
 
 // Create new job [USER]
 jobsRouter.post(
   '/',
-  verifyJWT,
   isUser,
   validateStartDate,
   validateStartTime,

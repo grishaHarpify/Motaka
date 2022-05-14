@@ -7,6 +7,7 @@ const { JobQueryHandler } = require('../services/queryHandler')
 async function getAllJobs(req, res) {
   try {
     // get from query important info and paginate
+    // pagination is async function => needed await
     const filterQueryObject = await (new JobQueryHandler(
       req.query,
       JobModel,
@@ -14,6 +15,8 @@ async function getAllJobs(req, res) {
       'userId',// populateField 
       'firstName lastName email avatar' // populateSelect  
     ).salaryCostHandler()
+      .categoriesHandler()
+      .durationHandler()
       .pagination())
 
     // get from db data 

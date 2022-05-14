@@ -28,6 +28,9 @@ by categories --> caties = petWalking, ironing
 by date --> date[gte] = 2022-10-15 & date[gte] = 2022-11-15
 by duration -> dur[gte] = ??? & dur[lte] = ??? 
 
+// gnahatakan
+service provider -> 5 astx
+
 
 // Error
 id-i het kapvac error kara lini passportFacebook um u google um
