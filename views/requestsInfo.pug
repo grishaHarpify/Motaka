@@ -167,8 +167,12 @@ html
           div.content-data(style="color: black")
             div Description [&&] ==> Get all jobs from DB with advanced search and pagination
             div Request URI ==> [AUTH]URI/jobs
+
             div Request Query ( URI/jobs?key1=value1&k2=v2 ) ==> {
             div &emsp;&emsp;Searching with job salary: salcost[gte]=1000&salcost[lte]=10000
+            div &emsp;&emsp;Searching with job category: caties=petWalking,cleaning,repairing
+            div &emsp;&emsp;Searching with job startDate: date[gte]=2022-10-25&date[lte]=2023-07-16
+            div &emsp;&emsp;Searching with job duration: in progress ...
             div &emsp;&emsp;Pagination and limit: page=1&limit=15
             div }
 
@@ -180,9 +184,9 @@ html
             div }
           
             div &emsp;
-            div(style="color: black")
-              | Request Example ==> URI/jobs?page=1&limit=3&salcost[gte]=10000&salcost[lte]=40000
-
+            div(style="color: black") Request Example ==> URI/jobs?page=1&limit=3&salcost[gte]=10000&salcost[lte]=40000
+              br
+            div &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;==> URI/jobs?caties=petWalking&date[gte]=2022-10-25&date[lte]=2023-07-16
 
 
 
