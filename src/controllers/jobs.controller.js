@@ -1,6 +1,5 @@
 const UserModel = require('../models/User')
 const JobModel = require('../models/Job')
-const _ = require('lodash')
 
 const { JobQueryHandler } = require('../services/queryHandler')
 

@@ -19,7 +19,27 @@ const userSchema = new Schema(
     password: { type: String },
     isEmailVerified: { type: Boolean, default: false },
     isPhoneVerified: { type: Boolean, default: false },
-    avatar: { type: String }
+    avatar: { type: String },
+    providerRating: [{
+      estimatorId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+      },
+      point: {
+        type: Number,
+        enum: [1, 2, 3, 4, 5]
+      }
+    }],
+    userRating: [{
+      estimatorId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+      },
+      point: {
+        type: Number,
+        enum: [1, 2, 3, 4, 5]
+      }
+    }]
   },
   {
     collection: 'users',
