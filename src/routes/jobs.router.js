@@ -34,7 +34,7 @@ jobsRouter.get('/',
 
 // Get job data with id
 jobsRouter.get(
-  '/:id',
+  '/:jobId',
   idValidation,
   jobsController.getJobDataWithId
 )
@@ -55,6 +55,6 @@ jobsRouter.post(
 )
 
 // Edit job
-jobsRouter.patch('/:id', idValidation, verifyJWT, jobsController.editJobWithId)
+jobsRouter.patch('/:jobId', idValidation, verifyJWT, jobsController.editJobWithId)
 
 module.exports = jobsRouter
