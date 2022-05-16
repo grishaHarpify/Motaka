@@ -10,6 +10,6 @@ const userController = require('../controllers/user.controller')
 // --- middlewares end --- //
 
 // Routes //
-userRouter.patch('/rating', userController.userRating)
+
 
 module.exports = userRouter
