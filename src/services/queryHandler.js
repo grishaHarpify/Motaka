@@ -155,7 +155,7 @@ class JobQueryHandler {
   // get result from DB
   async getRequestResult() {
     const queryObject = JSON.parse(this.queryString)
-    console.log(queryObject, 'query object after filter')
+    console.log(queryObject, 'query object after filter [JobQueryHandler]')
 
     // Get data from DB
     this._queryHandlerResult.data = await this.DBmodel.find(queryObject)
