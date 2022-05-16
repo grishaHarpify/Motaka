@@ -149,7 +149,7 @@ html
             div Request Body [JSON] ==> {
             div &emsp;&emsp;"startDate": "2000-10-21" ,
             div &emsp;&emsp;"startTime": "10:30:00" , 
-            div &emsp;&emsp;"duration": "2 week" , 
+            div &emsp;&emsp;"duration": 2 , // indicates the job duration in hour
             div &emsp;&emsp;"salary": {
             div &emsp;&emsp;&emsp;&emsp;"currency": "AMD", // default="AMD"
             div &emsp;&emsp;&emsp;&emsp;"cost": 15000
@@ -165,14 +165,14 @@ html
 
           //- Get all jobs from DB with advanced search and pagination [BLACK]
           div.content-data(style="color: black")
-            div Description [&&] ==> Get all jobs from DB with advanced search and pagination
+            div Description ==> Get all jobs from DB with advanced search and pagination
             div Request URI ==> [AUTH]URI/jobs
 
             div Request Query ( URI/jobs?key1=value1&k2=v2 ) ==> {
             div &emsp;&emsp;Searching with job salary: salcost[gte]=1000&salcost[lte]=10000
             div &emsp;&emsp;Searching with job category: caties=petWalking,cleaning,repairing
             div &emsp;&emsp;Searching with job startDate: date[gte]=2022-10-25&date[lte]=2023-07-16
-            div &emsp;&emsp;Searching with job duration: in progress ...
+            div &emsp;&emsp;Searching with job duration (must be number from '1' to '6' OR '0'. '0' indicates all.): dur=1,3
             div &emsp;&emsp;Pagination and limit: page=1&limit=15
             div }
 
@@ -190,6 +190,8 @@ html
               div &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;==> URI/jobs?page=1&limit=3&salcost[gte]=10000&salcost[lte]=40000
 
               div &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;==> URI/jobs?caties=petWalking&date[gte]=2022-10-25&date[lte]=2023-07-16
+
+              div &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;==> URI/jobs?dur=2,6
 
 
 
