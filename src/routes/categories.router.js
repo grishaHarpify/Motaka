@@ -14,6 +14,6 @@ const idValidation = require('../middlewares/IDValidation')
 
 // Routes //
 categoriesRouter.get('/', categoriesController.getAllCategories)
-categoriesRouter.get('/:categoryId/:id', idValidation, categoriesController.getCategoryDataWithId)
+categoriesRouter.get('/:categoryId', idValidation, categoriesController.getCategoryDataWithId)
 
 module.exports = categoriesRouter
