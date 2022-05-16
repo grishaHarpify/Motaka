@@ -64,6 +64,9 @@ html
 
         //- Grisha ==================================================
         if isGrishaPage  
+          //- ============================ Login ============================
+          div.requestBlockName [ Login ]
+
           //- Login to the site                   
           div.content-data  
             div Description ==> Login to the site
@@ -76,6 +79,9 @@ html
             div &emsp;&emsp;"password": "********"
             div }
 
+          //- ============================ Reset Password ============================
+          div.requestBlockName [ Reset password ]
+            
           //- Send sms to phone to reset password 	                   
           div.content-data  
             div Description ==> Send sms to phone to reset password
@@ -112,6 +118,9 @@ html
             div &emsp;&emsp;"phone": "+374 ** ******" , // [!!]
             div }
 
+          //- ============================ Select Role ============================
+          div.requestBlockName [ Select Role ]
+
           //- Change active role [BLACK]
           div.content-data(style="color: black")  
             div Description ==> Change active role
@@ -127,6 +136,9 @@ html
             div &emsp;&emsp;"Authorization": "Bearer accessToken" , 
             div }
           
+          //- ============================ Jobs ============================
+          div.requestBlockName [ Jobs ]
+
           //- Get job data with ID [BLACK]
           div.content-data(style="color: black") 
             div Description ==> Get data about job with id 
@@ -192,6 +204,9 @@ html
               div &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;==> URI/jobs?caties=petWalking&date[gte]=2022-10-25&date[lte]=2023-07-16
 
               div &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;==> URI/jobs?dur=2,6
+
+          //- ============================ Categories ============================
+          div.requestBlockName [ Categories ]
 
           //- Get all categories [BLACK]
           div.content-data(style="color: black") 
@@ -272,7 +287,7 @@ html
 
 
 
-
+          //- arandznacnel categorianery
 
         //- Helper Requests ==================================================
         if isHelperRequestsPage  

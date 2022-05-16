@@ -71,7 +71,8 @@ button {
 }
 
 /* Descriptions */
-.description {
+.description,
+.requestBlockName {
   text-align: center;
   background-color: rgba(77, 68, 68, 0.795);
   border: 1px solid wheat;
