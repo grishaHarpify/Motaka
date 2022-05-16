@@ -1,7 +1,7 @@
 const userRouter = require('express').Router()
 
 // Import Controller
-const userController = require('../controllers/user.controller')
+const userController = require('../controllers/users.controller')
 
 // Import middlewares //
 // Validation
