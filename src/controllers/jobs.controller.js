@@ -11,7 +11,7 @@ async function getAllJobs(req, res) {
     const filteredQueryObject = await (new JobQueryHandler(
       req.query,
       JobModel,
-      '',// 'salary.cost category startDate', // requestSelect
+      'salary.cost category startDate duration', // requestSelect
       'userId',// populateField 
       'firstName lastName email avatar' // populateSelect  
     ).salaryCostHandler()

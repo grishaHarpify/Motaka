@@ -1,6 +1,6 @@
 const UserModel = require('../models/User')
 const JobModel = require('../models/Job')
-const { query } = require('express')
+
 
 class JobQueryHandler {
   _page
@@ -82,15 +82,25 @@ class JobQueryHandler {
     return this
   }
 
-  // by duration [dur] // ???
+  // by duration [dur] 
   durationHandler() {
     if (this.queryString.includes('dur')) {
-      // change dur to duration
+      // Change dur to duration
       this.queryString = this.queryString.replace(
         /"dur"/g,
         (match) => `"duration"`
       )
 
+      // Convert duration = '1,2,3' to duration = ['1','2','3']
+      const queryObject = JSON.parse(this.queryString)
+      queryObject.duration = queryObject.duration.split(',')
+
+      if (queryObject.duration.includes('0')) {
+        // all jobs
+        delete queryObject.duration
+      }
+
+      this.queryString = JSON.stringify(queryObject)
     }
 
     return this
@@ -142,6 +152,7 @@ class JobQueryHandler {
     return this
   }
 
+  // get result from DB
   async getRequestResult() {
     const queryObject = JSON.parse(this.queryString)
     console.log(queryObject, 'query object after filter')
