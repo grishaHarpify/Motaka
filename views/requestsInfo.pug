@@ -128,7 +128,7 @@ html
             div }
           
           //- Get job data with ID [BLACK]
-          div.content-data(style="color: red") 
+          div.content-data(style="color: black") 
             div Description ==> Get data about job with id 
             div Request URI ==> [AUTH]URI/jobs/:jobId
             div Request Method ==> 
@@ -193,7 +193,27 @@ html
 
               div &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;==> URI/jobs?dur=2,6
 
+          //- Get all categories [BLACK]
+          div.content-data(style="color: black") 
+            div Description ==> Get all categories
+            div Request URI ==> [AUTH]URI/categories
+            div Request Method ==> 
+              span(style="color: black") [GET] 
 
+            div Request Headers ==> {
+            div &emsp;&emsp;"Authorization": "Bearer accessToken" , 
+            div }
+
+          //- Get category data with ID [BLACK]
+          div.content-data(style="color: black") 
+            div Description ==> Get data about category with id 
+            div Request URI ==> [AUTH]URI/categories/:categoryId
+            div Request Method ==> 
+              span(style="color: black") [GET] 
+
+            div Request Headers ==> {
+            div &emsp;&emsp;"Authorization": "Bearer accessToken" , 
+            div }
 
 
         //- Mamikon ==================================================
@@ -235,6 +255,17 @@ html
             div Request Method ==> 
               span(style="color: black") [GET] 
             
+            div Request Headers ==> {
+            div &emsp;&emsp;"Authorization": "Bearer accessToken" , 
+            div }
+
+          //- Get user data with ID [BLACK]
+          div.content-data(style="color: black") 
+            div Description [&&] ==> Get data about user with id 
+            div Request URI ==> [AUTH]URI/users/:userId
+            div Request Method ==> 
+              span(style="color: black") [GET] 
+
             div Request Headers ==> {
             div &emsp;&emsp;"Authorization": "Bearer accessToken" , 
             div }
