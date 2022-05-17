@@ -22,10 +22,15 @@ const jobSchema = new Schema({
   providerId: {
     type: Schema.Types.ObjectId,
     ref: 'User'
+  },
+  status: {
+    type: String,
+    enum: ['open', 'inProgress', 'finished'],
+    default: 'open'
   }
 
 }, {
-  collection: 'jobs', strict: false
+  collection: 'jobs', strict: false, timestamps: true
 })
 
 module.exports = model('Job', jobSchema)
