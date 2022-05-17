@@ -7,11 +7,11 @@ const userController = require('../controllers/users.controller')
 // Validation
 
 // ID validation
-const idValidation = require('../middlewares/IDValidation')
+const { pathIdValidation } = require('../middlewares/IDValidation')
 
 // --- middlewares end --- //
 
 // Routes //
-usersRouter.get('/:userId', idValidation, userController.getUserDataWithId)
+usersRouter.get('/:userId', pathIdValidation, userController.getUserDataWithId)
 
 module.exports = usersRouter

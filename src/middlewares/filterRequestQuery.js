@@ -1,6 +1,6 @@
 
 
-function filterGetAllJobsQuery(req, res, next) {
+function getAllJobsQueryFilter(req, res, next) {
   const queryObject = req.query
 
   for (let key in queryObject) {
@@ -24,5 +24,5 @@ function filterGetAllJobsQuery(req, res, next) {
 
 
 module.exports = {
-  filterGetAllJobsQuery
+  getAllJobsQueryFilter
 }

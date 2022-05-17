@@ -8,12 +8,12 @@ const categoriesController = require('../controllers/categories.controller')
 
 
 // ID validation
-const idValidation = require('../middlewares/IDValidation')
+const { pathIdValidation } = require('../middlewares/IDValidation')
 
 // --- middlewares end --- //
 
 // Routes //
 categoriesRouter.get('/', categoriesController.getAllCategories)
-categoriesRouter.get('/:categoryId', idValidation, categoriesController.getCategoryDataWithId)
+categoriesRouter.get('/:categoryId', pathIdValidation, categoriesController.getCategoryDataWithId)
 
 module.exports = categoriesRouter

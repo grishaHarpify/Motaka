@@ -70,7 +70,7 @@ async function createNewJob(req, res) {
     const user = req.user
 
     // Put job data to DB
-    await JobModel.create({
+    const newJob = await JobModel.create({
       startDate: `${startDate}T${startTime}`,
       duration,
       salary,
@@ -82,6 +82,7 @@ async function createNewJob(req, res) {
 
     res.json({
       message: 'Job successfully created.',
+      jobId: newJob._id
     })
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
