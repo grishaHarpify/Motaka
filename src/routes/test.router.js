@@ -5,6 +5,8 @@ const UserModel = require('../models/User')
 const ConfirmCodeModel = require('../models/ConfirmCode')
 const CategoryModel = require('../models/Category')
 const JobModel = require('../models/Job')
+const OrderModel = require('../models/Order')
+const CommentModel = require('../models/Comment')
 
 
 // Create, delete ..... // 
@@ -102,7 +104,7 @@ testRouter.get('/dbs/:dbName', async (req, res) => {
   }
 
   if (req.params.dbName === 'jobs') {
-    let jobs = await getAllJob()
+    let jobs = await getAllJobs()
     if (jobs.length === 0) {
       jobs = ''
     }
@@ -112,6 +114,31 @@ testRouter.get('/dbs/:dbName', async (req, res) => {
       data: jobs
     })
   }
+
+  if (req.params.dbName === 'orders') {
+    let orders = await getAllOrders()
+    if (orders.length === 0) {
+      orders = ''
+    }
+
+    return res.render('dbHome', {
+      message: 'Orders',
+      data: orders
+    })
+  }
+
+  if (req.params.dbName === 'comments') {
+    let comments = await getAllComments()
+    if (comments.length === 0) {
+      comments = ''
+    }
+
+    return res.render('dbHome', {
+      message: 'Comments',
+      data: comments
+    })
+  }
+
 
   // else //
   return res.render('dbHome', {
@@ -185,13 +212,29 @@ async function getAllCategories() {
 
   return categories
 }
-async function getAllJob() {
+async function getAllJobs() {
   const jobs = await JobModel.find()
   jobs.forEach((eachJob) => {
     return JSON.stringify(eachJob, undefined, 2)
   })
 
   return jobs
+}
+async function getAllOrders() {
+  const orders = await OrderModel.find()
+  orders.forEach((eachOrder) => {
+    return JSON.stringify(eachOrder, undefined, 2)
+  })
+
+  return orders
+}
+async function getAllComments() {
+  const comments = await CommentModel.find()
+  comments.forEach((eachCom) => {
+    return JSON.stringify(eachCom, undefined, 2)
+  })
+
+  return comments
 }
 // ========================== // 
 
