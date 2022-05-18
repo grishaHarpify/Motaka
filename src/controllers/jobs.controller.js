@@ -3,6 +3,7 @@ const JobModel = require('../models/Job')
 
 const { JobQueryHandler } = require('../services/queryHandler')
 
+// Get all jobs with filter
 async function getAllJobs(req, res) {
   try {
     // Get from query important info and paginate
@@ -11,7 +12,7 @@ async function getAllJobs(req, res) {
       req.query,
       JobModel,
       'salary.cost category startDate duration', // requestSelect
-      'userId',// populateField 
+      'userId', // populateField 
       'firstName lastName email avatar' // populateSelect  
     ).salaryCostHandler()
       .categoriesHandler()
