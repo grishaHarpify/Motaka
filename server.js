@@ -6,8 +6,10 @@ const app = express()
 // Dotenv
 console.log(`======= ${process.env.NODE_ENV} mode =======`)
 if (process.env.NODE_ENV === 'development') {
-  const dotenv = require('dotenv')
-  dotenv.config({ path: './config.env' })
+  // const dotenv = require('dotenv')
+  // dotenv.config({ path: './config.env' })
+  require('dotenv').config()
+
 
   const morgan = require('morgan')
   app.use(morgan('dev'))

@@ -161,12 +161,16 @@ async function resetPassword(req, res) {
     user.password = hashedPassword
     await user.save()
 
-    // Change confirm code status in DB
+    // Change confirm code status in DB 
     const codeInfo = await ConfirmCodeModel.findOne({
       userId: user._id,
     }).populate('userId')
     codeInfo.isUsed = true
     await codeInfo.save()
+
+    // Change phone verified field in db
+    user.isPhoneVerified = true
+    await user.save()
 
     res.status(201).json({
       message: 'Password was changed successfully.',

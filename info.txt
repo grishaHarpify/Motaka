@@ -18,34 +18,17 @@ Category
 3) plumbing (santexnik)
 4) petWalking (kendanineri zbosanq)
 5) ironing (arduk)
-6) 
 
-// In progress
-//*//*search *//*//
-        --> salCur = AMD (default)
-by cost --> salcost[gte] = 15000 & salcost[lte]=15000
-by categories --> caties = petWalking, ironing 
-by date --> date[gte] = 2022-10-15 & date[gte] = 2022-11-15
-by duration -> dur[gte] = ??? & dur[lte] = ??? 
 
-// gnahatakan
+
+
+// Gnahatakan
 service provider -> 5 astx
 
 
-// Error
-id-i het kapvac error kara lini passportFacebook um u google um
+// Errors can be
 
 
 // Questions
 
 
-
-
-
-poxel code uxarkelu site-y //??
-
-canceled -job status
-categorianery tesnelu jamanak inchu lracnenq jwt
-dimoxneri cucak job-i hamar
-
-set_role-i jamanak ete voreve roleov chi grancvel tal hamapatasxan message yev texapoxel settings
