@@ -367,9 +367,11 @@ async function setActiveRole(req, res) {
     const isRole = `is${role.charAt(0).toUpperCase() + role.slice(1)}` // isRole = isUser \ isProvider
 
     if (!user.role[isRole]) {
-      return res.status(400).json({
-        errorType: 'Incorrect data error!',
-        errorMsg: 'The user is not registered with such role.',
+      user.role[isRole] = true
+      await user.save()
+
+      return res.status(201).json({
+        message: `The user has create a new role [${role}] for himself.`
       })
     }
 
@@ -378,7 +380,7 @@ async function setActiveRole(req, res) {
     await user.save()
 
     res.json({
-      message: `User active role was changed to ${role}.`,
+      message: `User active role was changed to [${role}].`,
     })
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
