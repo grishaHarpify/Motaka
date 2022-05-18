@@ -15,16 +15,15 @@ const getUserAvailableRoles = require('../services/getAvailableRoles')
 
 async function register(req, res) {
   try {
-    const { firstName, lastName, password, phone, email, isUser, isProvider } =
-      req.body
+    const { firstName, lastName, password, phone, email, isUser, isProvider } = req.body
 
     // Check if exist user with such phone
     const existingUserPhone = await UserModel.findOne({
       phone,
     })
-    const usernameExistsPhone = existingUserPhone !== null
+    const userExistsPhone = existingUserPhone !== null
 
-    if (usernameExistsPhone) {
+    if (userExistsPhone) {
       return res.status(400).json({
         message: 'This phone already registered.',
       })
@@ -34,9 +33,9 @@ async function register(req, res) {
     const existingUser = await UserModel.findOne({
       email,
     })
-    const usernameExists = existingUser !== null
+    const userExists = existingUser !== null
 
-    if (usernameExists) {
+    if (userExists) {
       return res.status(400).json({
         message: 'This email already registered.',
       })
