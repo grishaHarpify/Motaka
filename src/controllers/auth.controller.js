@@ -274,11 +274,6 @@ async function loginWithGoogle(req, res) {
         firstName: googleUserData.given_name,
         lastName: googleUserData.family_name,
         email: googleUserData.email,
-        // role: {
-        //   isProvider: '',
-        //   isUser: ''
-        // },
-        // activeRole: '',
         isEmailVerified: googleUserData.email_verified,
         avatar: googleUserData.picture,
       })
@@ -332,11 +327,6 @@ async function loginWithFacebook(req, res) {
         firstName: fbUserData.first_name,
         lastName: fbUserData.last_name,
         email: fbUserData.email,
-        // role: {
-        //   isProvider: '',
-        //   isUser: ''
-        // },
-        // activeRole: '',
         avatar: fbUserData.picture.data.url,
       })
     }

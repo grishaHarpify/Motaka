@@ -13,7 +13,6 @@ const jobSchema = new Schema({
     enum: ['cleaning', 'repairing', 'plumbing', 'petWalking', 'ironing']
   },
   subCategories: [{ type: String }],
-  // provider and user 
   userId: {
     type: Schema.Types.ObjectId,
     ref: 'User',
@@ -25,7 +24,7 @@ const jobSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ['open', 'inProgress', 'finished'],
+    enum: ['open', 'inProgress', 'finished', 'canceled'],
     default: 'open'
   }
 
