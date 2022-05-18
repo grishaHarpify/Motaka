@@ -10,16 +10,7 @@ const OrderSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true
-  },
-  // status: {
-  //   type: String,
-  //   enum: ['inProgress', 'finished'],
-  // },
-  comments: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Comment',
-    _id: false
-  }]
+  }
 
 }, {
   collection: 'orders', strict: false, timestamps: true

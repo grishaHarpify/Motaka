@@ -44,6 +44,7 @@ id-i het kapvac error kara lini passportFacebook um u google um
 
 
 canceled -job status
+
 dimoxneri cucak job-i hamar
 set_role-i jamanak ete voreve roleov chi grancvel tal hamapatasxan message yev texapoxel settings
 categorianery tesnelu jamanak inchu lracnenq jwt

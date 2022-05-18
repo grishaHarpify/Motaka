@@ -9,6 +9,11 @@ const CommentSchema = new Schema({
   content: {
     type: String,
     required: true
+  },
+  orderId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Order',
+    required: true
   }
 
 

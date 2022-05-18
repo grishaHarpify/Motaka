@@ -9,6 +9,7 @@ const confirmCodeSchema = new Schema({
     ref: 'User',
     required: true
   }
+
 }, {
   collection: 'confirmCodes', strict: false
 })

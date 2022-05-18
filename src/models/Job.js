@@ -12,16 +12,17 @@ const jobSchema = new Schema({
     type: String,
     enum: ['cleaning', 'repairing', 'plumbing', 'petWalking', 'ironing']
   },
-  subCategories: [{ type: String }],
+  subCategories: [{ type: String, _id: false }],
   userId: {
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true
   },
-  providerId: {
+  applicantsList: [{ // dimoxneri cucak
     type: Schema.Types.ObjectId,
-    ref: 'User'
-  },
+    ref: 'User',
+    _id: false
+  }],
   status: {
     type: String,
     enum: ['open', 'inProgress', 'finished', 'canceled'],

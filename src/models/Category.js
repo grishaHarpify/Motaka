@@ -2,7 +2,8 @@ const { Schema, model } = require('mongoose')
 
 const CategorySchema = new Schema({
   name: { type: String, required: true },
-  subCategories: [{ type: String }]
+  subCategories: [{ type: String, _id: false }]
+
 }, {
   collection: 'categories', strict: false
 })
