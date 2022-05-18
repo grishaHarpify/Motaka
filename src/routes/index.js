@@ -13,7 +13,7 @@ const ordersRouter = require('./orders.router')
 // Use routes
 router.use('/', authRouter) // motaka.am/
 router.use('/jobs', verifyJWT, jobsRouter) // motaka.am/jobs
-router.use('/categories', verifyJWT, categoriesRouter) // motaka.am/categories
+router.use('/categories', categoriesRouter) // motaka.am/categories
 router.use('/users', verifyJWT, usersRouter) // motaka.am/users
 router.use('/orders', verifyJWT, ordersRouter) // motaka.am/orders 
 
