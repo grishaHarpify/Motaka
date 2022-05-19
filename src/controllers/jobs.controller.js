@@ -117,9 +117,75 @@ async function editJobWithId(req, res) {
   }
 }
 
+// Add job new candidate
+async function addJobNewCandidate(req, res) {
+  try {
+    const { jobId } = req.params
+    const candidateId = req.user._id
+
+    // Check user exist
+    const userFromDb = await UserModel.findById(candidateId)
+    if (!userFromDb) {
+      return res.status(400).json({
+        errorMessage: 'User with such ID does not exist.'
+      })
+    }
+
+    // Find job data from DB
+    const jobFromDb = await JobModel.findById(jobId)
+    if (!jobFromDb) {
+      return res.status(400).json({
+        errorMessage: 'Job with such ID does not exist.'
+      })
+    }
+
+    // // Check job status
+    if (jobFromDb.status !== 'open') {
+      return res.status(400).json({
+        errorMessage: `This job [${jobId}] is not open. Service provider cannot become candidate for a job that is not open.`
+      })
+    }
+
+    // Check candidateId and job.userId
+    if (jobFromDb.userId.toString() === candidateId.toString()) {
+      return res.status(400).json({
+        errorMessage: 'Service provider cannot become a job candidate if he/she is the creator of that job.'
+      })
+    }
+
+    // Check candidate already have in candidates list or no
+    for (let i = 0; i < jobFromDb.candidatesList.length; i++) {
+      let eachCanId = jobFromDb.candidatesList[i]
+
+      if (eachCanId.toString() === candidateId.toString()) {
+        return res.status(400).json({
+          errorMessage: 'Service provider cannot become a job candidate more then one time.'
+        })
+      }
+    }
+
+    // Add new candidate in DB
+    jobFromDb.candidatesList.push(candidateId)
+    await jobFromDb.save()
+
+    res.json({
+      message: `Provider[${candidateId}] have been successfully added to the list of candidates for this job [${jobId}].`
+    })
+
+  } catch (e) {
+    console.log(`Error in file: ${__filename}!`)
+    console.log(e.message)
+    res.status(500).json({
+      errorType: 'Server side error!',
+      errorMsg: e.message,
+    })
+  }
+}
+
 module.exports = {
   getAllJobs,
   getJobDataWithId,
   createNewJob,
   editJobWithId,
+  addJobNewCandidate,
 }
