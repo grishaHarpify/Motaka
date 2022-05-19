@@ -18,7 +18,7 @@ const jobSchema = new Schema({
     ref: 'User',
     required: true
   },
-  applicantsList: [{ // dimoxneri cucak
+  candidatesList: [{ // dimoxneri cucak
     type: Schema.Types.ObjectId,
     ref: 'User',
     _id: false
