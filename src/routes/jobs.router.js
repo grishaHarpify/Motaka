@@ -62,4 +62,7 @@ jobsRouter.patch('/:jobId', pathIdValidation, jobsController.editJobWithId)
 // Add new applicant to job
 jobsRouter.patch('/:jobId/candidate', isProvider, pathIdValidation, jobsController.addJobNewCandidate)
 
+
+jobsRouter.delete('/:jobId', isUser, pathIdValidation, jobsController.cancelJob)
+
 module.exports = jobsRouter

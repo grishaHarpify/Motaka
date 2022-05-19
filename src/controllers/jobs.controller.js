@@ -182,10 +182,49 @@ async function addJobNewCandidate(req, res) {
   }
 }
 
+// Cancel job
+async function cancelJob(req, res) {
+  try {
+    const { jobId } = req.params
+    // Find job data from DB
+    const jobFromDb = await JobModel.findById(jobId)
+    if (!jobFromDb) {
+      return res.status(400).json({
+        errorMessage: 'Job with such ID does not exist.'
+      })
+    }
+
+    // Check job status
+    if (jobFromDb.status === 'canceled') {
+      return res.json({
+        message: 'Job already canceled.'
+      })
+    }
+
+    // Change job status to 'canceled'
+    jobFromDb.status = 'canceled'
+    await jobFromDb.save()
+
+    res.json({
+      message: `Job with id [${jobId}] was canceled.`
+    })
+
+  } catch (e) {
+    console.log(`Error in file: ${__filename}!`)
+    console.log(e.message)
+    res.status(500).json({
+      errorType: 'Server side error!',
+      errorMsg: e.message,
+    })
+  }
+}
+
+
 module.exports = {
   getAllJobs,
   getJobDataWithId,
   createNewJob,
   editJobWithId,
   addJobNewCandidate,
+  cancelJob,
 }
