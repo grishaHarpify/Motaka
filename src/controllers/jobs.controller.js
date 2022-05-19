@@ -194,6 +194,14 @@ async function cancelJob(req, res) {
       })
     }
 
+    // Check job author
+    const user = req.user
+    if (user._id.toString() !== jobFromDb.userId.toString()) {
+      return res.status(403).json({
+        errorMessage: 'Job creator ID and logged in user ID does not match. The creator of this work is not logged in user.'
+      })
+    }
+
     // Check job status
     if (jobFromDb.status === 'canceled') {
       return res.json({

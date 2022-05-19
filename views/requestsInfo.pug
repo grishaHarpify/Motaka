@@ -154,7 +154,6 @@ html
           div.content-data(style="color: black") 
             div Description [&&] ==> Create new job 
             div Request URI ==> [AUTH]URI/jobs
-            div Have access ==> [USER]
             div Request Method ==> 
               span(style="color: black") [POST] 
 
@@ -212,6 +211,19 @@ html
 
             div Request Method ==> 
               span(style="color: black") [PATCH] 
+            
+            div Request Headers ==> {
+            div &emsp;&emsp;"Authorization": "Bearer accessToken" , 
+            div }
+
+          //- Cancel job
+          //- Add new candidate in job
+          div.content-data(style="color: black")
+            div Description [&&] ==> Cancel job [det job status 'canceled']
+            div Request URI ==> [AUTH]URI/jobs/:jobId
+
+            div Request Method ==> 
+              span(style="color: black") [DELETE] 
             
             div Request Headers ==> {
             div &emsp;&emsp;"Authorization": "Bearer accessToken" , 
