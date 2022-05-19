@@ -205,6 +205,18 @@ html
 
               div &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;==> URI/jobs?dur=2,6
 
+          //- Add new candidate in job
+          div.content-data(style="color: black")
+            div Description [&&] ==> Add new candidate in job [yourself]
+            div Request URI ==> [AUTH]URI/jobs/:jobId/candidate
+
+            div Request Method ==> 
+              span(style="color: black") [PATCH] 
+            
+            div Request Headers ==> {
+            div &emsp;&emsp;"Authorization": "Bearer accessToken" , 
+            div }
+
           //- ============================ Categories ============================
           div.requestBlockName [ Categories ]
 
