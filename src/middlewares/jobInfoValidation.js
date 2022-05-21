@@ -40,9 +40,9 @@ const validateStartTime = body('startTime')
 const validateDuration = body('duration')
   .not()
   .isEmpty()
-  .withMessage('Job duration date is required field.')
-  .matches(/^\d+$/)
-  .withMessage('Duration field must be a number that indicates the job duration in hour.')
+  .withMessage('Job duration is required field.')
+  .matches(/^(?![0]\b)\d{0,}$/)
+  .withMessage('Duration field must be a number that indicates the job duration in hour [Except 0].')
 
 
 // BEFORE

@@ -1,18 +1,9 @@
 export NODE_ENV=development
 export NODE_ENV=production
 
-// For change
-home
-============================
-ADD JOB
-1) start date 
-2) start time ??? 
-3) duration   
-4) money
-5) address
-6) category
+/////// For change ///////
 
-Category
+Job Categories
 1) cleaning (maqrutyun)
 2) repairing (norogum)
 3) plumbing (santexnik)
@@ -21,18 +12,26 @@ Category
 
 
 
+/////// BUGS ///////
+// error messages with provider name 
+// job start date 
 
-// Gnahatakan
+
+/////// IN PROGRES ///////
 service provider -> 5 astx
 
 
-// Errors can be
 
 
-// Questions
-erb uzum enq stanal provider-i masin info kam bolor providernerin 
+
+
+/////// Questions ///////
+2) erb uzum enq stanal provider-i masin info kam bolor providernerin 
 /users/providers
 u erb usernerin 
-/users/users
+/users/users ****
+
+
+1) commentnery websocket-nerov ?? 
 
 
