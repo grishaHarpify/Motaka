@@ -38,10 +38,14 @@ async function getAllJobs(req, res) {
 // Get job data with id
 async function getJobDataWithId(req, res) {
   try {
-    const { id: jobId } = req.params
+    const { jobId } = req.params
 
     // Find job with id
     let jobData = await JobModel.findById(jobId).populate('userId', 'firstName lastName email avatar')
+
+
+    console.log(jobId)
+    console.log(jobData)
 
     // Check job with such id exist or not
     if (!jobData) {
@@ -98,7 +102,7 @@ async function createNewJob(req, res) {
 // Edit job data [USER] // in progress 
 async function editJobWithId(req, res) {
   try {
-    const { id: jobId } = req.params
+    const { jobId } = req.params
 
     // Get job data form DB
     const jobData = await JobModel.findById(jobId).populate('userId', 'firstName lastName email avatar')
