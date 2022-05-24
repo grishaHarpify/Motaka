@@ -78,7 +78,9 @@ async function createNewJob(req, res) {
     const newJob = await JobModel.create({
       startDate: `${startDate}T${startTime}`,
       duration,
-      salary,
+      salary: {
+        cost: salary // salary from FRONT we put in db with name salary.cost
+      },
       address,
       category,
       subCategories,
