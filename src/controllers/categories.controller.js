@@ -24,7 +24,7 @@ async function getCategoryDataWithId(req, res) {
   try {
     const { categoryId } = req.params
 
-    const categoryData = await CategoryModel.findById(categoryId)
+    const categoryData = await CategoryModel.findById(categoryId).select('name subCategories')
 
     // Check category with such id exist or not
     if (!categoryData) {
