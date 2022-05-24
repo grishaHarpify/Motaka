@@ -30,7 +30,7 @@ async function getAllJobs(req, res) {
     console.log(e.message)
     res.status(500).json({
       errorType: 'Server side error!',
-      errorMsg: e.message,
+      errorMessage: e.message,
     })
   }
 }
@@ -45,9 +45,9 @@ async function getJobDataWithId(req, res) {
 
     // Check job with such id exist or not
     if (!jobData) {
-      return res.status(400).json({
+      return res.status(404).json({
         errorType: 'Incorrect ID error!',
-        errorMsg: 'Job with such ID does not exist.',
+        errorMessage: 'Job with such ID does not exist.',
       })
     }
 
@@ -59,7 +59,7 @@ async function getJobDataWithId(req, res) {
     console.log(e.message)
     res.status(500).json({
       errorType: 'Server side error!',
-      errorMsg: e.message,
+      errorMessage: e.message,
     })
   }
 }
@@ -92,7 +92,7 @@ async function createNewJob(req, res) {
     console.log(e.message)
     res.status(500).json({
       errorType: 'Server side error!',
-      errorMsg: e.message,
+      errorMessage: e.message,
     })
   }
 }
@@ -107,9 +107,9 @@ async function editJobWithId(req, res) {
     const jobFromDb = await JobModel.findById(jobId)
 
     if (!jobFromDb) {
-      return res.status(400).json({
+      return res.status(404).json({
         errorType: 'Incorrect ID error!',
-        errorMsg: 'Job with such ID does not exist.',
+        errorMessage: 'Job with such ID does not exist.',
       })
     }
 
@@ -117,14 +117,14 @@ async function editJobWithId(req, res) {
     if (user._id.toString() !== jobFromDb.userId.toString()) {
       return res.status(403).json({
         errorType: 'Forbidden!',
-        errorMsg: 'The user is not the creator of this.',
+        errorMessage: 'The user is not the creator of this.',
       })
     }
 
     if (jobFromDb.status !== 'open') {
       return res.status(400).json({
         errorType: 'Job status error!',
-        errorMsg: 'Job status is no longer open.',
+        errorMessage: 'Job status is no longer open.',
       })
     }
 
@@ -150,7 +150,7 @@ async function editJobWithId(req, res) {
     console.log(e.message)
     res.status(500).json({
       errorType: 'Server side error!',
-      errorMsg: e.message,
+      errorMessage: e.message,
     })
   }
 }
@@ -164,7 +164,7 @@ async function addJobNewCandidate(req, res) {
     // Check user exist
     const userFromDb = await UserModel.findById(candidateId)
     if (!userFromDb) {
-      return res.status(400).json({
+      return res.status(404).json({
         errorMessage: 'User with such ID does not exist.'
       })
     }
@@ -172,7 +172,7 @@ async function addJobNewCandidate(req, res) {
     // Find job data from DB
     const jobFromDb = await JobModel.findById(jobId)
     if (!jobFromDb) {
-      return res.status(400).json({
+      return res.status(404).json({
         errorMessage: 'Job with such ID does not exist.'
       })
     }
@@ -197,7 +197,7 @@ async function addJobNewCandidate(req, res) {
 
       if (eachCanId.toString() === candidateId.toString()) {
         return res.status(400).json({
-          errorMessage: 'Service provider cannot become a job candidate more then one time.'
+          errorMessage: 'Service provider cannot become a same job candidate more then one time.'
         })
       }
     }
@@ -215,7 +215,7 @@ async function addJobNewCandidate(req, res) {
     console.log(e.message)
     res.status(500).json({
       errorType: 'Server side error!',
-      errorMsg: e.message,
+      errorMessage: e.message,
     })
   }
 }
@@ -227,7 +227,7 @@ async function cancelJob(req, res) {
     // Find job data from DB
     const jobFromDb = await JobModel.findById(jobId)
     if (!jobFromDb) {
-      return res.status(400).json({
+      return res.status(404).json({
         errorMessage: 'Job with such ID does not exist.'
       })
     }
@@ -260,7 +260,7 @@ async function cancelJob(req, res) {
     console.log(e.message)
     res.status(500).json({
       errorType: 'Server side error!',
-      errorMsg: e.message,
+      errorMessage: e.message,
     })
   }
 }

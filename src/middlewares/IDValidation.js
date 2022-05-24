@@ -8,7 +8,7 @@ function pathIdValidation(req, res, next) {
       if (params[id].length !== 12 && params[id].length !== 24) {
         return res.status(400).json({
           errorType: 'Mongo ID error!',
-          errorMsg: `${id} passed in must be a string of 12 bytes or a string of 24 hex characters.`
+          errorMessage: `${id} passed in must be a string of 12 bytes or a string of 24 hex characters.`
         })
       }
 
@@ -20,7 +20,7 @@ function pathIdValidation(req, res, next) {
     console.log(e.message)
     res.status(500).json({
       errorType: 'Server side error!',
-      errorMsg: e.message
+      errorMessage: e.message
     })
   }
 }
@@ -34,7 +34,7 @@ function bodyIdValidation(req, res, next) {
       if (body[id].length !== 12 && body[id].length !== 24) {
         return res.status(400).json({
           errorType: 'Mongo ID error!',
-          errorMsg: `${id} passed in must be a string of 12 bytes or a string of 24 hex characters.`
+          errorMessage: `${id} passed in must be a string of 12 bytes or a string of 24 hex characters.`
         })
       }
 
@@ -46,7 +46,7 @@ function bodyIdValidation(req, res, next) {
     console.log(e.message)
     res.status(500).json({
       errorType: 'Server side error!',
-      errorMsg: e.message
+      errorMessage: e.message
     })
   }
 }

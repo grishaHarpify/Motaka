@@ -6,7 +6,7 @@ function isProvider(req, res, next) {
 
   res.status(403).json({
     errorType: 'Forbidden!',
-    errorMsg: 'Only users with an active role [provider] have access in this route.'
+    errorMessage: 'Only users with an active role [provider] have access in this route.'
   })
 }
 
@@ -18,7 +18,7 @@ function isUser(req, res, next) {
 
   res.status(403).json({
     errorType: 'Forbidden!',
-    errorMsg: 'Only users with an active role [user] have access in this route.'
+    errorMessage: 'Only users with an active role [user] have access in this route.'
   })
 }
 

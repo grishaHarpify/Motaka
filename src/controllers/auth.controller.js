@@ -81,7 +81,7 @@ async function register(req, res) {
     console.log(e.message)
     res.status(500).json({
       errorType: 'Server side error!',
-      errorMsg: e.message,
+      errorMessage: e.message,
     })
   }
 }
@@ -104,14 +104,14 @@ async function phoneVerification(req, res) {
     await codeInfo.save()
 
     res.json({
-      message: 'User send right code and his phone number has been verified.'
+      message: 'User send right code and phone number has been verified.'
     })
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
     console.log(e.message)
     res.status(500).json({
       errorType: 'Server side error!',
-      errorMsg: e.message,
+      errorMessage: e.message,
     })
   }
 }
@@ -125,9 +125,9 @@ async function getPhoneToResetPassword(req, res) {
 
     if (!user) {
       // No such user case
-      return res.status(400).json({
+      return res.status(404).json({
         errorType: 'Incorrect data error!',
-        errorMsg: 'User with such phone number not found.',
+        errorMessage: 'User with such phone number does not exist.',
       })
     }
 
@@ -138,14 +138,14 @@ async function getPhoneToResetPassword(req, res) {
     console.log('confirmCode --->', confirmCode, '<---')
 
     res.json({
-      message: `Password recovery code was send on the user's phone.`,
+      message: `Password recovery code was send on the user phone number.`,
     })
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
     console.log(e.message)
     res.status(500).json({
       errorType: 'Server side error!',
-      errorMsg: e.message,
+      errorMessage: e.message,
     })
   }
 }
@@ -182,7 +182,7 @@ async function resetPassword(req, res) {
     console.log(e.message)
     res.status(500).json({
       errorType: 'Server side error!',
-      errorMsg: e.message,
+      errorMessage: e.message,
     })
   }
 }
@@ -208,7 +208,7 @@ async function resendConfirmCode(req, res) {
     console.log(e.message)
     res.status(500).json({
       errorType: 'Server side error!',
-      errorMsg: e.message,
+      errorMessage: e.message,
     })
   }
 }
@@ -224,7 +224,7 @@ async function loginWithPhone(req, res) {
       // User with such username[phone] not exist
       return res.status(400).json({
         errorType: 'Incorrect data error!',
-        errorMsg: 'You have entered an incorrect phone and/or password.',
+        errorMessage: 'User have entered an incorrect phone and/or password.',
       })
     }
 
@@ -234,7 +234,7 @@ async function loginWithPhone(req, res) {
     if (!isPasswordCorrect) {
       return res.status(400).json({
         errorType: 'Incorrect data error!',
-        errorMsg: 'You have entered an incorrect phone and/or password.',
+        errorMessage: 'User have entered an incorrect phone and/or password.',
       })
     }
 
@@ -252,7 +252,7 @@ async function loginWithPhone(req, res) {
     console.log(e.message)
     res.status(500).json({
       errorType: 'Server side error!',
-      errorMsg: e.message,
+      errorMessage: e.message,
     })
   }
 }
@@ -306,7 +306,7 @@ async function loginWithGoogle(req, res) {
     console.log(e.message)
     res.status(500).json({
       errorType: 'Server side error!',
-      errorMsg: e.message,
+      errorMessage: e.message,
     })
   }
 }
@@ -358,7 +358,7 @@ async function loginWithFacebook(req, res) {
     console.log(e.message)
     res.status(500).json({
       errorType: 'Server side error!',
-      errorMsg: e.message,
+      errorMessage: e.message,
     })
   }
 }
@@ -392,7 +392,7 @@ async function setActiveRole(req, res) {
     console.log(e.message)
     res.status(500).json({
       errorType: 'Server side error!',
-      errorMsg: e.message,
+      errorMessage: e.message,
     })
   }
 }

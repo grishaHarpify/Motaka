@@ -15,7 +15,7 @@ async function getAllCategories(req, res) {
     console.log(e.message)
     res.status(500).json({
       errorType: 'Server side error!',
-      errorMsg: e.message,
+      errorMessage: e.message,
     })
   }
 }
@@ -29,9 +29,9 @@ async function getCategoryDataWithId(req, res) {
 
     // Check category with such id exist or not
     if (!categoryData) {
-      return res.status(400).json({
+      return res.status(404).json({
         errorType: 'Incorrect ID error!',
-        errorMsg: 'Category with such ID does not exist.',
+        errorMessage: 'Category with such ID does not exist.',
       })
     }
 
@@ -43,7 +43,7 @@ async function getCategoryDataWithId(req, res) {
     console.log(e.message)
     res.status(500).json({
       errorType: 'Server side error!',
-      errorMsg: e.message,
+      errorMessage: e.message,
     })
   }
 }

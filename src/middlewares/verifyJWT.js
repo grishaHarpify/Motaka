@@ -19,14 +19,14 @@ async function verifyJWT(req, res, next) {
           // Token expired
           return res.status(401).json({
             errorType: 'JWT error!',
-            errorMsg: 'Authorization token date is expired.'
+            errorMessage: 'Authorization token date is expired.'
           })
         }
 
         // Token invalid
         return res.status(401).json({
           errorType: 'JWT error!',
-          errorMsg: 'Authorization token is not valid.'
+          errorMessage: 'Authorization token is not valid.'
         })
       }
 
@@ -42,7 +42,7 @@ async function verifyJWT(req, res, next) {
           // in JWT incorrect ID
           return res.status(401).json({
             errorType: 'JWT error!',
-            errorMsg: 'Wrong authorization token.'
+            errorMessage: 'Wrong authorization token.'
           })
         }
 
@@ -55,13 +55,13 @@ async function verifyJWT(req, res, next) {
       // User id in token incorrect
       res.status(401).json({
         errorType: 'JWT error!',
-        errorMsg: 'Wrong authorization token.'
+        errorMessage: 'Wrong authorization token.'
       })
     } else {
       // Authorization header is empty
       return res.status(401).json({
         errorType: 'JWT error!',
-        errorMsg: 'Request must contain authorization header.'
+        errorMessage: 'Request must contain authorization header.'
       })
     }
 
@@ -70,7 +70,7 @@ async function verifyJWT(req, res, next) {
     console.log(e)
     res.status(500).json({
       errorType: 'Server side error!',
-      errorMsg: e.message,
+      errorMessage: e.message,
     })
   }
 }

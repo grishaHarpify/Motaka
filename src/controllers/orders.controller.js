@@ -10,18 +10,18 @@ async function createNewOrder(req, res) {
     // Check provider exist or not
     const userFromDb = await UserModel.findById(providerId)
     if (!userFromDb || !userFromDb.role.isProvider) {
-      return res.status(400).json({
+      return res.status(404).json({
         errorType: 'Incorrect ID error!',
-        errorMsg: 'Provider with such ID does not exist.',
+        errorMessage: 'Provider with such ID does not exist.',
       })
     }
 
     // Check job exist or not 
     const jobFromDb = await JobModel.findById(jobId)
     if (!jobFromDb) {
-      return res.status(400).json({
+      return res.status(404).json({
         errorType: 'Incorrect ID error!',
-        errorMsg: 'Job with such ID does not exist.',
+        errorMessage: 'Job with such ID does not exist.',
       })
     }
 
@@ -29,7 +29,7 @@ async function createNewOrder(req, res) {
     if (jobFromDb.status !== 'open') {
       return res.status(400).json({
         errorType: 'Job creating error!',
-        errorMsg: 'The status of this job is not open.',
+        errorMessage: 'The status of this job is not open.',
       })
     }
 
@@ -54,7 +54,7 @@ async function createNewOrder(req, res) {
     console.log(e.message)
     res.status(500).json({
       errorType: 'Server side error!',
-      errorMsg: e.message,
+      errorMessage: e.message,
     })
   }
 }

@@ -11,7 +11,7 @@ async function checkConfirmCode(req, res, next) {
     if (!confirmCode) {
       return res.status(400).json({
         errorType: 'Confirm code error!',
-        errorMsg: 'Please input confirm code.',
+        errorMessage: `Request body must contain confirm code.`,
       })
     }
 
@@ -19,16 +19,13 @@ async function checkConfirmCode(req, res, next) {
     const user = await UserModel.findOne({ phone })
 
     // get info about code from DB
-    const codeInfo = await ConfirmCodeModel.findOne({ userId: user._id }).populate(
-      'userId'
-    )
+    const codeInfo = await ConfirmCodeModel.findOne({ userId: user._id }).populate('userId')
 
     // codeInfo === null -> no code in db -> user dont send code
     if (!codeInfo) {
       return res.status(400).json({
         errorType: 'Confirm code error!',
-        errorMsg:
-          'In first you need to send confirm code in your phone number.',
+        errorMessage: 'In first user must send the code to your phone number.',
       })
     }
 
@@ -40,7 +37,7 @@ async function checkConfirmCode(req, res, next) {
       // Codes does not match
       return res.status(400).json({
         errorType: 'Confirm code error!',
-        errorMsg: 'User send the wrong confirm code.',
+        errorMessage: 'User send the wrong confirm code.',
       })
     }
 
@@ -51,7 +48,7 @@ async function checkConfirmCode(req, res, next) {
       // Code valid time expired
       return res.status(400).json({
         errorType: 'Confirm code error!',
-        errorMsg: 'Confirm code valid time is expired. Please send a new one.',
+        errorMessage: 'Confirm code valid time is expired.',
       })
     }
 
@@ -60,8 +57,7 @@ async function checkConfirmCode(req, res, next) {
       // This code already used
       return res.status(400).json({
         errorType: 'Confirm code error!',
-        errorMsg:
-          'You have already used this code to change/recover your password. Please send a new one.',
+        errorMessage: 'User have already used this code to change/recover your password.',
       })
     }
 
@@ -72,7 +68,7 @@ async function checkConfirmCode(req, res, next) {
     console.log(e.message)
     res.status(500).json({
       errorType: 'Server side error!',
-      errorMsg: e.message,
+      errorMessage: e.message,
     })
   }
 }

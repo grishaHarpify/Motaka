@@ -7,9 +7,9 @@ async function getUserDataWithId(req, res) {
     const userData = await UserModel.findById(userId)
 
     if (!userData) {
-      return res.status(400).json({
+      return res.status(404).json({
         errorType: 'Incorrect ID error!',
-        errorMsg: 'User with such ID does not exist.',
+        errorMessage: 'User with such ID does not exist.',
       })
     }
 
@@ -19,7 +19,7 @@ async function getUserDataWithId(req, res) {
     console.log(e.message)
     res.status(500).json({
       errorType: 'Server side error!',
-      errorMsg: e.message,
+      errorMessage: e.message,
     })
   }
 }
