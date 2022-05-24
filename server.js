@@ -10,12 +10,27 @@ if (process.env.NODE_ENV === 'development') {
   // dotenv.config({ path: './config.env' })
   require('dotenv').config()
 
-
   const morgan = require('morgan')
   app.use(morgan('dev'))
 }
 app.set('view engine', 'pug')
 app.use(express.static('public'))
+
+// Swagger
+const swaggerJsdoc = require('swagger-jsdoc')
+const swaggerUi = require('swagger-ui-express')
+const swaggerOptions = swaggerJsdoc({
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Motaka',
+      version: '1.0.0',
+    },
+  },
+  apis: ['./src/routes/*.js'],
+})
+
+app.use('/app-docs', swaggerUi.serve, swaggerUi.setup(swaggerOptions))
 
 // Cors and Middlewares
 const cors = require('cors') // Cross-Origin Resource Sharing
