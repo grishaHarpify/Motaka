@@ -161,10 +161,28 @@ html
             div &emsp;&emsp;"startDate": "2000-10-21" ,
             div &emsp;&emsp;"startTime": "10:30:00" , 
             div &emsp;&emsp;"duration": 2 , // indicates the job duration in hour
-            div &emsp;&emsp;"salary": {
-            div &emsp;&emsp;&emsp;&emsp;"currency": "AMD", // default="AMD"
-            div &emsp;&emsp;&emsp;&emsp;"cost": 15000
-            div &emsp;&emsp;},
+            div &emsp;&emsp;"salary": 19600
+            div &emsp;&emsp;"address": "something" , // [?]
+            div &emsp;&emsp;"category": "petWalking" ,
+            div &emsp;&emsp;"subCategories": ["subCat1", "subCat2"] // [?]
+            div }
+
+            div Request Headers ==> {
+            div &emsp;&emsp;"Authorization": "Bearer accessToken" , 
+            div }
+
+          //- Edit job
+          div.content-data(style="color: black") 
+            div Description [&&] ==> Edit job 
+            div Request URI ==> [AUTH]URI/jobs/:jobId
+            div Request Method ==> 
+              span(style="color: black") [PATCH] 
+
+            div Request Body [JSON] ==> {
+            div &emsp;&emsp;"startDate": "2000-10-21" ,
+            div &emsp;&emsp;"startTime": "10:30:00" , 
+            div &emsp;&emsp;"duration": 2 , // indicates the job duration in hour
+            div &emsp;&emsp;"salary": 15600
             div &emsp;&emsp;"address": "something" , // [?]
             div &emsp;&emsp;"category": "petWalking" ,
             div &emsp;&emsp;"subCategories": ["subCat1", "subCat2"] // [?]
@@ -210,14 +228,13 @@ html
             div Request URI ==> [AUTH]URI/jobs/:jobId/candidate
 
             div Request Method ==> 
-              span(style="color: black") [PATCH] 
+              span(style="color: black") [POST] 
             
             div Request Headers ==> {
             div &emsp;&emsp;"Authorization": "Bearer accessToken" , 
             div }
 
           //- Cancel job
-          //- Add new candidate in job
           div.content-data(style="color: black")
             div Description [&&] ==> Cancel job [set job status 'canceled']
             div Request URI ==> [AUTH]URI/jobs/:jobId

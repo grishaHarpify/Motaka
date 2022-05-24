@@ -43,10 +43,6 @@ async function getJobDataWithId(req, res) {
     // Find job with id
     let jobData = await JobModel.findById(jobId).populate('userId', 'firstName lastName email avatar')
 
-
-    console.log(jobId)
-    console.log(jobData)
-
     // Check job with such id exist or not
     if (!jobData) {
       return res.status(400).json({
@@ -101,17 +97,53 @@ async function createNewJob(req, res) {
   }
 }
 
-// Edit job data [USER] // in progress 
+// Edit job data [USER]  
 async function editJobWithId(req, res) {
   try {
     const { jobId } = req.params
+    const user = req.user
 
     // Get job data form DB
-    const jobData = await JobModel.findById(jobId).populate('userId', 'firstName lastName email avatar')
+    const jobFromDb = await JobModel.findById(jobId)
+
+    if (!jobFromDb) {
+      return res.status(400).json({
+        errorType: 'Incorrect ID error!',
+        errorMsg: 'Job with such ID does not exist.',
+      })
+    }
+
+    // Check job author and current user id
+    if (user._id.toString() !== jobFromDb.userId.toString()) {
+      return res.status(403).json({
+        errorType: 'Forbidden!',
+        errorMsg: 'The user is not the creator of this.',
+      })
+    }
+
+    if (jobFromDb.status !== 'open') {
+      return res.status(400).json({
+        errorType: 'Job status error!',
+        errorMsg: 'Job status is no longer open.',
+      })
+    }
+
+    // Get job new data
+    const jobNewData = {
+      ...req.body,
+      salary: {
+        cost: req.body.salary // salary from FRONT we put in DB -> salary.cost
+      }
+    }
+
+    // Edit job
+    await JobModel.findByIdAndUpdate(jobId, {
+      ...jobNewData
+    })
 
     res.json({
-      message: 'Job editing in progress.',
-      data: jobData,
+      message: 'Job successfully edited.',
+      data: jobFromDb
     })
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)

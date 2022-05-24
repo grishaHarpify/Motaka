@@ -57,10 +57,21 @@ jobsRouter.post(
 )
 
 // Edit job
-jobsRouter.patch('/:jobId', pathIdValidation, jobsController.editJobWithId)
+jobsRouter.patch('/:jobId',
+  isUser,
+  pathIdValidation,
+  validateStartDate,
+  validateStartTime,
+  validateDuration,
+  validateSalaryCost,
+  validateAddress,
+  validateCategory,
+  validateSubCategories,
+  jobValidationErrorHandler,
+  jobsController.editJobWithId)
 
 // Add new applicant to job
-jobsRouter.patch('/:jobId/candidate', isProvider, pathIdValidation, jobsController.addJobNewCandidate)
+jobsRouter.post('/:jobId/candidate', isProvider, pathIdValidation, jobsController.addJobNewCandidate)
 
 // Cancel job
 jobsRouter.delete('/:jobId', isUser, pathIdValidation, jobsController.cancelJob)
