@@ -138,7 +138,7 @@ async function getPhoneToResetPassword(req, res) {
     console.log('confirmCode --->', confirmCode, '<---')
 
     res.json({
-      message: `Password recovery code was send on the user phone number.`,
+      message: `Password recovery code was sended on the user phone number.`,
     })
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
@@ -174,7 +174,7 @@ async function resetPassword(req, res) {
     user.isPhoneVerified = true
     await user.save()
 
-    res.status(201).json({
+    res.json({
       message: 'Password was changed successfully.',
     })
   } catch (e) {
@@ -201,7 +201,7 @@ async function resendConfirmCode(req, res) {
     console.log('confirmCode --->', confirmCode, '<---')
 
     res.json({
-      message: `A new confirm code has been sent to phone number ${phone}.`,
+      message: 'A new confirm code has been sent to phone number.'
     })
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)

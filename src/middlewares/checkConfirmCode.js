@@ -18,6 +18,13 @@ async function checkConfirmCode(req, res, next) {
     // find user in DB
     const user = await UserModel.findOne({ phone })
 
+    if (!user) {
+      return res.status(404).json({
+        errorType: 'Incorrect data error!',
+        errorMessage: 'User with such phone number does not exist.',
+      })
+    }
+
     // get info about code from DB
     const codeInfo = await ConfirmCodeModel.findOne({ userId: user._id }).populate('userId')
 

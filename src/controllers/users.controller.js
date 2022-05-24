@@ -4,16 +4,16 @@ async function getUserDataWithId(req, res) {
   try {
     const { userId } = req.params
 
-    const userData = await UserModel.findById(userId)
+    const userFromDb = await UserModel.findById(userId)
 
-    if (!userData) {
+    if (!userFromDb) {
       return res.status(404).json({
         errorType: 'Incorrect ID error!',
         errorMessage: 'User with such ID does not exist.',
       })
     }
 
-    res.json({ data: userData })
+    res.json({ data: userFromDb })
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
     console.log(e.message)

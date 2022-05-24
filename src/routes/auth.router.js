@@ -104,6 +104,8 @@ module.exports = authRouter
  * components:
  *  tags:
  *   - name: Registration and authentication
+ *   - name: Forgot password
+ *   - name: Login and select role
  *  securitySchemes:
  *     access-token:
  *       type: http
@@ -121,7 +123,7 @@ module.exports = authRouter
  *      example: Reeves
  *     phone:
  *      type: string
- *      example: +374 94 785868
+ *      example: +374 77 630905
  *     email:
  *      type: string
  *      example: example@mail.ru
@@ -137,7 +139,8 @@ module.exports = authRouter
  *     isProvider:
  *      type: boolean
  *      example: false
- *   RegistrationValidationErrors:
+ *
+ *   RegistrationValidationSchema:
  *    type: object
  *    properties:
  *     errorType:
@@ -154,6 +157,7 @@ module.exports = authRouter
  *        "isUser filed must be boolean(true or false).",
  *        "One of isUser or isProvider fields must be true."
  *       ]
+ *
  *   VerifyPhoneSchema:
  *    type: object
  *    properties:
@@ -163,6 +167,7 @@ module.exports = authRouter
  *     confirmCode:
  *      type: string
  *      example: 154896
+ *
  *   ConfirmCodeValidationSchema:
  *    type: object
  *    properties:
@@ -177,12 +182,47 @@ module.exports = authRouter
  *        - User send the wrong confirm code.
  *        - Confirm code valid time is expired.
  *        - User have already used this code to change/recover your password.
+ *
+ *   PasswordValidationSchema:
+ *    type: object
+ *    properties:
+ *     errorType:
+ *      type: string
+ *      example: Validation error!
+ *     errorMessages:
+ *      type: array
+ *      example:
+ *       [
+ *        "Password is required field.",
+ *        "No spaces are allowed in the password.",
+ *        "Password must contain from 8 to 25 symbols.",
+ *        "Password must contain minimum one capital letter, minimum one small letter, minimum one number and minimum one special symbol like [#$@!%&*?=+-].",
+ *        "Password confirmation does not match with password."
+ *       ]
+ *
  *   ForgotPasswordSchema:
  *    type: object
  *    properties:
  *     phone:
  *      type: string
  *      example: +374 94 785868
+ *
+ *   ResetPasswordSchema:
+ *    type: object
+ *    properties:
+ *     phone:
+ *      type: string
+ *      example: +374 77 630905
+ *     confirmCode:
+ *      type: string
+ *      example: 158694
+ *     password:
+ *      type: string
+ *      example: Aa7777777++
+ *     passwordConfirm:
+ *      type: string
+ *      example: Aa7777777++
+ *
  *   LoginSchema:
  *    type: object
  *    properties:
@@ -192,35 +232,32 @@ module.exports = authRouter
  *     password:
  *      type: string
  *      example: Aa7777777++
- *   LoginValidationErrors:
+ *
+ *   LoginValidationSchema:
  *    type: object
  *    properties:
- *     errors:
+ *     errorType:
+ *      type: string
+ *      example: Validation error!
+ *     errorMessages:
  *      type: array
- *      items:
- *       type: string
- *    example:
- *     {
- *      "errors": [
- *       "email is not valid",
- *       "password must contain from 6 to 32 symbols"
- *      ]
- *     }
- *   LoginResponseSchema:
+ *      example:
+ *       [
+ *        "Phone number field cannot be left blank.",
+ *        "Incomplete or incorrect phone number. Phone number must be in format like (+374 xx xxxxxx).",
+ *        "Password filed cannot be left blank."
+ *       ]
+ *
+ *   IncorrectLoginDataSchema:
  *    type: object
  *    properties:
- *     message:
+ *     errorType:
  *      type: string
- *     access-token:
+ *      example: Incorrect data error!
+ *     errorMessage:
  *      type: string
- *     refresh-token:
- *      type: string
- *    example:
- *     {
- *      "message": "Login successfully completed",
- *      "access-token": "",
- *      "refresh-token": ""
- *     }
+ *      example: User have entered an incorrect phone and/or password.
+ *
  */
 
 
@@ -232,7 +269,7 @@ module.exports = authRouter
  *   tags: [Registration and authentication]
  *	  description: New user registration
  *	  requestBody:
- *	   description: User's personal data
+ *	   description: User personal data
  *	   required: true
  *	   content:
  *	    application/json:
@@ -256,7 +293,7 @@ module.exports = authRouter
  *	    content:
  *	     application/json:
  *       schema:
- *	       $ref: '#/components/schemas/RegistrationValidationErrors'
+ *	       $ref: '#/components/schemas/RegistrationValidationSchema'
  *    409:
  *	    description: Conflict
  *	    content:
@@ -314,6 +351,18 @@ module.exports = authRouter
  *	     application/json:
  *       schema:
  *	       $ref: '#/components/schemas/ConfirmCodeValidationSchema'
+ *    404:
+ *	    description: Not found
+ *	    content:
+ *	     application/json:
+ *       schema:
+ *         properties:
+ *           errorType:
+ *            type: string
+ *            example: Incorrect data error!
+ *           errorMessage:
+ *            type: string
+ *            example: User with such phone number does not exist.
  *    500:
  *	    description: Server side error
  *	    content:
@@ -334,8 +383,8 @@ module.exports = authRouter
  * @swagger
  * /forgot_password:
  *  post:
- *   tags: [Registration and authentication]
- *	  description: Forgot password 
+ *   tags: [Forgot password]
+ *	  description: Forgot password
  *	  requestBody:
  *	   description: User phone number
  *	   required: true
@@ -348,14 +397,14 @@ module.exports = authRouter
  *	      $ref: '#/components/schemas/ForgotPasswordSchema'
  *	  responses:
  *    200:
- *	    description: Created
+ *	    description: Code was sended to the user phone number
  *	    content:
  *	     application/json:
  *       schema:
  *         properties:
  *           message:
  *            type: string
- *            example: Registration success. Confirm code was sended in user phone number.
+ *            example: Password recovery code was sended on the user phone number.
  *    400:
  *	    description: Bad request
  *	    content:
@@ -372,16 +421,19 @@ module.exports = authRouter
  *            [
  *             "Phone number field cannot be left blank.",
  *             "Incomplete or incorrect phone number. Phone number must be in format like (+374 xx xxxxxx)."
- *            ]  
- *    409:
- *	    description: Conflict
+ *            ]
+ *    404:
+ *	    description: Not found
  *	    content:
  *	     application/json:
  *       schema:
  *         properties:
- *           message:
+ *           errorType:
  *            type: string
- *            example: Such phone/email already registered.
+ *            example: Incorrect data error!
+ *           errorMessage:
+ *            type: string
+ *            example: User with such phone number does not exist.
  *    500:
  *	    description: Server side error
  *	    content:
@@ -397,7 +449,180 @@ module.exports = authRouter
  *
  */
 
+// ===== reset_password =====
+/**
+ * @swagger
+ * /reset_password:
+ *  patch:
+ *   tags: [Forgot password]
+ *	  description: Reset password
+ *	  requestBody:
+ *	   description: User phone, confirmCode and new password
+ *	   required: true
+ *	   content:
+ *	    application/json:
+ *	     schema:
+ *	      $ref: '#/components/schemas/ResetPasswordSchema'
+ *	    application/x-www-form-urlencoded:
+ *	     schema:
+ *	      $ref: '#/components/schemas/ResetPasswordSchema'
+ *	  responses:
+ *    200:
+ *	    description: Password was changed successfully.
+ *	    content:
+ *	     application/json:
+ *       schema:
+ *         properties:
+ *           message:
+ *            type: string
+ *            example: Password was changed successfully.
+ *    400:
+ *	    description: Bad request
+ *	    content:
+ *	     application/json:
+ *       schema:
+ *         oneOf:
+ *           - $ref: '#/components/schemas/ConfirmCodeValidationSchema'
+ *           - $ref: '#/components/schemas/PasswordValidationSchema'
+ *    404:
+ *	    description: Not found
+ *	    content:
+ *	     application/json:
+ *       schema:
+ *         properties:
+ *           errorType:
+ *            type: string
+ *            example: Incorrect data error!
+ *           errorMessage:
+ *            type: string
+ *            example: User with such phone number does not exist.
+ *    500:
+ *	    description: Server side error
+ *	    content:
+ *	     application/json:
+ *       schema:
+ *         properties:
+ *           errorType:
+ *            type: string
+ *            example: Server side error!
+ *           errorMessage:
+ *            type: string
+ *            example: ...
+ *
+ */
 
+// ===== resend_code =====
+/**
+ * @swagger
+ * /resend_code:
+ *  post:
+ *   tags: [Forgot password]
+ *	  description: Resend code to the user phone number
+ *	  requestBody:
+ *	   description: User phone number
+ *	   required: true
+ *	   content:
+ *	    application/json:
+ *	     schema:
+ *         properties:
+ *           phone:
+ *            type: string
+ *            example: +374 77 630905
+ *
+ *	  responses:
+ *    200:
+ *	    description: A new code has been sent
+ *	    content:
+ *	     application/json:
+ *       schema:
+ *         properties:
+ *           message:
+ *            type: string
+ *            example: A new confirm code has been sent to phone number.
+ *    404:
+ *	    description: Not found
+ *	    content:
+ *	     application/json:
+ *       schema:
+ *         properties:
+ *           errorType:
+ *            type: string
+ *            example: Incorrect data error!
+ *           errorMessage:
+ *            type: string
+ *            example: User with such phone number does not exist.
+ *    500:
+ *	    description: Server side error
+ *	    content:
+ *	     application/json:
+ *       schema:
+ *         properties:
+ *           errorType:
+ *            type: string
+ *            example: Server side error!
+ *           errorMessage:
+ *            type: string
+ *            example: ...
+ *
+ */
 
-
+// ===== login ====
+/**
+ * @swagger
+ * /login:
+ *  post:
+ *   tags: [Login and select role]
+ *	  description: Login 
+ *	  requestBody:
+ *	   description: User phone and password
+ *	   required: true
+ *	   content:
+ *	    application/json:
+ *	     schema:
+ *	      $ref: '#/components/schemas/LoginSchema'
+ *	    application/x-www-form-urlencoded:
+ *	     schema:
+ *	      $ref: '#/components/schemas/LoginSchema'
+ *	  responses:
+ *    200:
+ *	    description: Login success
+ *	    content:
+ *	     application/json:
+ *       schema:
+ *         properties:
+ *           message:
+ *            type: string
+ *            example: Login success.
+ *           accessToken:
+ *            type: string
+ *            example: eyJhbGciOiJI.yJ1c2VySWQiOiI2Mjd.51IDb0V_ql7BUXgAw8ryg
+ *           availableRoles:
+ *            type: array
+ *            example: 
+ *              [
+ *                "user",
+ *                "provider"
+ *              ]
+ *    400:
+ *	    description: Bad request
+ *	    content:
+ *	     application/json:
+ *       schema:
+ *         oneOf:
+ *           - $ref: '#/components/schemas/LoginValidationSchema'
+ *           - $ref: '#/components/schemas/IncorrectLoginDataSchema'
+ *    500:
+ *	    description: Server side error
+ *	    content:
+ *	     application/json:
+ *       schema:
+ *         properties:
+ *           errorType:
+ *            type: string
+ *            example: Server side error!
+ *           errorMessage:
+ *            type: string
+ *            example: ...
+ *
+ */
 
