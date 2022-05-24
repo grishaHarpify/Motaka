@@ -258,6 +258,33 @@ module.exports = authRouter
  *      type: string
  *      example: User have entered an incorrect phone and/or password.
  *
+ *   ResetRoleSchema:
+ *    type: object
+ *    properties:
+ *     errorType:
+ *      type: string
+ *      example: Validation error!
+ *     errorMessages:
+ *      type: array
+ *      example:
+ *       [
+ *        "User must send role (only 'user' or 'provider').",
+ *        "Role can be only 'user' or 'provider'."
+ *       ]
+ *
+ *   VerifyJwtSchema:
+ *    type: object
+ *    properties:
+ *     errorType:
+ *      type: string
+ *      example: Validation error!
+ *     errorMessage:
+ *      type: string
+ *      example:
+ *        - Request must contain authorization header.
+ *        - Wrong authorization token.
+ *        - Authorization token is not valid.
+ *        - Authorization token date is expired.
  */
 
 
@@ -566,13 +593,13 @@ module.exports = authRouter
  *
  */
 
-// ===== login ====
+// ===== login =====
 /**
  * @swagger
  * /login:
  *  post:
  *   tags: [Login and select role]
- *	  description: Login 
+ *	  description: Login
  *	  requestBody:
  *	   description: User phone and password
  *	   required: true
@@ -598,7 +625,7 @@ module.exports = authRouter
  *            example: eyJhbGciOiJI.yJ1c2VySWQiOiI2Mjd.51IDb0V_ql7BUXgAw8ryg
  *           availableRoles:
  *            type: array
- *            example: 
+ *            example:
  *              [
  *                "user",
  *                "provider"
@@ -626,3 +653,67 @@ module.exports = authRouter
  *
  */
 
+// ===== set_role =====
+/**
+ * @swagger
+ * /set_role:
+ *  post:
+ *   tags: [Login and select role]
+ *   security:
+ *    - access-token: []
+ *	  description: Change user active role
+ *	  requestBody:
+ *	   description: The role the user wants to switch to
+ *	   required: true
+ *	   content:
+ *	    application/json:
+ *	     schema:
+ *         properties:
+ *           role:
+ *            type: string
+ *            example: user
+ *	  responses:
+ *    200:
+ *	    description: User active role was changed
+ *	    content:
+ *	     application/json:
+ *       schema:
+ *         properties:
+ *           message:
+ *            type: string
+ *            example: User active role was changed to <roleName>.
+ *    201:
+ *	    description:  The user has create a new role
+ *	    content:
+ *	     application/json:
+ *       schema:
+ *         properties:
+ *           message:
+ *            type: string
+ *            example: The user has create a new role <roleName> for himself and switched to it.
+ *    400:
+ *	    description: Bad request
+ *	    content:
+ *	     application/json:
+ *       schema:
+ *	       $ref: '#/components/schemas/ResetRoleSchema'
+ *    401:
+ *	    description: Unauthorized
+ *	    content:
+ *	     application/json:
+ *       schema:
+ *	       $ref: '#/components/schemas/VerifyJwtSchema'
+ *    500:
+ *	    description: Server side error
+ *	    content:
+ *	     application/json:
+ *       schema:
+ *         properties:
+ *           errorType:
+ *            type: string
+ *            example: Server side error!
+ *           errorMessage:
+ *            type: string
+ *            example: ...
+ *
+ */
