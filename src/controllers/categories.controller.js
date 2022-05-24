@@ -20,7 +20,6 @@ async function getAllCategories(req, res) {
   }
 }
 
-
 async function getCategoryDataWithId(req, res) {
   try {
     const { categoryId } = req.params
