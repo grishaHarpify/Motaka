@@ -17,6 +17,14 @@ async function register(req, res) {
   try {
     const { firstName, lastName, password, phone, email, isUser, isProvider } = req.body
 
+    // isUSer and isProvider validation
+    if (!isUser && !isProvider) {
+      return res.status(400).json({
+        errorType: 'Validation error!',
+        errorMessages: ['One of isUser or isProvider fields must be true.']
+      })
+    }
+
     // Check if exist user with such phone
     const existingUserPhone = await UserModel.findOne({
       phone,
@@ -24,8 +32,8 @@ async function register(req, res) {
     const userExistsPhone = existingUserPhone !== null
 
     if (userExistsPhone) {
-      return res.status(400).json({
-        message: 'This phone already registered.',
+      return res.status(409).json({
+        message: 'Such phone already registered.',
       })
     }
 
@@ -36,14 +44,8 @@ async function register(req, res) {
     const userExists = existingUser !== null
 
     if (userExists) {
-      return res.status(400).json({
-        message: 'This email already registered.',
-      })
-    }
-
-    if (!isUser && !isProvider) {
-      return res.status(400).json({
-        message: 'One of isUser or isProvider fields must be true.',
+      return res.status(409).json({
+        message: 'Such email already registered.',
       })
     }
 
@@ -71,9 +73,9 @@ async function register(req, res) {
     console.log('confirmCode --->', code, '<---')
 
     res.status(201).json({
-      message:
-        'Registration success. Confirm code was sended in your phone number.',
+      message: 'Registration success. Confirm code was sended in user phone number.',
     })
+
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
     console.log(e.message)
@@ -84,7 +86,7 @@ async function register(req, res) {
   }
 }
 
-async function phoneVerificationCode(req, res) {
+async function phoneVerification(req, res) {
   try {
     // const phone = req.body.phone
     const { phone } = req.body
@@ -397,7 +399,7 @@ async function setActiveRole(req, res) {
 
 module.exports = {
   register,
-  phoneVerificationCode,
+  phoneVerification,
   getPhoneToResetPassword,
   resetPassword,
   resendConfirmCode,

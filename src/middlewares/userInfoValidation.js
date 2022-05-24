@@ -57,7 +57,7 @@ const validatePassword = body('password')
   .custom((value) => !/\s/.test(value))
   .withMessage('No spaces are allowed in the password.')
   .isLength({ min: 8, max: 25 })
-  .withMessage('Password must contain from 8 to 25 symbols')
+  .withMessage('Password must contain from 8 to 25 symbols.')
   .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?=+-])([A-Za-z\d#$@!%&*?=+-]){8,30}$/)
   .withMessage(
     'Password must contain minimum one capital letter, minimum one small letter, minimum one number and minimum one special symbol like [#$@!%&*?=+-].'
@@ -106,14 +106,14 @@ function validationErrorHandler(req, res, next) {
         return acc
       }
       errorField = error.param
-      acc[`${error.param}Error`] = error.msg
+      acc.push(error.msg)
 
       return acc
-    }, {})
+    }, [])
 
     return res.status(400).json({
-      errorType: 'Incorrect data error!',
-      errorMsgObject: validationMsg,
+      errorType: 'Validation error!',
+      errorMessages: validationMsg,
     })
   }
 
