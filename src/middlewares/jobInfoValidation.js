@@ -28,15 +28,6 @@ const validateStartTime = body('startTime')
     return true
   })
 
-// old duration validation
-// const validateDuration = body('duration')
-//   .not()
-//   .isEmpty()
-//   .withMessage('Job duration date is required field.')
-//   .matches(/^\d+\s(minute|hour|day|week)$/)
-//   .withMessage('Job duration must be in format like (number minute/hour/day/week): Ex. 4 hour, 2 day, 1 week.')
-// =======
-
 const validateDuration = body('duration')
   .not()
   .isEmpty()
@@ -55,7 +46,7 @@ const validateSalaryCost = body('salary')
   .not()
   .isEmpty()
   .withMessage('Job salary is required field.')
-  .matches(/^\d+$/)
+  .matches(/^(?![0]\b)\d{0,}$/)
   .withMessage('Job salary must be positive number.')
 
 const validateAddress = body('address')
