@@ -4,7 +4,7 @@ const CategoryModel = require('../models/Category')
 async function getAllCategories(req, res) {
   try {
     // get all categories
-    const allCategories = await CategoryModel.find()
+    const allCategories = await CategoryModel.find().select('name subCategories')
 
     res.json({
       count: allCategories.length,

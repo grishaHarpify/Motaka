@@ -4,7 +4,7 @@ async function getUserDataWithId(req, res) {
   try {
     const { userId } = req.params
 
-    const userFromDb = await UserModel.findById(userId)
+    const userFromDb = await UserModel.findById(userId).select('role firstName lastName email phone')
 
     if (!userFromDb) {
       return res.status(404).json({

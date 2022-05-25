@@ -14,13 +14,12 @@ Job Categories
 
 /////// BUGS ///////
 // error messages with provider name 
-// job start date 
-// aranc phone u email validacnelu ojb stexcel
+// aranc phone u email validacnelu job stexcel
 
 
 /////// IN PROGRES ///////
 service provider -> 5 astx
-
+email validation
 
 
 
