@@ -20,8 +20,6 @@ const validateStartTime = body('startTime')
     const jobStartDate = new Date(dateAndTimeString)
 
     now.setHours(now.getHours() + 4)
-    console.log(now, '   now')
-    console.log(jobStartDate, '   jobStartDate')
 
     if (now > jobStartDate) {
       const dateNow = now.toLocaleDateString().split('T')[0]
