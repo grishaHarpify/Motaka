@@ -20,7 +20,7 @@ const validateStartTime = body('startTime')
     const jobStartDate = new Date(dateAndTimeString)
 
     if (now > jobStartDate) {
-      const dateNow = now.toISOString().split('T')[0]
+      const dateNow = now.toString().split('T')[0]
       const timeNow = now.toLocaleTimeString()
       throw new Error(`Job start date must be after then ${dateNow} ${timeNow}.`)
     }
