@@ -30,6 +30,26 @@ module.exports = categoriesRouter
  *       scheme: bearer
  *       bearerFormat: JWT
  *  schemas:
+ *   CategoryDataSchema:
+ *    type: object
+ *    properties:
+ *      data:
+ *        type: object
+ *        properties:
+ *          _id:
+ *            type: string
+ *            example: 627bc0d775b8d002007772a1
+ *          name:
+ *            type: string
+ *            example: cleaning
+ *          subCategories:
+ *            type: array
+ *            example:
+ *              [
+ *                subCategory1,
+ *                subCategory2,
+ *                ...
+ *              ]
  *
  *   VerifyJwtSchema:
  *    type: object
@@ -109,22 +129,7 @@ module.exports = categoriesRouter
  *       content:
  *         application/json:
  *          schema:
- *            type: object
- *            properties: 
- *              _id: 
- *                type: string
- *                example: 627bc0d775b8d002007772a1
- *              name:
- *                type: string
- *                example: petWalking
- *              subCategories:
- *                type: array
- *                items: string
- *                example: 
- *                  [
- *                    "dogWalking",
- *                    "catWalking"
- *                  ]
+ *           $ref: '#/components/schemas/CategoryDataSchema'
  *              
  *     404:
  *	     description: Not found

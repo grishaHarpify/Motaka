@@ -41,7 +41,7 @@ async function getJobDataWithId(req, res) {
     const { jobId } = req.params
 
     // Find job with id
-    let jobData = await JobModel.findById(jobId).populate('userId', 'firstName lastName email avatar')
+    let jobData = await JobModel.findById(jobId).select('salary startDate duration address category subCategories userId status')
 
     // Check job with such id exist or not
     if (!jobData) {
@@ -52,7 +52,7 @@ async function getJobDataWithId(req, res) {
     }
 
     res.json({
-      jobData,
+      data: jobData,
     })
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)

@@ -35,7 +35,7 @@ async function getCategoryDataWithId(req, res) {
     }
 
     res.json({
-      categoryData
+      data: categoryData
     })
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
