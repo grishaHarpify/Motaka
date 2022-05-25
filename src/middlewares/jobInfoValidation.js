@@ -19,13 +19,11 @@ const validateStartTime = body('startTime')
     const dateAndTimeString = `${req.body.startDate}T${time}`
     const jobStartDate = new Date(dateAndTimeString)
 
-    console.log(now.toISOString())
-    console.log(jobStartDate.toISOString())
-    console.log(new Date(now.toISOString()))
-    console.log(new Date(jobStartDate.toISOString()))
-    console.log(now > jobStartDate)
+    now.setHours(now.getHours() + 4)
+    console.log(now, '   now')
+    console.log(jobStartDate, '   jobStartDate')
 
-    if (new Date(now.toISOString()) > new Date(jobStartDate.toISOString())) {
+    if (now > jobStartDate) {
       const dateNow = now.toLocaleDateString().split('T')[0]
       const timeNow = now.toLocaleTimeString()
       throw new Error(`Job start date must be after then ${dateNow} ${timeNow}.`)
