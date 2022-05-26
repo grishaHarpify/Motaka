@@ -64,7 +64,7 @@ async function checkPhoneConfirmCode(req, res, next) {
       // This code already used
       return res.status(400).json({
         errorType: 'Confirm code error!',
-        errorMessage: 'User have already used this code to change/recover your password.',
+        errorMessage: 'User have already used this code.',
       })
     }
 

@@ -197,6 +197,7 @@ module.exports = authRouter
  *        - User send the wrong confirm code.
  *        - Confirm code valid time is expired.
  *        - User have already used this code.
+ *        - User phone number (or email) already verified.
  *
  *   PasswordValidationSchema:
  *    type: object

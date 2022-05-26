@@ -128,6 +128,16 @@ async function phoneVerification(req, res) {
 
     // change user phone info in DB
     const user = await UserModel.findOne({ phone })
+
+    // Check phone already verified or no
+    if (user.isPhoneVerified) {
+      return res.status(400).json({
+        errorType: 'Verified error!',
+        errorMessage: 'User phone number already verified.'
+      })
+    }
+
+    // Change isPhoneVerified in DB
     user.isPhoneVerified = true
     await user.save()
 
@@ -192,6 +202,16 @@ async function emailVerification(req, res) {
 
     // change user phone info in DB
     const user = await UserModel.findOne({ email })
+
+    // Check phone already verified or no
+    if (user.isEmailVerified) {
+      return res.status(400).json({
+        errorType: 'Verified error!',
+        errorMessage: 'User email already verified.'
+      })
+    }
+
+    // Change isEmailVerified in DB
     user.isEmailVerified = true
     await user.save()
 

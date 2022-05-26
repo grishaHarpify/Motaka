@@ -79,23 +79,30 @@ html
             div &emsp;&emsp;"password": "********"
             div }
 
-          //- ============================ Reset Password ============================
-          div.requestBlockName [ Reset password ]
-            
-          //- Send sms to phone to reset password 	                   
-          div.content-data  
-            div Description ==> Send sms to phone to reset password
-            div Request URI ==> URI/forgot_password
+          //- ============================ Register and Forgot Password ============================
+          div.requestBlockName [ Register and Forgot Password ]
+
+          //- Register
+          div.content-data
+            div Description ==> Register to the site
+            div Request URI ==> URI/register
             div Request Method ==> 
               span(style="color: black") [POST] 
 
             div Request Body [JSON] ==> {
-            div &emsp;&emsp;"phone": "+374 ** ******"
+            div &emsp;&emsp;"fistName": "*****" ,
+            div &emsp;&emsp;"lastName": "*****" , 
+            div &emsp;&emsp;"password": "********" , 
+            div &emsp;&emsp;"passwordConfirm": "********" ,
+            div &emsp;&emsp;"phone": "+374 ** ******" , 
+            div &emsp;&emsp;"email": "*****@mail.ru" ,
+            div &emsp;&emsp;"isUser": true ,
+            div &emsp;&emsp;"isProvider": false    
             div }
-
-          //- Send the code and set a new password 	                   
+          
+          //- Reset new password 	                   
           div.content-data  
-            div Description ==> Send the code and set a new password
+            div Description ==> Reset password [forgot password]
             div Request URI ==> URI/reset_password
             div Request Method ==> 
               span(style="color: black") [PATCH] 
@@ -106,16 +113,41 @@ html
             div &emsp;&emsp;"password": "********" ,
             div &emsp;&emsp;"passwordConfirm": "********"
             div }
-          
-          //- Send confirm code again 	                   
+
+          //- ============================ Verify ============================
+          div.requestBlockName [ Verify ]
+            
+          //- Send code to phone number                
           div.content-data  
-            div Description ==> Send confirm code again
-            div Request URI ==> URI/resend_code
+            div Description ==> Send code to phone number 
+            div Request URI ==> URI/send_code_phone
             div Request Method ==> 
               span(style="color: black") [POST] 
 
             div Request Body [JSON] ==> {
-            div &emsp;&emsp;"phone": "+374 ** ******" , // [!!]
+            div &emsp;&emsp;"phone": "+374 ** ******"
+            div }
+          
+          //- Verify phone
+          div.content-data  
+            div Description ==> Verify phone
+            div Request URI ==> URI/verify_phone
+            div Request Method ==> 
+              span(style="color: black") [POST] 
+
+            div Request Body [JSON] ==> {
+            div &emsp;&emsp;"email": "example@mail.ru"
+            div }
+
+          //- Send code to email               
+          div.content-data  
+            div Description ==> Send code to email 
+            div Request URI ==> URI/send_code_email
+            div Request Method ==> 
+              span(style="color: black") [POST] 
+
+            div Request Body [JSON] ==> {
+            div &emsp;&emsp;"email": "example@mail.ru"
             div }
 
           //- ============================ Select Role ============================
