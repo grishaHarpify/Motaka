@@ -35,11 +35,12 @@ jobsRouter.get('/',
   jobsController.getAllJobs)
 
 // Get job data with id
-jobsRouter.get('/:jobId', pathIdValidation, jobsController.getJobDataWithId)
+jobsRouter.get('/:jobId',
+  pathIdValidation,
+  jobsController.getJobDataWithId)
 
-// Create new job [USER]
-jobsRouter.post(
-  '/',
+// Create new job 
+jobsRouter.post('/',
   isUser,
   validateStartDate,
   validateStartTime,
@@ -49,8 +50,7 @@ jobsRouter.post(
   validateCategory,
   validateSubCategories,
   jobValidationErrorHandler,
-  jobsController.createNewJob
-)
+  jobsController.createNewJob)
 
 // Edit job
 jobsRouter.patch('/:jobId',
@@ -67,10 +67,15 @@ jobsRouter.patch('/:jobId',
   jobsController.editJobWithId)
 
 // Add new applicant to job
-jobsRouter.post('/:jobId/candidate', isProvider, pathIdValidation, jobsController.addJobNewCandidate)
+jobsRouter.post('/:jobId/candidate',
+  isProvider,
+  pathIdValidation,
+  jobsController.addJobNewCandidate)
 
 // Cancel job
-jobsRouter.delete('/:jobId', isUser, pathIdValidation, jobsController.cancelJob)
+jobsRouter.delete('/:jobId',
+  isUser, pathIdValidation,
+  jobsController.cancelJob)
 
 module.exports = jobsRouter
 
@@ -158,6 +163,16 @@ module.exports = jobsRouter
  *            type: enum
  *            example: open
  *
+ *   NoOpenStatusSchema:
+ *    type: object
+ *    properties:
+ *     errorType:
+ *      type: string
+ *      example: Job status error!
+ *     errorMessage:
+ *      type: string
+ *      example: Job status is no longer open.
+ *
  *   JobValidationSchema:
  *    type: object
  *    properties:
@@ -180,7 +195,7 @@ module.exports = jobsRouter
  *    properties:
  *     errorType:
  *      type: string
- *      example: Validation error!
+ *      example: JWT error!
  *     errorMessage:
  *      type: string
  *      example:
@@ -192,8 +207,9 @@ module.exports = jobsRouter
 
 
 // ===== jobs/ ===== (get all jobs ???)
+// ???
 
-// ===== jobs/:jobId =====
+// ===== jobs/:jobId ===== get
 /**
  * @swagger
  * /jobs/{jobId}:
@@ -263,7 +279,7 @@ module.exports = jobsRouter
  *
  */
 
-// ===== jobs ===== 
+// ===== jobs ===== post
 /**
  * @swagger
  * /jobs:
@@ -319,7 +335,7 @@ module.exports = jobsRouter
  *             errorMessage:
  *              type: string
  *              example: Only users with an active role [user] have access in this route.
- *  
+ *
  *     500:
  *	     description: Server side error
  *	     content:
@@ -335,4 +351,175 @@ module.exports = jobsRouter
  *
  */
 
+// ===== jobs/:jobId ===== patch
+/**
+* @swagger
+* /jobs/{jobId}:
+*  patch:
+*   tags: [Jobs]
+*   security:
+*    - access-token: []
+*   description: Edit existing job data
+*	  requestBody:
+*	   description: Job new data
+*	   required: true
+*	   content:
+*	    application/json:
+*	     schema:
+*	      $ref: '#/components/schemas/NewJobSchema'
+*	    application/x-www-form-urlencoded:
+*	     schema:
+*	      $ref: '#/components/schemas/NewJobSchema'
+*   parameters:
+*   - name: jobId
+*     in: path
+*     description: Id of the job what need to edit.
+*     required: true
+*     type: id
+*
+*   responses:
+*     200:
+*	     description: Job successfully edited.
+*	     content:
+*	       application/json:
+*         schema:
+*           properties:
+*             message:
+*              type: string
+*              example: Job successfully edited.
 
+*     400:
+*	     description: Bad request
+*	     content:
+*	       application/json:
+*         schema:
+*          $ref: '#/components/schemas/JobValidationSchema'
+*
+*     401:
+*	     description: Unauthorized
+*	     content:
+*	       application/json:
+*         schema:
+*          $ref: '#/components/schemas/VerifyJwtSchema'
+*
+*     403:
+*	     description: Forbidden
+*	     content:
+*	       application/json:
+*         schema:
+*           properties:
+*             errorType:
+*              type: string
+*              example: Forbidden!
+*             errorMessage:
+*              type: string
+*              example:
+*                - Only users with an active role [user] have access in this route.
+*                - The user is not the creator of this job.
+*
+*     404:
+*	     description: Not found
+*	     content:
+*	       application/json:
+*         schema:
+*           properties:
+*             errorType:
+*              type: string
+*              example: Incorrect ID error!
+*             errorMessage:
+*              type: string
+*              example: Job with such ID does not exist.
+*
+*     500:
+*	     description: Server side error
+*	     content:
+*	       application/json:
+*         schema:
+*           properties:
+*             errorType:
+*              type: string
+*              example: Server side error!
+*             errorMessage:
+*              type: string
+*              example: ...
+*
+*/
+
+// ===== jobs/:jobId/candidate ===== post
+/**
+* @swagger
+* /jobs/{jobId}/candidate:
+*  post:
+*   tags: [Jobs]
+*   security:
+*    - access-token: []
+*   description: Edit existing job data
+*	  requestBody:
+*	   description: Job new data
+*	   required: true
+*	   content:
+*	    application/json:
+*	     schema:
+*	      $ref: '#/components/schemas/NewJobSchema'
+*	    application/x-www-form-urlencoded:
+*	     schema:
+*	      $ref: '#/components/schemas/NewJobSchema'
+*   parameters:
+*   - name: jobId
+*     in: path
+*     description: Id of the job what need to edit.
+*     required: true
+*     type: id
+*
+*   responses:
+*     200:
+*	     description: Job successfully edited.
+*	     content:
+*	       application/json:
+*         schema:
+*           properties:
+*             message:
+*              type: string
+*              example: Job successfully edited.
+
+*     400:
+*	     description: Bad request
+*	     content:
+*	       application/json:
+*         schema:
+*          $ref: '#/components/schemas/JobValidationSchema'
+*
+*     401:
+*	     description: Unauthorized
+*	     content:
+*	       application/json:
+*         schema:
+*          $ref: '#/components/schemas/VerifyJwtSchema'
+*
+*     403:
+*	     description: Forbidden
+*	     content:
+*	       application/json:
+*         schema:
+*           properties:
+*             errorType:
+*              type: string
+*              example: Forbidden!
+*             errorMessage:
+*              type: string
+*              example: Only users with an active role [user] have access in this route.
+*  
+*     500:
+*	     description: Server side error
+*	     content:
+*	       application/json:
+*         schema:
+*           properties:
+*             errorType:
+*              type: string
+*              example: Server side error!
+*             errorMessage:
+*              type: string
+*              example: ...
+*
+*/
