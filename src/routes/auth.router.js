@@ -108,8 +108,8 @@ module.exports = authRouter
  * @swagger
  * components:
  *  tags:
- *   - name: Registration and authentication
- *   - name: Forgot password
+ *   - name: Registration and Forgot password
+ *   - name: Verification
  *   - name: Login and select role
  *  securitySchemes:
  *     access-token:
@@ -173,6 +173,16 @@ module.exports = authRouter
  *      type: string
  *      example: 154896
  *
+ *   VerifyEmailSchema:
+ *    type: object
+ *    properties:
+ *     email:
+ *      type: string
+ *      example: example@mail.ru
+ *     confirmCode:
+ *      type: string
+ *      example: 154896
+ *
  *   ConfirmCodeValidationSchema:
  *    type: object
  *    properties:
@@ -183,10 +193,10 @@ module.exports = authRouter
  *      type: string
  *      example:
  *        - Request body must contain confirm code.
- *        - In first user must send the code to your phone number.
+ *        - In first user must send the code.
  *        - User send the wrong confirm code.
  *        - Confirm code valid time is expired.
- *        - User have already used this code to change/recover your password.
+ *        - User have already used this code.
  *
  *   PasswordValidationSchema:
  *    type: object
@@ -204,13 +214,6 @@ module.exports = authRouter
  *        "Password must contain minimum one capital letter, minimum one small letter, minimum one number and minimum one special symbol like [#$@!%&*?=+-].",
  *        "Password confirmation does not match with password."
  *       ]
- *
- *   ForgotPasswordSchema:
- *    type: object
- *    properties:
- *     phone:
- *      type: string
- *      example: +374 94 785868
  *
  *   ResetPasswordSchema:
  *    type: object
@@ -298,7 +301,7 @@ module.exports = authRouter
  * @swagger
  * /register:
  *  post:
- *   tags: [Registration and authentication]
+ *   tags: [Registration and Forgot password]
  *	  description: New user registration
  *	  requestBody:
  *	   description: User personal data
@@ -350,143 +353,12 @@ module.exports = authRouter
  *
  */
 
-// ===== verify_phone =====
-/**
- * @swagger
- * /verify_phone:
- *  post:
- *   tags: [Registration and authentication]
- *	  description: User phone number verification
- *	  requestBody:
- *	   description: User phone number and confirm code
- *	   required: true
- *	   content:
- *	    application/json:
- *	     schema:
- *	      $ref: '#/components/schemas/VerifyPhoneSchema'
- *	    application/x-www-form-urlencoded:
- *	     schema:
- *	      $ref: '#/components/schemas/VerifyPhoneSchema'
- *	  responses:
- *    201:
- *	    description: Phone verified
- *	    content:
- *	     application/json:
- *       schema:
- *         properties:
- *           message:
- *            type: string
- *            example: User send right code and phone number has been verified.
- *    400:
- *	    description: Bad request
- *	    content:
- *	     application/json:
- *       schema:
- *	       $ref: '#/components/schemas/ConfirmCodeValidationSchema'
- *    404:
- *	    description: Not found
- *	    content:
- *	     application/json:
- *       schema:
- *         properties:
- *           errorType:
- *            type: string
- *            example: Incorrect data error!
- *           errorMessage:
- *            type: string
- *            example: User with such phone number does not exist.
- *    500:
- *	    description: Server side error
- *	    content:
- *	     application/json:
- *       schema:
- *         properties:
- *           errorType:
- *            type: string
- *            example: Server side error!
- *           errorMessage:
- *            type: string
- *            example: ...
- *
- */
-
-// ===== forgot_password =====
-/**
- * @swagger
- * /forgot_password:
- *  post:
- *   tags: [Forgot password]
- *	  description: Forgot password
- *	  requestBody:
- *	   description: User phone number
- *	   required: true
- *	   content:
- *	    application/json:
- *	     schema:
- *	      $ref: '#/components/schemas/ForgotPasswordSchema'
- *	    application/x-www-form-urlencoded:
- *	     schema:
- *	      $ref: '#/components/schemas/ForgotPasswordSchema'
- *	  responses:
- *    200:
- *	    description: Code was sended to the user phone number
- *	    content:
- *	     application/json:
- *       schema:
- *         properties:
- *           message:
- *            type: string
- *            example: Password recovery code was sended on the user phone number.
- *    400:
- *	    description: Bad request
- *	    content:
- *	     application/json:
- *       schema:
- *         type: object
- *         properties:
- *          errorType:
- *           type: string
- *           example: Validation error!
- *          errorMessages:
- *           type: array
- *           example:
- *            [
- *             "Phone number field cannot be left blank.",
- *             "Incomplete or incorrect phone number. Phone number must be in format like (+374 xx xxxxxx)."
- *            ]
- *    404:
- *	    description: Not found
- *	    content:
- *	     application/json:
- *       schema:
- *         properties:
- *           errorType:
- *            type: string
- *            example: Incorrect data error!
- *           errorMessage:
- *            type: string
- *            example: User with such phone number does not exist.
- *    500:
- *	    description: Server side error
- *	    content:
- *	     application/json:
- *       schema:
- *         properties:
- *           errorType:
- *            type: string
- *            example: Server side error!
- *           errorMessage:
- *            type: string
- *            example: ...
- *
- */
-
 // ===== reset_password =====
 /**
  * @swagger
  * /reset_password:
  *  patch:
- *   tags: [Forgot password]
+ *   tags: [Registration and Forgot password]
  *	  description: Reset password
  *	  requestBody:
  *	   description: User phone, confirmCode and new password
@@ -543,34 +415,51 @@ module.exports = authRouter
  *
  */
 
-// ===== resend_code =====
+// ===== send_code_phone =====
 /**
  * @swagger
- * /resend_code:
+ * /send_code_phone:
  *  post:
- *   tags: [Forgot password]
- *	  description: Resend code to the user phone number
+ *   tags: [Verification]
+ *	  description: Send code to user phone number
  *	  requestBody:
  *	   description: User phone number
  *	   required: true
  *	   content:
- *	    application/json:
- *	     schema:
+ *	     application/json:
+ *       schema:
  *         properties:
  *           phone:
  *            type: string
- *            example: +374 77 630905
+ *            example: +374 77 659516
  *
  *	  responses:
  *    200:
- *	    description: A new code has been sent
+ *	    description: Success
  *	    content:
  *	     application/json:
  *       schema:
  *         properties:
  *           message:
  *            type: string
- *            example: A new confirm code has been sent to phone number.
+ *            example: Confirm code was sent on the user phone number.
+ *    400:
+ *	    description: Bad request
+ *	    content:
+ *	     application/json:
+ *       schema:
+ *         type: object
+ *         properties:
+ *          errorType:
+ *           type: string
+ *           example: Validation error!
+ *          errorMessages:
+ *           type: array
+ *           example:
+ *            [
+ *             "Phone number field cannot be left blank.",
+ *             "Incomplete or incorrect phone number. Phone number must be in format like (+374 xx xxxxxx)."
+ *            ]
  *    404:
  *	    description: Not found
  *	    content:
@@ -583,6 +472,201 @@ module.exports = authRouter
  *           errorMessage:
  *            type: string
  *            example: User with such phone number does not exist.
+ *
+ *    500:
+ *	    description: Server side error
+ *	    content:
+ *	     application/json:
+ *       schema:
+ *         properties:
+ *           errorType:
+ *            type: string
+ *            example: Server side error!
+ *           errorMessage:
+ *            type: string
+ *            example: ...
+ *
+ */
+
+// ===== verify_phone =====
+/**
+ * @swagger
+ * /verify_phone:
+ *  post:
+ *   tags: [Verification]
+ *	  description: User phone number verification
+ *	  requestBody:
+ *	   description: User phone number and confirm code
+ *	   required: true
+ *	   content:
+ *	    application/json:
+ *	     schema:
+ *	      $ref: '#/components/schemas/VerifyPhoneSchema'
+ *	    application/x-www-form-urlencoded:
+ *	     schema:
+ *	      $ref: '#/components/schemas/VerifyPhoneSchema'
+ *	  responses:
+ *    200:
+ *	    description: Phone verified
+ *	    content:
+ *	     application/json:
+ *       schema:
+ *         properties:
+ *           message:
+ *            type: string
+ *            example: User sent right code and phone number has been verified.
+ *    400:
+ *	    description: Bad request
+ *	    content:
+ *	     application/json:
+ *       schema:
+ *	       $ref: '#/components/schemas/ConfirmCodeValidationSchema'
+ *    404:
+ *	    description: Not found
+ *	    content:
+ *	     application/json:
+ *       schema:
+ *         properties:
+ *           errorType:
+ *            type: string
+ *            example: Incorrect data error!
+ *           errorMessage:
+ *            type: string
+ *            example: User with such phone number does not exist.
+ *    500:
+ *	    description: Server side error
+ *	    content:
+ *	     application/json:
+ *       schema:
+ *         properties:
+ *           errorType:
+ *            type: string
+ *            example: Server side error!
+ *           errorMessage:
+ *            type: string
+ *            example: ...
+ *
+ */
+
+// ===== send_code_email =====
+/**
+ * @swagger
+ * /send_code_email:
+ *  post:
+ *   tags: [Verification]
+ *	  description: Send code to user email
+ *	  requestBody:
+ *	   description: User email
+ *	   required: true
+ *	   content:
+ *	     application/json:
+ *       schema:
+ *         properties:
+ *           email:
+ *            type: string
+ *            example: example@mail.ru
+ *
+ *	  responses:
+ *    200:
+ *	    description: Success
+ *	    content:
+ *	     application/json:
+ *       schema:
+ *         properties:
+ *           message:
+ *            type: string
+ *            example: Confirm code was sent on the user email.
+ *
+ *    400:
+ *	    description: Bad request
+ *	    content:
+ *	     application/json:
+ *       schema:
+ *         type: object
+ *         properties:
+ *          errorType:
+ *           type: string
+ *           example: Validation error!
+ *          errorMessages:
+ *           type: array
+ *           example:
+ *            [
+ *             "Email is required field.",
+ *             "Invalid email format."
+ *            ]
+ *    404:
+ *	    description: Not found
+ *	    content:
+ *	     application/json:
+ *       schema:
+ *         properties:
+ *           errorType:
+ *            type: string
+ *            example: Incorrect data error!
+ *           errorMessage:
+ *            type: string
+ *            example: User with such email does not exist.
+ *
+ *    500:
+ *	    description: Server side error
+ *	    content:
+ *	     application/json:
+ *       schema:
+ *         properties:
+ *           errorType:
+ *            type: string
+ *            example: Server side error!
+ *           errorMessage:
+ *            type: string
+ *            example: ...
+ *
+ */
+
+// ===== verify_email =====
+/**
+ * @swagger
+ * /verify_email:
+ *  post:
+ *   tags: [Verification]
+ *	  description: User email verification
+ *	  requestBody:
+ *	   description: User email and confirm code
+ *	   required: true
+ *	   content:
+ *	    application/json:
+ *	     schema:
+ *	      $ref: '#/components/schemas/VerifyEmailSchema'
+ *	    application/x-www-form-urlencoded:
+ *	     schema:
+ *	      $ref: '#/components/schemas/VerifyEmailSchema'
+ *	  responses:
+ *    200:
+ *	    description: Email verified
+ *	    content:
+ *	     application/json:
+ *       schema:
+ *         properties:
+ *           message:
+ *            type: string
+ *            example: User sent right code and email has been verified.
+ *    400:
+ *	    description: Bad request
+ *	    content:
+ *	     application/json:
+ *       schema:
+ *	       $ref: '#/components/schemas/ConfirmCodeValidationSchema'
+ *    404:
+ *	    description: Not found
+ *	    content:
+ *	     application/json:
+ *       schema:
+ *         properties:
+ *           errorType:
+ *            type: string
+ *            example: Incorrect data error!
+ *           errorMessage:
+ *            type: string
+ *            example: User with such email does not exist.
  *    500:
  *	    description: Server side error
  *	    content:
