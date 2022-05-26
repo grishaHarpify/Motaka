@@ -109,7 +109,7 @@ async function sendConfirmCodeToPhoneNumber(req, res) {
     console.log('confirmCode --->', confirmCode, '<---')
 
     res.json({
-      message: `Confirm code was sended on the user phone number.`,
+      message: `Confirm code was sent on the user phone number.`,
     })
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
@@ -139,7 +139,7 @@ async function phoneVerification(req, res) {
     await codeInfo.save()
 
     res.json({
-      message: 'User send right code and phone number has been verified.'
+      message: 'User sent right code and phone number has been verified.'
     })
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
@@ -173,7 +173,7 @@ async function sendConfirmCodeToEmail(req, res) {
     console.log('confirmCode --->', confirmCode, '<---')
 
     res.json({
-      message: `Confirm code was sended on the user email.`,
+      message: `Confirm code was sent on the user email.`,
     })
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
@@ -203,7 +203,7 @@ async function emailVerification(req, res) {
     await codeInfo.save()
 
     res.json({
-      message: 'User send right code and email has been verified.'
+      message: 'User sent right code and email has been verified.'
     })
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)

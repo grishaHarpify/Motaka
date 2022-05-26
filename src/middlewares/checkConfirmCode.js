@@ -83,7 +83,7 @@ async function checkPhoneConfirmCode(req, res, next) {
 async function checkEmailConfirmCode(req, res, next) {
   try {
     // get confirmCode and phone from req.body
-    const { confirmCode, phone } = req.body
+    const { confirmCode, email } = req.body
 
     // Check we have code or not
     if (!confirmCode) {
@@ -94,12 +94,12 @@ async function checkEmailConfirmCode(req, res, next) {
     }
 
     // find user in DB
-    const user = await UserModel.findOne({ phone })
+    const user = await UserModel.findOne({ email })
 
     if (!user) {
       return res.status(404).json({
         errorType: 'Incorrect data error!',
-        errorMessage: 'User with such phone number does not exist.',
+        errorMessage: 'User with such email does not exist.',
       })
     }
 
@@ -110,7 +110,7 @@ async function checkEmailConfirmCode(req, res, next) {
     if (!codeInfo) {
       return res.status(400).json({
         errorType: 'Confirm code error!',
-        errorMessage: 'In first user must send the code to your phone number.',
+        errorMessage: 'In first user must send the code to your email.',
       })
     }
 
@@ -142,7 +142,7 @@ async function checkEmailConfirmCode(req, res, next) {
       // This code already used
       return res.status(400).json({
         errorType: 'Confirm code error!',
-        errorMessage: 'User have already used this code to change/recover your password.',
+        errorMessage: 'User have already used this code.',
       })
     }
 

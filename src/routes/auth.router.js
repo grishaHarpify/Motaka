@@ -50,21 +50,28 @@ authRouter.post('/send_code_phone',
 
 // Phone number verification
 authRouter.post('/verify_phone',
+  validateLoginPhone,
+  validationErrorHandler,
   checkPhoneConfirmCode,
   authController.phoneVerification)
 
 // Send code to mail
 authRouter.post('/send_code_email',
+  validateEmail,
+  validationErrorHandler,
   authController.sendConfirmCodeToEmail)
 
 // Email verification
 authRouter.post('/verify_email',
+  validateEmail,
+  validationErrorHandler,
   checkEmailConfirmCode,
   authController.emailVerification)
 
 // Send code and reset password
 authRouter.patch('/reset_password',
   checkPhoneConfirmCode,
+  validateLoginPhone, // this is not only for login
   validatePassword,
   validatePasswordConfirm,
   validationErrorHandler,
