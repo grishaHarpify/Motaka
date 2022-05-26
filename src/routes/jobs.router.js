@@ -86,7 +86,37 @@ module.exports = jobsRouter
  *       scheme: bearer
  *       bearerFormat: JWT
  *  schemas:
- *   JobDataSchema:
+ *   NewJobSchema:
+ *    type: object
+ *    properties:
+ *      startDate:
+ *        type: string
+ *        example: 2023-03-23
+ *      startTime:
+ *        type: string
+ *        example: 13:13:13
+ *      duration:
+ *        type: number
+ *        example: 3
+ *      salary:
+ *        type: number
+ *        example: 17077
+ *      address:
+ *        type: string
+ *        example: Xanjyan
+ *      category:
+ *        type: string
+ *        example: cleaning
+ *      subCategories:
+ *        type: array
+ *        example:
+ *          [
+ *            subCategory1,
+ *            subCategory2,
+ *             ...
+ *          ]
+ *
+ *   GetJobDataSchema:
  *    type: object
  *    properties:
  *      data:
@@ -128,6 +158,23 @@ module.exports = jobsRouter
  *            type: enum
  *            example: open
  *
+ *   JobValidationSchema:
+ *    type: object
+ *    properties:
+ *     errorType:
+ *      type: string
+ *      example: Validation error!
+ *     errorMessages:
+ *      type: array
+ *      example:
+ *       [
+ *        "Job start date is required field.",
+ *        "Job start time must be in format like (hh:mm:ss): Ex. 15:30:00",
+ *        "Duration field must be a number that indicates the job duration in hour [Except 0].",
+ *        "Job salary is required field.",
+ *        "Job category is required field. Allowed job categories: ([cleaning] [repairing] [plumbing] [petWalking] [ironing])"
+ *       ]
+ *
  *   VerifyJwtSchema:
  *    type: object
  *    properties:
@@ -167,7 +214,7 @@ module.exports = jobsRouter
  *	     content:
  *	       application/json:
  *         schema:
- *          $ref: '#/components/schemas/JobDataSchema'
+ *          $ref: '#/components/schemas/GetJobDataSchema'
  *     401:
  *	     description: Unauthorized
  *	     content:
@@ -216,7 +263,7 @@ module.exports = jobsRouter
  *
  */
 
-// ===== jobs ===== (post a job ???)
+// ===== jobs ===== 
 /**
  * @swagger
  * /jobs:
@@ -224,53 +271,55 @@ module.exports = jobsRouter
  *   tags: [Jobs]
  *   security:
  *    - access-token: []
- *   description: Post a job
- *   parameters:
- *   - name: jobId
- *     in: path
- *     description: Id of the job to get data.
- *     required: true
- *     type: id
+ *   description: Post a new job
+ *	  requestBody:
+ *	   description: New job data
+ *	   required: true
+ *	   content:
+ *	    application/json:
+ *	     schema:
+ *	      $ref: '#/components/schemas/NewJobSchema'
+ *	    application/x-www-form-urlencoded:
+ *	     schema:
+ *	      $ref: '#/components/schemas/NewJobSchema'
  *   responses:
- *     200:
- *	     description: Job data
+ *     201:
+ *	     description: Job successfully created
  *	     content:
  *	       application/json:
  *         schema:
- *          $ref: '#/components/schemas/JobDataSchema'
+ *           properties:
+ *             message:
+ *              type: string
+ *              example: Job successfully created.
+ *             jobId:
+ *              type: string
+ *              example: 627f8488fc247861eb2a4467
+ *     400:
+ *	     description: Bad request
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *          $ref: '#/components/schemas/JobValidationSchema'
  *     401:
  *	     description: Unauthorized
  *	     content:
  *	       application/json:
  *         schema:
- *	        $ref: '#/components/schemas/VerifyJwtSchema'
- *     404:
- *	     description: Not found
+ *          $ref: '#/components/schemas/VerifyJwtSchema'
+ *     403:
+ *	     description: Forbidden
  *	     content:
  *	       application/json:
  *         schema:
  *           properties:
  *             errorType:
  *              type: string
- *              example: Incorrect ID error!
+ *              example: Forbidden!
  *             errorMessage:
  *              type: string
- *              example: Job with such ID does not exist.
- *     409:
- *       description: Conflict. ID does not match rules.
- *       content:
- *         application/json:
- *          schema:
- *            type: object
- *            properties:
- *              error:
- *                type: string
- *              errorMessage:
- *                type: string
- *            example:
- *              error: ID does not match rules.
- *              errorMessage: ID passed in must be a string of 12 bytes or a string of 24 hex characters.
- * 
+ *              example: Only users with an active role [user] have access in this route.
+ *  
  *     500:
  *	     description: Server side error
  *	     content:
@@ -285,3 +334,5 @@ module.exports = jobsRouter
  *              example: ...
  *
  */
+
+

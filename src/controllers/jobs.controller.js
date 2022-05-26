@@ -83,7 +83,7 @@ async function createNewJob(req, res) {
       userId: user._id,
     })
 
-    res.json({
+    res.status(201).json({
       message: 'Job successfully created.',
       jobId: newJob._id
     })
@@ -117,7 +117,7 @@ async function editJobWithId(req, res) {
     if (user._id.toString() !== jobFromDb.userId.toString()) {
       return res.status(403).json({
         errorType: 'Forbidden!',
-        errorMessage: 'The user is not the creator of this.',
+        errorMessage: 'The user is not the creator of this job.',
       })
     }
 

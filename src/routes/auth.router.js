@@ -258,7 +258,7 @@ module.exports = authRouter
  *      type: string
  *      example: User have entered an incorrect phone and/or password.
  *
- *   ResetRoleSchema:
+ *   ResetRoleValidationSchema:
  *    type: object
  *    properties:
  *     errorType:
@@ -696,7 +696,7 @@ module.exports = authRouter
  *	    content:
  *	     application/json:
  *       schema:
- *	       $ref: '#/components/schemas/ResetRoleSchema'
+ *	       $ref: '#/components/schemas/ResetRoleValidationSchema'
  *    401:
  *	    description: Unauthorized
  *	    content:
