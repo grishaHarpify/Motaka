@@ -1,7 +1,8 @@
 export NODE_ENV=development
 export NODE_ENV=production
 
-/////// For change ///////
+
+/////// NOTES ///////
 
 Job Categories
 1) cleaning (maqrutyun)
@@ -13,25 +14,23 @@ Job Categories
 
 
 /////// BUGS ///////
-// error messages with provider name 
-// aranc phone u email validacnelu job stexcel
+error messages with provider name 
 
 
-/////// IN PROGRES ///////
+/////// TODO ///////
 service provider -> 5 astx
-email validation
-
+aranc phone u email validacnelu job stexcel
 
 
 
 
 /////// Questions ///////
+1) commentnery websocket-nerov ?? 
+
 2) erb uzum enq stanal provider-i masin info kam bolor providernerin 
 /users/providers
 u erb usernerin 
 /users/users ****
 
-
-1) commentnery websocket-nerov ?? 
 
 
