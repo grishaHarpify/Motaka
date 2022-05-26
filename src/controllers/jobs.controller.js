@@ -160,14 +160,6 @@ async function addJobNewCandidate(req, res) {
     const { jobId } = req.params
     const candidateId = req.user._id
 
-    // Check user exist
-    const userFromDb = await UserModel.findById(candidateId)
-    if (!userFromDb) {
-      return res.status(404).json({
-        errorMessage: 'User with such ID does not exist.'
-      })
-    }
-
     // Find job data from DB
     const jobFromDb = await JobModel.findById(jobId)
     if (!jobFromDb) {

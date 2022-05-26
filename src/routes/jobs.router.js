@@ -352,174 +352,167 @@ module.exports = jobsRouter
  */
 
 // ===== jobs/:jobId ===== patch
-/**
-* @swagger
-* /jobs/{jobId}:
-*  patch:
-*   tags: [Jobs]
-*   security:
-*    - access-token: []
-*   description: Edit existing job data
-*	  requestBody:
-*	   description: Job new data
-*	   required: true
-*	   content:
-*	    application/json:
-*	     schema:
-*	      $ref: '#/components/schemas/NewJobSchema'
-*	    application/x-www-form-urlencoded:
-*	     schema:
-*	      $ref: '#/components/schemas/NewJobSchema'
-*   parameters:
-*   - name: jobId
-*     in: path
-*     description: Id of the job what need to edit.
-*     required: true
-*     type: id
-*
-*   responses:
-*     200:
-*	     description: Job successfully edited.
-*	     content:
-*	       application/json:
-*         schema:
-*           properties:
-*             message:
-*              type: string
-*              example: Job successfully edited.
-
-*     400:
-*	     description: Bad request
-*	     content:
-*	       application/json:
-*         schema:
-*          $ref: '#/components/schemas/JobValidationSchema'
-*
-*     401:
-*	     description: Unauthorized
-*	     content:
-*	       application/json:
-*         schema:
-*          $ref: '#/components/schemas/VerifyJwtSchema'
-*
-*     403:
-*	     description: Forbidden
-*	     content:
-*	       application/json:
-*         schema:
-*           properties:
-*             errorType:
-*              type: string
-*              example: Forbidden!
-*             errorMessage:
-*              type: string
-*              example:
-*                - Only users with an active role [user] have access in this route.
-*                - The user is not the creator of this job.
-*
-*     404:
-*	     description: Not found
-*	     content:
-*	       application/json:
-*         schema:
-*           properties:
-*             errorType:
-*              type: string
-*              example: Incorrect ID error!
-*             errorMessage:
-*              type: string
-*              example: Job with such ID does not exist.
-*
-*     500:
-*	     description: Server side error
-*	     content:
-*	       application/json:
-*         schema:
-*           properties:
-*             errorType:
-*              type: string
-*              example: Server side error!
-*             errorMessage:
-*              type: string
-*              example: ...
-*
-*/
-
+ /**
+ * @swagger
+ * /jobs/{jobId}:
+ *  patch:
+ *   tags: [Jobs]
+ *   security:
+ *    - access-token: []
+ *   description: Edit existing job data
+ *	  requestBody:
+ *	   description: Job new data
+ *	   required: true
+ *	   content:
+ *	    application/json:
+ *	     schema:
+ *	      $ref: '#/components/schemas/NewJobSchema'
+ *	    application/x-www-form-urlencoded:
+ *	     schema:
+ *	      $ref: '#/components/schemas/NewJobSchema'
+ *   parameters:
+ *   - name: jobId
+ *     in: path
+ *     description: Id of the job what need to edit.
+ *     required: true
+ *     type: id
+ *
+ *   responses:
+ *     200:
+ *	     description: Job successfully edited.
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *           properties:
+ *             message:
+ *              type: string
+ *              example: Job successfully edited.
+ 
+ *     400:
+ *	     description: Bad request
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *          oneOf:
+ *           - $ref: '#/components/schemas/JobValidationSchema'
+ *           - $ref: '#/components/schemas/NoOpenStatusSchema'
+ *
+ *     401:
+ *	     description: Unauthorized
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *          $ref: '#/components/schemas/VerifyJwtSchema'
+ *
+ *     403:
+ *	     description: Forbidden
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *           properties:
+ *             errorType:
+ *              type: string
+ *              example: Forbidden!
+ *             errorMessage:
+ *              type: string
+ *              example:
+ *                - Only users with an active role [user] have access in this route.
+ *                - The user is not the creator of this job.
+ *
+ *     404:
+ *	     description: Not found
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *           properties:
+ *             errorType:
+ *              type: string
+ *              example: Incorrect ID error!
+ *             errorMessage:
+ *              type: string
+ *              example: Job with such ID does not exist.
+ *
+ *     500:
+ *	     description: Server side error
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *           properties:
+ *             errorType:
+ *              type: string
+ *              example: Server side error!
+ *             errorMessage:
+ *              type: string
+ *              example: ...
+ *
+ */
+ 
 // ===== jobs/:jobId/candidate ===== post
 /**
-* @swagger
-* /jobs/{jobId}/candidate:
-*  post:
-*   tags: [Jobs]
-*   security:
-*    - access-token: []
-*   description: Edit existing job data
-*	  requestBody:
-*	   description: Job new data
-*	   required: true
-*	   content:
-*	    application/json:
-*	     schema:
-*	      $ref: '#/components/schemas/NewJobSchema'
-*	    application/x-www-form-urlencoded:
-*	     schema:
-*	      $ref: '#/components/schemas/NewJobSchema'
-*   parameters:
-*   - name: jobId
-*     in: path
-*     description: Id of the job what need to edit.
-*     required: true
-*     type: id
-*
-*   responses:
-*     200:
-*	     description: Job successfully edited.
-*	     content:
-*	       application/json:
-*         schema:
-*           properties:
-*             message:
-*              type: string
-*              example: Job successfully edited.
-
-*     400:
-*	     description: Bad request
-*	     content:
-*	       application/json:
-*         schema:
-*          $ref: '#/components/schemas/JobValidationSchema'
-*
-*     401:
-*	     description: Unauthorized
-*	     content:
-*	       application/json:
-*         schema:
-*          $ref: '#/components/schemas/VerifyJwtSchema'
-*
-*     403:
-*	     description: Forbidden
-*	     content:
-*	       application/json:
-*         schema:
-*           properties:
-*             errorType:
-*              type: string
-*              example: Forbidden!
-*             errorMessage:
-*              type: string
-*              example: Only users with an active role [user] have access in this route.
-*  
-*     500:
-*	     description: Server side error
-*	     content:
-*	       application/json:
-*         schema:
-*           properties:
-*             errorType:
-*              type: string
-*              example: Server side error!
-*             errorMessage:
-*              type: string
-*              example: ...
-*
-*/
+ * @swagger
+ * /jobs/{jobId}/candidate:
+ *  post:
+ *   tags: [Jobs]
+ *   security:
+ *    - access-token: []
+ *   description: Edit existing job data
+ *   parameters:
+ *   - name: jobId
+ *     in: path
+ *     description: Id of the job what need to edit.
+ *     required: true
+ *     type: id
+ *
+ *   responses:
+ *     200:
+ *	     description: Job successfully edited.
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *           properties:
+ *             message:
+ *              type: string
+ *              example: Job successfully edited.
+ 
+ *     400:
+ *	     description: Bad request
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *          $ref: '#/components/schemas/JobValidationSchema'
+ *
+ *     401:
+ *	     description: Unauthorized
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *          $ref: '#/components/schemas/VerifyJwtSchema'
+ *
+ *     403:
+ *	     description: Forbidden
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *           properties:
+ *             errorType:
+ *              type: string
+ *              example: Forbidden!
+ *             errorMessage:
+ *              type: string
+ *              example: Only users with an active role [user] have access in this route.
+ *  
+ *     500:
+ *	     description: Server side error
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *           properties:
+ *             errorType:
+ *              type: string
+ *              example: Server side error!
+ *             errorMessage:
+ *              type: string
+ *              example: ...
+ *
+ */
+ 
