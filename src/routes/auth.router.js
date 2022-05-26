@@ -21,7 +21,7 @@ const {
 } = require('../middlewares/userInfoValidation')
 
 // Check confirm code right or no
-const checkConfirmCode = require('../middlewares/checkConfirmCode')
+const { checkPhoneConfirmCode, checkEmailConfirmCode } = require('../middlewares/checkConfirmCode')
 
 // VerifyJWT
 const verifyJWT = require('../middlewares/verifyJWT')
@@ -42,28 +42,33 @@ authRouter.post('/register',
   validationErrorHandler,
   authController.register)
 
-// Phone number verification
-authRouter.post('/verify_phone',
-  checkConfirmCode,
-  authController.phoneVerification)
-
-// Send phone to get code to change password
-authRouter.post('/forgot_password',
+// Send code to phone
+authRouter.post('/send_code_phone',
   validateLoginPhone,
   validationErrorHandler,
-  authController.getPhoneToResetPassword)
+  authController.sendConfirmCodeToPhoneNumber)
+
+// Phone number verification
+authRouter.post('/verify_phone',
+  checkPhoneConfirmCode,
+  authController.phoneVerification)
+
+// Send code to mail
+authRouter.post('/send_code_email',
+  authController.sendConfirmCodeToEmail)
+
+// Email verification
+authRouter.post('/verify_email',
+  checkEmailConfirmCode,
+  authController.emailVerification)
 
 // Send code and reset password
 authRouter.patch('/reset_password',
-  checkConfirmCode,
+  checkPhoneConfirmCode,
   validatePassword,
   validatePasswordConfirm,
   validationErrorHandler,
   authController.resetPassword)
-
-// Resend confirm code
-authRouter.post('/resend_code',
-  authController.resendConfirmCode)
 
 // Login with phone
 authRouter.post('/login',

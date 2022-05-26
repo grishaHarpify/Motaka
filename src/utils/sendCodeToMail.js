@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer')
 
 const senderAddress = 'grisha.hovhanyan@mail.ru'
 
-async function sendCodeToPhone(mailAddress, code) {
+async function sendCodeToEmail(mailAddress, code) {
   const transporter = nodemailer.createTransport({
     host: 'smtp.mail.ru',
     port: 465,
@@ -11,17 +11,17 @@ async function sendCodeToPhone(mailAddress, code) {
       user: senderAddress,
       pass: 'EX7KDCEriJkyBt2v69zb', // password from mail settings
     },
-    tls: { rejectUnauthorized: false }
+    tls: { rejectUnauthorized: false },
   })
 
   const info = await transporter.sendMail({
-    from: senderAddress, // sender address
+    from: senderAddress,
     to: mailAddress,
     subject: 'Motaka',
-    text: 'Verify your email.',
+    text: 'Verify your email',
     html: `
       <div style= "text-align: center">
-        <b> Confirm code: </b>
+        <b> Your confirm code: </b>
         <h1>${code}</h1>
       </div>
     `,
@@ -31,4 +31,4 @@ async function sendCodeToPhone(mailAddress, code) {
 }
 
 
-module.exports = sendCodeToPhone
+module.exports = sendCodeToEmail

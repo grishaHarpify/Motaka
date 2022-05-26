@@ -10,6 +10,7 @@ const ConfirmCodeModel = require('../models/ConfirmCode')
 const UserModel = require('../models/User')
 const generateCode = require('../utils/generateCode')
 const sendCodeToPhone = require('../utils/sendCodeToPhone')
+const sendCodeToEmail = require('../utils/sendCodeToMail')
 const putConfirmCodeToDb = require('../utils/putCodeToDb')
 const getUserAvailableRoles = require('../services/getAvailableRoles')
 
@@ -86,6 +87,40 @@ async function register(req, res) {
   }
 }
 
+async function sendConfirmCodeToPhoneNumber(req, res) {
+  try {
+    const { phone } = req.body
+
+    // Check user with such phone exist or not
+    const user = await UserModel.findOne({ phone })
+
+    if (!user) {
+      // No such user case
+      return res.status(404).json({
+        errorType: 'Incorrect data error!',
+        errorMessage: 'User with such phone number does not exist.',
+      })
+    }
+
+    // Generate confirmCode, send and put in the DB
+    const confirmCode = generateCode()
+    sendCodeToPhone(req.body.phone, confirmCode)
+    putConfirmCodeToDb(user._id, confirmCode)
+    console.log('confirmCode --->', confirmCode, '<---')
+
+    res.json({
+      message: `Confirm code was sended on the user phone number.`,
+    })
+  } catch (e) {
+    console.log(`Error in file: ${__filename}!`)
+    console.log(e.message)
+    res.status(500).json({
+      errorType: 'Server side error!',
+      errorMessage: e.message,
+    })
+  }
+}
+
 async function phoneVerification(req, res) {
   try {
     // const phone = req.body.phone
@@ -116,29 +151,59 @@ async function phoneVerification(req, res) {
   }
 }
 
-async function getPhoneToResetPassword(req, res) {
+async function sendConfirmCodeToEmail(req, res) {
   try {
-    const { phone } = req.body
+    const { email } = req.body
 
     // Check user with such phone exist or not
-    const user = await UserModel.findOne({ phone })
+    const user = await UserModel.findOne({ email })
 
     if (!user) {
       // No such user case
       return res.status(404).json({
         errorType: 'Incorrect data error!',
-        errorMessage: 'User with such phone number does not exist.',
+        errorMessage: 'User with such email does not exist.',
       })
     }
 
     // Generate confirmCode, send and put in the DB
     const confirmCode = generateCode()
-    sendCodeToPhone(req.body.phone, confirmCode)
+    sendCodeToEmail(email, confirmCode)
     putConfirmCodeToDb(user._id, confirmCode)
     console.log('confirmCode --->', confirmCode, '<---')
 
     res.json({
-      message: `Password recovery code was sended on the user phone number.`,
+      message: `Confirm code was sended on the user email.`,
+    })
+  } catch (e) {
+    console.log(`Error in file: ${__filename}!`)
+    console.log(e.message)
+    res.status(500).json({
+      errorType: 'Server side error!',
+      errorMessage: e.message,
+    })
+  }
+}
+
+async function emailVerification(req, res) {
+  try {
+    // const phone = req.body.phone
+    const { email } = req.body
+
+    // change user phone info in DB
+    const user = await UserModel.findOne({ email })
+    user.isEmailVerified = true
+    await user.save()
+
+    // Change confirm code status in DB
+    const codeInfo = await ConfirmCodeModel.findOne({
+      userId: user._id,
+    }).populate('userId')
+    codeInfo.isUsed = true
+    await codeInfo.save()
+
+    res.json({
+      message: 'User send right code and email has been verified.'
     })
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
@@ -176,32 +241,6 @@ async function resetPassword(req, res) {
 
     res.json({
       message: 'Password was changed successfully.',
-    })
-  } catch (e) {
-    console.log(`Error in file: ${__filename}!`)
-    console.log(e.message)
-    res.status(500).json({
-      errorType: 'Server side error!',
-      errorMessage: e.message,
-    })
-  }
-}
-
-async function resendConfirmCode(req, res) {
-  try {
-    const { phone } = req.body
-
-    // Find user
-    const user = await UserModel.findOne({ phone })
-
-    // Generate confirmCode, send and put in the DB
-    const confirmCode = generateCode()
-    sendCodeToPhone(phone, confirmCode)
-    putConfirmCodeToDb(user._id, confirmCode)
-    console.log('confirmCode --->', confirmCode, '<---')
-
-    res.json({
-      message: 'A new confirm code has been sent to phone number.'
     })
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
@@ -399,10 +438,11 @@ async function setActiveRole(req, res) {
 
 module.exports = {
   register,
+  sendConfirmCodeToPhoneNumber,
   phoneVerification,
-  getPhoneToResetPassword,
+  sendConfirmCodeToEmail,
+  emailVerification,
   resetPassword,
-  resendConfirmCode,
   loginWithPhone,
   loginWithGoogle,
   loginWithFacebook,
