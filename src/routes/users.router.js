@@ -65,7 +65,7 @@ module.exports = usersRouter
  *    properties:
  *     errorType:
  *      type: string
- *      example: Validation error!
+ *      example: JWT error!
  *     errorMessage:
  *      type: string
  *      example:
