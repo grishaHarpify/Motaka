@@ -118,7 +118,7 @@ html
           div.requestBlockName [ Verify ]
             
           //- Send code to phone number                
-          div.content-data  
+          div.content-data(style="color: black")  
             div Description ==> Send code to phone number 
             div Request URI ==> URI/send_code_phone
             div Request Method ==> 
@@ -129,18 +129,19 @@ html
             div }
           
           //- Verify phone
-          div.content-data  
+          div.content-data(style="color: black") 
             div Description ==> Verify phone
             div Request URI ==> URI/verify_phone
             div Request Method ==> 
               span(style="color: black") [POST] 
 
             div Request Body [JSON] ==> {
-            div &emsp;&emsp;"email": "example@mail.ru"
+            div &emsp;&emsp;"phone": "+374 ** ******"
+            div &emsp;&emsp;"confirmCode": "******"
             div }
 
           //- Send code to email               
-          div.content-data  
+          div.content-data(style="color: black")   
             div Description ==> Send code to email 
             div Request URI ==> URI/send_code_email
             div Request Method ==> 
@@ -150,13 +151,25 @@ html
             div &emsp;&emsp;"email": "example@mail.ru"
             div }
 
+          //- Verify email
+          div.content-data(style="color: black")   
+            div Description ==> Verify email
+            div Request URI ==> URI/verify_email
+            div Request Method ==> 
+              span(style="color: black") [POST] 
+
+            div Request Body [JSON] ==> {
+            div &emsp;&emsp;"email": "example@mail.ru"
+            div &emsp;&emsp;"confirmCode": "******"
+            div }
+
           //- ============================ Select Role ============================
           div.requestBlockName [ Select Role ]
 
-          //- Change active role [BLACK]
-          div.content-data(style="color: black")  
+          //- Change active role 
+          div.content-data
             div Description ==> Change active role
-            div Request URI ==> [AUTH]URI/set_role
+            div Request URI ==> URI/set_role
             div Request Method ==> 
               span(style="color: black") [POST] 
 
@@ -171,10 +184,10 @@ html
           //- ============================ Jobs ============================
           div.requestBlockName [ Jobs ]
 
-          //- Get job data with ID [BLACK]
-          div.content-data(style="color: black") 
-            div Description ==> Get data about job with id 
-            div Request URI ==> [AUTH]URI/jobs/:jobId
+          //- Get job data with ID 
+          div.content-data
+            div Description ==> Get data about job with ID 
+            div Request URI ==> URI/jobs/:jobId
             div Request Method ==> 
               span(style="color: black") [GET] 
 
@@ -182,10 +195,10 @@ html
             div &emsp;&emsp;"Authorization": "Bearer accessToken" , 
             div }
 
-          //- Create new job [BLACK]                
-          div.content-data(style="color: black") 
+          //- Create new job                 
+          div.content-data
             div Description [&&] ==> Create new job 
-            div Request URI ==> [AUTH]URI/jobs
+            div Request URI ==> URI/jobs
             div Request Method ==> 
               span(style="color: black") [POST] 
 
@@ -204,9 +217,9 @@ html
             div }
 
           //- Edit job
-          div.content-data(style="color: black") 
+          div.content-data 
             div Description [&&] ==> Edit job 
-            div Request URI ==> [AUTH]URI/jobs/:jobId
+            div Request URI ==> URI/jobs/:jobId
             div Request Method ==> 
               span(style="color: black") [PATCH] 
 
@@ -224,10 +237,10 @@ html
             div &emsp;&emsp;"Authorization": "Bearer accessToken" , 
             div }
 
-          //- Get all jobs from DB with advanced search and pagination [BLACK]
-          div.content-data(style="color: black")
+          //- Get all jobs from DB with advanced search and pagination 
+          div.content-data
             div Description ==> Get all jobs from DB with advanced search and pagination
-            div Request URI ==> [AUTH]URI/jobs
+            div Request URI ==> URI/jobs
 
             div Request Query ( URI/jobs?key1=value1&k2=v2 ) ==> {
             div &emsp;&emsp;Searching with job salary: salcost[gte]=1000&salcost[lte]=10000
@@ -255,9 +268,9 @@ html
               div &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;==> URI/jobs?dur=2,6
 
           //- Add new candidate in job
-          div.content-data(style="color: black")
+          div.content-data
             div Description [&&] ==> Add new candidate in job [yourself]
-            div Request URI ==> [AUTH]URI/jobs/:jobId/candidate
+            div Request URI ==> URI/jobs/:jobId/candidate
 
             div Request Method ==> 
               span(style="color: black") [POST] 
@@ -267,9 +280,9 @@ html
             div }
 
           //- Cancel job
-          div.content-data(style="color: black")
+          div.content-data
             div Description [&&] ==> Cancel job [set job status 'canceled']
-            div Request URI ==> [AUTH]URI/jobs/:jobId
+            div Request URI ==> URI/jobs/:jobId
 
             div Request Method ==> 
               span(style="color: black") [DELETE] 
@@ -281,19 +294,32 @@ html
           //- ============================ Categories ============================
           div.requestBlockName [ Categories ]
 
-          //- Get all categories [BLACK]
-          div.content-data(style="color: black") 
+          //- Get all categories 
+          div.content-data
             div Description ==> Get all categories
-            div Request URI ==> [AUTH]URI/categories
+            div Request URI ==> URI/categories
             div Request Method ==> 
               span(style="color: black") [GET]
 
-          //- Get category data with ID [BLACK]
-          div.content-data(style="color: black") 
-            div Description ==> Get data about category with id 
-            div Request URI ==> [AUTH]URI/categories/:categoryId
+          //- Get category data with ID 
+          div.content-data
+            div Description ==> Get data about category with ID 
+            div Request URI ==> URI/categories/:categoryId
             div Request Method ==> 
               span(style="color: black") [GET]
+
+
+          //- ============================ Users ============================
+          div.requestBlockName [ Users ]
+
+          //- Get user data with Id
+          div.content-data
+            div Description ==> Get data about user with ID 
+            div Request URI ==> URI/users/:userId
+            div Request Method ==> 
+              span(style="color: black") [GET] 
+
+
 
 
         //- Mamikon ==================================================
@@ -316,9 +342,9 @@ html
             div &emsp;&emsp;"isProvider": false    
             div }
           
-          //- Phone verification after register [BLACK]
-          div.content-data(style="color: black")
-            div Description ==> Phone verification after register
+          //- Phone verification
+          div.content-data
+            div Description ==> Phone verification 
             div Request URI ==> URI/verify_phone
             div Request Method ==> 
               span(style="color: black") [POST] 
@@ -328,10 +354,10 @@ html
             div &emsp;&emsp;"confirmCode": "******" 
             div }
 
-          //- Get all jobs from DB  [BLACK]
-          div.content-data(style="color: black")
+          //- Get all jobs from DB  
+          div.content-data
             div Description ==> Get all jobs from DB
-            div Request URI ==> [AUTH]URI/jobs
+            div Request URI ==> URI/jobs
             div Request Method ==> 
               span(style="color: black") [GET] 
             
@@ -339,16 +365,12 @@ html
             div &emsp;&emsp;"Authorization": "Bearer accessToken" , 
             div }
 
-          //- Get user data with ID [BLACK]
-          div.content-data(style="color: black") 
-            div Description ==> Get data about user with id 
-            div Request URI ==> [AUTH]URI/users/:userId
+          //- Get user data with ID 
+          div.content-data
+            div Description ==> Get data about user with ID 
+            div Request URI ==> URI/users/:userId
             div Request Method ==> 
               span(style="color: black") [GET] 
-
-            div Request Headers ==> {
-            div &emsp;&emsp;"Authorization": "Bearer accessToken" , 
-            div }
 
 
 
