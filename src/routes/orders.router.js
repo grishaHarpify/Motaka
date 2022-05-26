@@ -14,7 +14,9 @@ const { bodyIdValidation } = require('../middlewares/IDValidation')
 // --- middlewares end --- //
 
 // Routes //
-ordersRouter.post('/', bodyIdValidation, ordersController.createNewOrder)
+ordersRouter.post('/',
+  bodyIdValidation,
+  ordersController.createNewOrder)
 
 
 

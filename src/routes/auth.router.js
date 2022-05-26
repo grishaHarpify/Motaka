@@ -30,8 +30,7 @@ const verifyJWT = require('../middlewares/verifyJWT')
 
 // Routes //
 // Register
-authRouter.post(
-  '/register',
+authRouter.post('/register',
   validateRoleProvider,
   validateRoleUser,
   validateFirstName,
@@ -41,51 +40,45 @@ authRouter.post(
   validatePassword,
   validatePasswordConfirm,
   validationErrorHandler,
-  authController.register
-)
+  authController.register)
 
 // Phone number verification
-authRouter.post(
-  '/verify_phone',
+authRouter.post('/verify_phone',
   checkConfirmCode,
-  authController.phoneVerification
-)
+  authController.phoneVerification)
 
 // Send phone to get code to change password
-authRouter.post(
-  '/forgot_password',
+authRouter.post('/forgot_password',
   validateLoginPhone,
   validationErrorHandler,
-  authController.getPhoneToResetPassword
-)
+  authController.getPhoneToResetPassword)
 
 // Send code and reset password
-authRouter.patch(
-  '/reset_password',
+authRouter.patch('/reset_password',
   checkConfirmCode,
   validatePassword,
   validatePasswordConfirm,
   validationErrorHandler,
-  authController.resetPassword
-)
+  authController.resetPassword)
 
 // Resend confirm code
-authRouter.post('/resend_code', authController.resendConfirmCode)
+authRouter.post('/resend_code',
+  authController.resendConfirmCode)
 
 // Login with phone
-authRouter.post(
-  '/login',
+authRouter.post('/login',
   validateLoginPhone,
   isPasswordEmpty,
   validationErrorHandler,
-  authController.loginWithPhone
-)
+  authController.loginWithPhone)
 
 // Google login
-authRouter.post('/googleLogin', authController.loginWithGoogle)
+authRouter.post('/googleLogin',
+  authController.loginWithGoogle)
 
 //Facebook login
-authRouter.post('/facebookLogin', authController.loginWithFacebook)
+authRouter.post('/facebookLogin',
+  authController.loginWithFacebook)
 
 // Set user active role (select page)
 authRouter.post(
