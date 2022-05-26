@@ -152,6 +152,8 @@ module.exports = jobsRouter
  * /jobs/{jobId}:
  *  get:
  *   tags: [Jobs]
+ *   security:
+ *    - access-token: []
  *   description: Get data about job with given id
  *   parameters:
  *   - name: jobId
@@ -166,6 +168,82 @@ module.exports = jobsRouter
  *	       application/json:
  *         schema:
  *          $ref: '#/components/schemas/JobDataSchema'
+ *     401:
+ *	     description: Unauthorized
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *          $ref: '#/components/schemas/VerifyJwtSchema'
+ *     404:
+ *	     description: Not found
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *           properties:
+ *             errorType:
+ *              type: string
+ *              example: Incorrect ID error!
+ *             errorMessage:
+ *              type: string
+ *              example: Job with such ID does not exist.
+ *     409:
+ *       description: Conflict. ID does not match rules.
+ *       content:
+ *         application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              error:
+ *                type: string
+ *              errorMessage:
+ *                type: string
+ *            example:
+ *              error: ID does not match rules.
+ *              errorMessage: ID passed in must be a string of 12 bytes or a string of 24 hex characters.
+ *
+ *     500:
+ *	     description: Server side error
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *           properties:
+ *             errorType:
+ *              type: string
+ *              example: Server side error!
+ *             errorMessage:
+ *              type: string
+ *              example: ...
+ *
+ */
+
+// ===== jobs ===== (post a job ???)
+/**
+ * @swagger
+ * /jobs:
+ *  post:
+ *   tags: [Jobs]
+ *   security:
+ *    - access-token: []
+ *   description: Post a job
+ *   parameters:
+ *   - name: jobId
+ *     in: path
+ *     description: Id of the job to get data.
+ *     required: true
+ *     type: id
+ *   responses:
+ *     200:
+ *	     description: Job data
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *          $ref: '#/components/schemas/JobDataSchema'
+ *     401:
+ *	     description: Unauthorized
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *	        $ref: '#/components/schemas/VerifyJwtSchema'
  *     404:
  *	     description: Not found
  *	     content:
