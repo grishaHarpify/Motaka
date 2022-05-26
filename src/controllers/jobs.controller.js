@@ -11,9 +11,9 @@ async function getAllJobs(req, res) {
     const filteredQueryObject = await (new JobQueryHandler(
       req.query,
       JobModel,
-      '', // 'salary.cost category startDate duration', // requestSelect
-      'userId', // populateField 
-      'firstName lastName email avatar' // populateSelect  
+      'salary startDate duration address category subCategories status userId', // requestSelect
+      //'userId', // populateField 
+      //'firstName lastName email avatar' // populateSelect  
     ).salaryCostHandler()
       .categoriesHandler()
       .startDateHandler()
@@ -164,6 +164,7 @@ async function addJobNewCandidate(req, res) {
     const jobFromDb = await JobModel.findById(jobId)
     if (!jobFromDb) {
       return res.status(404).json({
+        errorType: 'Incorrect ID error!',
         errorMessage: 'Job with such ID does not exist.'
       })
     }
@@ -171,13 +172,15 @@ async function addJobNewCandidate(req, res) {
     // // Check job status
     if (jobFromDb.status !== 'open') {
       return res.status(400).json({
+        errorType: 'Incorrect status error!',
         errorMessage: `This job [${jobId}] is not open. Service provider cannot become candidate for a job that is not open.`
       })
     }
 
     // Check candidateId and job.userId
     if (jobFromDb.userId.toString() === candidateId.toString()) {
-      return res.status(400).json({
+      return res.status(403).json({
+        errorType: 'Forbidden!',
         errorMessage: 'Service provider cannot become a job candidate if he/she is the creator of that job.'
       })
     }
@@ -187,7 +190,8 @@ async function addJobNewCandidate(req, res) {
       let eachCanId = jobFromDb.candidatesList[i]
 
       if (eachCanId.toString() === candidateId.toString()) {
-        return res.status(400).json({
+        return res.status(403).json({
+          errorType: 'Forbidden',
           errorMessage: 'Service provider cannot become a same job candidate more then one time.'
         })
       }
@@ -219,6 +223,7 @@ async function cancelJob(req, res) {
     const jobFromDb = await JobModel.findById(jobId)
     if (!jobFromDb) {
       return res.status(404).json({
+        errorType: 'Incorrect ID error!',
         errorMessage: 'Job with such ID does not exist.'
       })
     }
@@ -227,6 +232,7 @@ async function cancelJob(req, res) {
     const user = req.user
     if (user._id.toString() !== jobFromDb.userId.toString()) {
       return res.status(403).json({
+        errorType: 'Forbidden!',
         errorMessage: 'Job creator ID and logged in user ID does not match. The creator of this work is not logged in user.'
       })
     }
@@ -243,7 +249,7 @@ async function cancelJob(req, res) {
     await jobFromDb.save()
 
     res.json({
-      message: `Job with id [${jobId}] was canceled.`
+      message: `Job [${jobId}] was canceled.`
     })
 
   } catch (e) {

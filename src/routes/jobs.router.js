@@ -74,7 +74,8 @@ jobsRouter.post('/:jobId/candidate',
 
 // Cancel job
 jobsRouter.delete('/:jobId',
-  isUser, pathIdValidation,
+  isUser,
+  pathIdValidation,
   jobsController.cancelJob)
 
 module.exports = jobsRouter
@@ -91,6 +92,71 @@ module.exports = jobsRouter
  *       scheme: bearer
  *       bearerFormat: JWT
  *  schemas:
+ *   AllJobsSchema:
+ *    type: object
+ *    properties:
+ *      next:
+ *        type: object
+ *        properties:
+ *          page:
+ *            type: number
+ *            example: 3
+ *          limit:
+ *            type: number
+ *            example: 15
+ *      previous:
+ *        type: object
+ *        properties:
+ *          page:
+ *            type: number
+ *            example: 1
+ *          limit:
+ *            type: number
+ *            example: 20
+ *      data:
+ *        type: array
+ *        items:
+ *          type: object
+ *          properties:
+ *            salary:
+ *              type: object
+ *              properties:
+ *                currency:
+ *                  type: string
+ *                  example: AMD
+ *                cost:
+ *                  type: number
+ *                  example: 20000
+ *            _id:
+ *              type: string
+ *              example: 6288a9715b7632fee1ed5a71
+ *            startDate:
+ *              type: string
+ *              example: 2022-07-21T12:57:35
+ *            duration:
+ *              type: number
+ *              example: 3
+ *            address:
+ *              type: string
+ *              example: Xanjyan
+ *            category:
+ *              type: string
+ *              example: petWalking
+ *            subCategories:
+ *              type: array
+ *              example:
+ *                [
+ *                  subCategory1,
+ *                  subCategory2,
+ *                  ...
+ *                ]
+ *            userId:
+ *              type: string
+ *              example: 627cf6b741804e13edd4ab05
+ *            status:
+ *              type: enum
+ *              example: inProgress
+ *
  *   NewJobSchema:
  *    type: object
  *    properties:
@@ -148,6 +214,9 @@ module.exports = jobsRouter
  *          address:
  *            type: string
  *            example: Xanjyan
+ *          category:
+ *            type: string
+ *            example: petWalking
  *          subCategories:
  *            type: array
  *            example:
@@ -207,7 +276,68 @@ module.exports = jobsRouter
 
 
 // ===== jobs/ ===== (get all jobs ???)
-// ???
+/**
+ * @swagger
+ * /jobs:
+ *  get:
+ *   tags: [Jobs]
+ *   security:
+ *    - access-token: []
+ *   description: All jobs with advanced search
+ *   responses:
+ *     200:
+ *	     description: All jobs
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *          $ref: '#/components/schemas/AllJobsSchema'
+ *     401:
+ *	     description: Unauthorized
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *          $ref: '#/components/schemas/VerifyJwtSchema'
+ *     404:
+ *	     description: Not found
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *           properties:
+ *             errorType:
+ *              type: string
+ *              example: Incorrect ID error!
+ *             errorMessage:
+ *              type: string
+ *              example: Job with such ID does not exist.
+ *     409:
+ *       description: Conflict. ID does not match rules.
+ *       content:
+ *         application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              error:
+ *                type: string
+ *              errorMessage:
+ *                type: string
+ *            example:
+ *              error: ID does not match rules.
+ *              errorMessage: ID passed in must be a string of 12 bytes or a string of 24 hex characters.
+ *
+ *     500:
+ *	     description: Server side error
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *           properties:
+ *             errorType:
+ *              type: string
+ *              example: Server side error!
+ *             errorMessage:
+ *              type: string
+ *              example: ...
+ *
+ */
 
 // ===== jobs/:jobId ===== get
 /**
@@ -352,7 +482,7 @@ module.exports = jobsRouter
  */
 
 // ===== jobs/:jobId ===== patch
- /**
+/**
  * @swagger
  * /jobs/{jobId}:
  *  patch:
@@ -387,7 +517,7 @@ module.exports = jobsRouter
  *             message:
  *              type: string
  *              example: Job successfully edited.
- 
+
  *     400:
  *	     description: Bad request
  *	     content:
@@ -431,6 +561,20 @@ module.exports = jobsRouter
  *             errorMessage:
  *              type: string
  *              example: Job with such ID does not exist.
+  *     409:
+ *       description: Conflict. ID does not match rules.
+ *       content:
+ *         application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              error:
+ *                type: string
+ *              errorMessage:
+ *                type: string
+ *            example:
+ *              error: ID does not match rules.
+ *              errorMessage: ID passed in must be a string of 12 bytes or a string of 24 hex characters.
  *
  *     500:
  *	     description: Server side error
@@ -446,7 +590,7 @@ module.exports = jobsRouter
  *              example: ...
  *
  */
- 
+
 // ===== jobs/:jobId/candidate ===== post
 /**
  * @swagger
@@ -455,31 +599,127 @@ module.exports = jobsRouter
  *   tags: [Jobs]
  *   security:
  *    - access-token: []
- *   description: Edit existing job data
+ *   description: Become new candidate on job
  *   parameters:
  *   - name: jobId
  *     in: path
- *     description: Id of the job what need to edit.
+ *     description: Id of the job in which needed to add new candidate.
  *     required: true
  *     type: id
  *
  *   responses:
  *     200:
- *	     description: Job successfully edited.
+ *	     description: Candidate successfully added
  *	     content:
  *	       application/json:
  *         schema:
  *           properties:
  *             message:
  *              type: string
- *              example: Job successfully edited.
- 
+ *              example: Provider [ID] have been successfully added to the list of candidates for this job [ID].
+ *
  *     400:
  *	     description: Bad request
  *	     content:
  *	       application/json:
  *         schema:
- *          $ref: '#/components/schemas/JobValidationSchema'
+ *           properties:
+ *             errorType:
+ *              type: string
+ *              example: Incorrect status error!
+ *             errorMessage:
+ *              type: string
+ *              example: This job [Id] is not open. Service provider cannot become candidate for a job that is not open.
+ *     401:
+ *	     description: Unauthorized
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *          $ref: '#/components/schemas/VerifyJwtSchema'
+ *
+ *     403:
+ *	     description: Forbidden
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *           properties:
+ *             errorType:
+ *              type: string
+ *              example: Forbidden!
+ *             errorMessage:
+ *              type: string
+ *              example:
+ *                - Only users with an active role [provider] have access in this route.
+ *                - Service provider cannot become a job candidate if he/she is the creator of that job.
+ *                - Service provider cannot become a same job candidate more then one time.
+ *
+  *     409:
+ *       description: Conflict. ID does not match rules.
+ *       content:
+ *         application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              error:
+ *                type: string
+ *              errorMessage:
+ *                type: string
+ *            example:
+ *              error: ID does not match rules.
+ *              errorMessage: ID passed in must be a string of 12 bytes or a string of 24 hex characters.
+ *
+ *     500:
+ *	     description: Server side error
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *           properties:
+ *             errorType:
+ *              type: string
+ *              example: Server side error!
+ *             errorMessage:
+ *              type: string
+ *              example: ...
+ *
+ */
+
+// ===== jobs/:jobId ===== patch
+/**
+ * @swagger
+ * /jobs/{jobId}:
+ *  delete:
+ *   tags: [Jobs]
+ *   security:
+ *    - access-token: []
+ *   description: Cancel job
+ *   parameters:
+ *   - name: jobId
+ *     in: path
+ *     description: Id of the job what need to cancel.
+ *     required: true
+ *     type: id
+ *
+ *   responses:
+ *     200:
+ *	     description: Job successfully canceled.
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *           properties:
+ *             message:
+ *              type: string
+ *              example: 
+ *                - Job already canceled.
+ *                - Job [ID] was canceled.
+ *
+ *     400:
+ *	     description: Bad request
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *          oneOf:
+ *           - $ref: '#/components/schemas/JobValidationSchema'
+ *           - $ref: '#/components/schemas/NoOpenStatusSchema'
  *
  *     401:
  *	     description: Unauthorized
@@ -499,8 +739,38 @@ module.exports = jobsRouter
  *              example: Forbidden!
  *             errorMessage:
  *              type: string
- *              example: Only users with an active role [user] have access in this route.
- *  
+ *              example: 
+ *                - Only users with an active role [user] have access in this route.
+ *                - Job creator ID and logged in user ID does not match. The creator of this work is not logged in user.
+ *
+ *     404:
+ *	     description: Not found
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *           properties:
+ *             errorType:
+ *              type: string
+ *              example: Incorrect ID error!
+ *             errorMessage:
+ *              type: string
+ *              example: Job with such ID does not exist.
+ * 
+  *     409:
+ *       description: Conflict. ID does not match rules.
+ *       content:
+ *         application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              error:
+ *                type: string
+ *              errorMessage:
+ *                type: string
+ *            example:
+ *              error: ID does not match rules.
+ *              errorMessage: ID passed in must be a string of 12 bytes or a string of 24 hex characters.
+ *
  *     500:
  *	     description: Server side error
  *	     content:
@@ -515,4 +785,6 @@ module.exports = jobsRouter
  *              example: ...
  *
  */
- 
+
+
+
