@@ -18,7 +18,6 @@ router.use('/users', usersRouter) // motaka.am/users
 router.use('/orders', verifyJWT, ordersRouter) // motaka.am/orders 
 
 // For testing
-const testRouter = require('./test.router')
-router.use('/help', testRouter)
+router.use('/help', require('./help.router'))
 
 module.exports = router

@@ -1,4 +1,5 @@
-const testRouter = require('express').Router()
+const helpRouter = require('express').Router()
+
 const bcrypt = require('bcrypt')
 
 const UserModel = require('../models/User')
@@ -11,7 +12,7 @@ const CommentModel = require('../models/Comment')
 
 // Create, delete ..... // 
 // create user 
-testRouter.post('/createUser', async (req, res) => {
+helpRouter.post('/createUser', async (req, res) => {
   const { phone, password } = req.body
 
   await UserModel.create({
@@ -26,7 +27,7 @@ testRouter.post('/createUser', async (req, res) => {
 })
 
 // create category
-testRouter.post('/createCategory', async (req, res) => {
+helpRouter.post('/createCategory', async (req, res) => {
   const { category } = req.body
 
   await CategoryModel.create({
@@ -40,7 +41,7 @@ testRouter.post('/createCategory', async (req, res) => {
 })
 
 // delete user
-testRouter.delete('/deleteUser', async (req, res) => {
+helpRouter.delete('/deleteUser', async (req, res) => {
   const { phone } = req.body
 
   const user = await UserModel.findOne({ phone })
@@ -61,12 +62,12 @@ testRouter.delete('/deleteUser', async (req, res) => {
 
 // ======= Render test pages ======= //
 // Render test home
-testRouter.get('/', async (req, res) => {
+helpRouter.get('/', async (req, res) => {
   res.render('helpHome')
 })
 
 // Render dbs
-testRouter.get('/dbs/:dbName', async (req, res) => {
+helpRouter.get('/dbs/:dbName', async (req, res) => {
   if (req.params.dbName === 'users') {
     let users = await getAllUsers()
     if (users.length === 0) {
@@ -147,7 +148,7 @@ testRouter.get('/dbs/:dbName', async (req, res) => {
 })
 
 // Render requestsInfo
-testRouter.get('/requestsInfo/:name', (req, res) => {
+helpRouter.get('/requestsInfo/:name', (req, res) => {
   if (req.params.name === 'about') {
     return res.render('requestsInfo', {
       message: 'About Requests Symbols',
@@ -238,4 +239,4 @@ async function getAllComments() {
 }
 // ========================== // 
 
-module.exports = testRouter 
+module.exports = helpRouter 
