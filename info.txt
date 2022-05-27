@@ -19,7 +19,7 @@ error messages with provider name
 
 /////// TODO ///////
 service provider -> 5 astx
-aranc phone u email validacnelu job stexcel
+
 
 
 

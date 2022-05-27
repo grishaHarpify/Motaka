@@ -5,6 +5,7 @@ const verifyJWT = require('../middlewares/verifyJWT')
 
 // Import routes
 const authRouter = require('./auth.router')
+const jwtRouter = require('./jwt.router')
 const jobsRouter = require('./jobs.router')
 const categoriesRouter = require('./categories.router')
 const usersRouter = require('./users.router')
@@ -12,6 +13,7 @@ const ordersRouter = require('./orders.router')
 
 // Use routes
 router.use('/', authRouter) // motaka.am/
+router.use('/jwt', jwtRouter) // motaka.am/jwt
 router.use('/jobs', verifyJWT, jobsRouter) // motaka.am/jobs
 router.use('/categories', categoriesRouter) // motaka.am/categories
 router.use('/users', usersRouter) // motaka.am/users
