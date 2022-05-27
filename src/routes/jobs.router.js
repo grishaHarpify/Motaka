@@ -17,7 +17,6 @@ const {
   jobValidationErrorHandler,
 } = require('../middlewares/jobInfoValidation')
 
-
 const { isProvider, isUser } = require('../middlewares/checkRole')
 
 // ID validation
@@ -25,6 +24,9 @@ const { pathIdValidation } = require('../middlewares/IDValidation')
 
 // QueryFilter
 const { getAllJobsQueryFilter } = require('../middlewares/filterRequestQuery')
+
+// Verification
+const checkVerification = require('../middlewares/checkVerification')
 
 // --- middlewares end --- //
 
@@ -38,6 +40,11 @@ jobsRouter.get('/',
 jobsRouter.get('/:jobId',
   pathIdValidation,
   jobsController.getJobDataWithId)
+
+
+jobsRouter.use( // Verification middlewares
+  checkVerification.isPhoneVerified,
+  checkVerification.isEmailVerified)
 
 // Create new job 
 jobsRouter.post('/',

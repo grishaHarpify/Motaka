@@ -142,7 +142,7 @@ async function editJobWithId(req, res) {
     })
 
     res.json({
-      message: 'Job successfully edited.'
+      message: 'Job data successfully edited.'
     })
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)

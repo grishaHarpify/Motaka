@@ -2,17 +2,25 @@
 
 
 function isPhoneVerified(req, res, next) {
-  console.log(req.user)
+  if (req.user.isPhoneVerified) {
+    return next()
+  }
 
-
-  next()
+  res.status(403).json({
+    errorType: 'Forbidden!',
+    errorMessage: 'Only users with a verified phone number have access in this route.'
+  })
 }
 
 function isEmailVerified(req, res, next) {
-  console.log(req.user)
+  if (req.user.isEmailVerified) {
+    return next()
+  }
 
-
-  next()
+  res.status(403).json({
+    errorType: 'Forbidden!',
+    errorMessage: 'Only users with a verified email have access in this route.'
+  })
 }
 
 
