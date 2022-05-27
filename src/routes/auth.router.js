@@ -93,13 +93,11 @@ authRouter.post('/facebookLogin',
   authController.loginWithFacebook)
 
 // Set user active role (select page)
-authRouter.post(
-  '/set_role',
+authRouter.post('/set_role',
   verifyJWT,
   validateResetRole,
   validationErrorHandler,
-  authController.setActiveRole
-)
+  authController.setActiveRole)
 
 module.exports = authRouter
 

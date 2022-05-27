@@ -8,11 +8,13 @@ const fetch = require('node-fetch')
 
 const ConfirmCodeModel = require('../models/ConfirmCode')
 const UserModel = require('../models/User')
+
 const generateCode = require('../utils/generateCode')
 const sendCodeToPhone = require('../utils/sendCodeToPhone')
 const sendCodeToEmail = require('../utils/sendCodeToMail')
 const putConfirmCodeToDb = require('../utils/putCodeToDb')
 const getUserAvailableRoles = require('../services/getAvailableRoles')
+const JWTHandler = require('../services/jwtHandler')
 
 async function register(req, res) {
   try {
@@ -301,11 +303,16 @@ async function loginWithPhone(req, res) {
     const availableRoles = getUserAvailableRoles(user)
 
     // Create JWT.(default role [activeRole])
-    const accessToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-      expiresIn: '7d',
-    })
+    const accessToken = JWTHandler.createAccessToken(user._id)
+    const refreshToken = JWTHandler.createRefreshToken(user._id)
 
-    res.json({ message: 'Login success.', accessToken, availableRoles })
+
+    res.json({
+      message: 'Login success.',
+      accessToken,
+      refreshToken,
+      availableRoles
+    })
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
     console.log(e.message)
@@ -347,18 +354,14 @@ async function loginWithGoogle(req, res) {
     const availableRoles = getUserAvailableRoles(userFromDb)
 
     // Create JWT.(default role [activeRole])
-    const accessToken = jwt.sign(
-      { userId: userFromDb._id },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: '7d',
-      }
-    )
+    const accessToken = JWTHandler.createAccessToken(user._id)
+    const refreshToken = JWTHandler.createRefreshToken(user._id)
 
     res.json({
       message: 'Login with google success.',
       accessToken,
-      availableRoles,
+      refreshToken,
+      availableRoles
     })
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
@@ -399,18 +402,14 @@ async function loginWithFacebook(req, res) {
     const availableRoles = getUserAvailableRoles(userFromDb)
 
     // Create JWT.(default role [activeRole])
-    const accessToken = jwt.sign(
-      { userId: userFromDb._id },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: '7d',
-      }
-    )
+    const accessToken = JWTHandler.createAccessToken(user._id)
+    const refreshToken = JWTHandler.createRefreshToken(user._id)
 
     res.json({
       message: 'Login with facebook success.',
       accessToken,
-      availableRoles,
+      refreshToken,
+      availableRoles
     })
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
