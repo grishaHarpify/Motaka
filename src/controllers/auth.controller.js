@@ -432,6 +432,9 @@ async function setActiveRole(req, res) {
       user.role[isRole] = true
       await user.save()
 
+      user.activeRole = role
+      await user.save()
+
       return res.status(201).json({
         message: `The user has create a new role [${role}] for himself and switched to it.`
       })

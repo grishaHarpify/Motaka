@@ -282,7 +282,7 @@ module.exports = jobsRouter
  */
 
 
-// ===== jobs/ ===== (get all jobs ???)
+// ===== jobs/ ===== 
 /**
  * @swagger
  * /jobs:
@@ -290,6 +290,56 @@ module.exports = jobsRouter
  *   tags: [Jobs]
  *   security:
  *    - access-token: []
+ *   parameters:
+ *      - in: query
+ *        name: page
+ *        schema:
+ *          type: integer
+ *          example: 2
+ *        description: Page count
+ *      - in: query
+ *        name: limit
+ *        schema:
+ *          type: integer
+ *          example: 15
+ *        description: Jobs count in one page
+ *      - in: query
+ *        name: salcost[gte]
+ *        schema:
+ *          type: integer
+ *          example: 10000
+ *        description: Jobs minimal cost
+ *      - in: query
+ *        name: salcost[lte]
+ *        schema:
+ *          type: integer
+ *          example: 25000
+ *        description: Jobs maximal cost
+ *      - in: query
+ *        name: caties
+ *        schema:
+ *          type: string
+ *          example: petWalking,cleaning
+ *        description: Jobs categories
+ *      - in: query
+ *        name: date[gte]
+ *        schema:
+ *          type: string
+ *          example: 2022-05-05
+ *        description: Jobs startDate must be after ...
+ *      - in: query
+ *        name: date[lte]
+ *        schema:
+ *          type: string
+ *          example: 2023-05-05
+ *        description: Jobs startDate must be before ...
+ *      - in: query
+ *        name: dur
+ *        schema:
+ *          type: string
+ *          example: 1,5
+ *        description: Job duration from 0 to 6 ( 0 indicates ALL ).
+ *
  *   description: All jobs with advanced search
  *   responses:
  *     200:
