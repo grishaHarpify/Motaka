@@ -64,6 +64,20 @@ html
 
         //- Grisha ==================================================
         if isGrishaPage  
+          //- ============================ JWT ============================
+          div.requestBlockName [ JWT ]
+
+          //- Send refresh token => get new access and refresh                  
+          div.content-data  
+            div Description ==> Send refresh token and get new access and refresh  
+            div Request URI ==> URI/jwt/refresh
+            div Request Method ==> 
+              span(style="color: black") [POST] 
+
+            div Request Body [JSON] ==> {
+            div &emsp;&emsp;"refreshToken": "eyJhbGci.iLCJpYXQiOjE2NTM.RZnQGg_icRM"
+            div }
+
           //- ============================ Login ============================
           div.requestBlockName [ Login ]
 

@@ -21,18 +21,19 @@ module.exports = jwtRouter
  *       scheme: bearer
  *       bearerFormat: JWT
  *  schemas:
- *   test:
+ *   RefreshJwtSchema:
  *    type: object
  *    properties:
- *      next:
- *        type: object
- *        properties:
- *          page:
- *            type: number
- *            example: 3
- *          limit:
- *            type: number
- *            example: 15
+ *      errorType:
+ *        type: string
+ *        example: JWT error!
+ *      errorMessage:
+ *        type: string
+ *        example: 
+ *          - Wrong refresh token.
+ *          - Refresh token date is expired.
+ *          - Refresh token is not valid.
+ * 
  */
 
 /**
@@ -53,7 +54,7 @@ module.exports = jwtRouter
  *             example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXCJ9.eyJ1c2VySWQiOiI2MjkY2E2MWU4MTEzNmY1YjU3OTcyOGYiLCJpYXQiOjE2NTM2NTcxMjYsImV4cCI6MTY1NDI2MTkyNn0.SgGPtXMCc68oU1oeuBJVyLK-4DPCqfEZJbX_IM5T-g 
  *
  *   responses:
- *     201:
+ *     200:
  *	     description: New access and refresh tokens
  *	     content:
  *	       application/json:
@@ -65,31 +66,13 @@ module.exports = jwtRouter
  *             refreshToken:
  *              type: string
  *              example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV9.eyJ1c2VySWQiOiI2MkwY2E2MWU4MTEzNmY1YjU3OTcyOGYiLCJpYXQiOjE2NTM2NTc0OTEsImV4cCI6MTY1NDI2MjI5MX0.knt7zINga4Z3QxNl0KdrTyBaOSI6Udf-s9HCE6s
- *     400:
- *	     description: Bad request
- *	     content:
- *	       application/json:
- *         schema:
- *          $ref: '#/components/schemas/JobValidationSchema'
  *     401:
  *	     description: Unauthorized
  *	     content:
  *	       application/json:
  *         schema:
- *          $ref: '#/components/schemas/VerifyJwtSchema'
- *     403:
- *	     description: Forbidden
- *	     content:
- *	       application/json:
- *         schema:
- *           properties:
- *             errorType:
- *              type: string
- *              example: Forbidden!
- *             errorMessage:
- *              type: string
- *              example: Only users with an active role [user] have access in this route.
- *
+ *          $ref: '#/components/schemas/RefreshJwtSchema'
+ * 
  *     500:
  *	     description: Server side error
  *	     content:

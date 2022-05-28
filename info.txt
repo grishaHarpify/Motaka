@@ -19,8 +19,10 @@ error messages with provider name
 
 /////// TODO ///////
 service provider -> 5 astx
-
-
+swagger query-info
+swagger jwt
+requestInfo pug
+ 
 
 
 

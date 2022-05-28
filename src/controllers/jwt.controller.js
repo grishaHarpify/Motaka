@@ -8,7 +8,6 @@ async function getRefreshReturnPair(req, res) {
   try {
     const { refreshToken } = req.body
 
-
     let userInfo
     try {
       userInfo = jwt.verify(refreshToken, process.env.JWT_SECRET)
@@ -57,7 +56,7 @@ async function getRefreshReturnPair(req, res) {
     // User id in token incorrect
     res.status(401).json({
       errorType: 'JWT error!',
-      errorMessage: 'Wrong authorization token.'
+      errorMessage: 'Wrong refresh token.'
     })
 
   } catch (e) {
