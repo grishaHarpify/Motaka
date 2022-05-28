@@ -41,8 +41,8 @@ jobsRouter.get('/:jobId',
   pathIdValidation,
   jobsController.getJobDataWithId)
 
-
-jobsRouter.use( // Verification middlewares
+// Verification middlewares
+jobsRouter.use(
   checkVerification.isPhoneVerified,
   checkVerification.isEmailVerified)
 
@@ -416,6 +416,7 @@ module.exports = jobsRouter
  *
  */
 
+// ========== Must be verified ==========
 // ===== jobs ===== post
 /**
  * @swagger
@@ -471,7 +472,10 @@ module.exports = jobsRouter
  *              example: Forbidden!
  *             errorMessage:
  *              type: string
- *              example: Only users with an active role [user] have access in this route.
+ *              example:
+ *                - Only users with a verified phone number have access in this route.
+ *                - Only users with a verified email have access in this route.
+ *                - Only users with an active role [user] have access in this route.
  *
  *     500:
  *	     description: Server side error
@@ -553,8 +557,11 @@ module.exports = jobsRouter
  *             errorMessage:
  *              type: string
  *              example:
+ *                - Only users with a verified phone number have access in this route.
+ *                - Only users with a verified email have access in this route.
  *                - Only users with an active role [user] have access in this route.
  *                - The user is not the creator of this job.
+ *
  *
  *     404:
  *	     description: Not found
@@ -656,11 +663,13 @@ module.exports = jobsRouter
  *             errorMessage:
  *              type: string
  *              example:
+ *                - Only users with a verified phone number have access in this route.
+ *                - Only users with a verified email have access in this route.
  *                - Only users with an active role [provider] have access in this route.
  *                - Service provider cannot become a job candidate if he/she is the creator of that job.
  *                - Service provider cannot become a same job candidate more then one time.
  *
-  *     409:
+ *     409:
  *       description: Conflict. ID does not match rules.
  *       content:
  *         application/json:
@@ -747,6 +756,8 @@ module.exports = jobsRouter
  *             errorMessage:
  *              type: string
  *              example: 
+ *                - Only users with a verified phone number have access in this route.
+ *                - Only users with a verified email have access in this route.
  *                - Only users with an active role [user] have access in this route.
  *                - Job creator ID and logged in user ID does not match. The creator of this work is not logged in user.
  *
