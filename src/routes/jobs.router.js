@@ -42,9 +42,9 @@ jobsRouter.get('/:jobId',
   jobsController.getJobDataWithId)
 
 // Verification middlewares
-jobsRouter.use(
-  checkVerification.isPhoneVerified,
-  checkVerification.isEmailVerified)
+// jobsRouter.use(
+//   checkVerification.isPhoneVerified,
+//   checkVerification.isEmailVerified)
 
 // Create new job 
 jobsRouter.post('/',

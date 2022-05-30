@@ -78,3 +78,9 @@ button {
   border: 1px solid wheat;
   padding: 4px;
 }
+
+/* Images */
+
+img {
+  border: 2px dotted silver;
+}

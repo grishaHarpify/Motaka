@@ -93,6 +93,33 @@ html
             div &emsp;&emsp;"password": "********"
             div }
 
+          //- Login with google
+          div.content-data  
+            div Description ==> Login with google
+            div Request URI ==> URI/googleLogin
+            div Request Method ==> 
+              span(style="color: black") [POST] 
+
+            div Request Body [JSON] ==> {
+            div &emsp;&emsp;"tokenId": "*******"
+            div }
+
+            img(src= '/img/GoogleLogin.png' )
+
+          //- Login with facebook
+          div.content-data  
+            div Description ==> Login with facebook
+            div Request URI ==> URI/facebookLogin
+            div Request Method ==> 
+              span(style="color: black") [POST] 
+
+            div Request Body [JSON] ==> {
+            div &emsp;&emsp;"accessToken": "*******"
+            div &emsp;&emsp;"userId": "785256359114348"
+            div }
+
+            img(src= '/img/FacebookLogin.png' )
+
           //- ============================ Register and Forgot Password ============================
           div.requestBlockName [ Register and Forgot Password ]
 
