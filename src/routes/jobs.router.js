@@ -292,11 +292,11 @@ module.exports = jobsRouter
  *    - access-token: []
  *   parameters:
  *      - in: query
- *        name: page
+ *        name: offset
  *        schema:
  *          type: integer
  *          example: 2
- *        description: Page count
+ *        description: Jobs count that needed to skip
  *      - in: query
  *        name: limit
  *        schema:

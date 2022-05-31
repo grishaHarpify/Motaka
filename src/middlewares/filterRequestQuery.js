@@ -10,7 +10,7 @@ function getAllJobsQueryFilter(req, res, next) {
       case 'caties':  // categories
       case 'date':    // startDate
       case 'dur':     // duration
-      case 'offset':    // pagination and limit
+      case 'offset':  // pagination and limit
       case 'limit':
         break
       default:
