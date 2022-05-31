@@ -6,6 +6,7 @@ class JobQueryHandler {
   _page
   _limit
   _skip
+  _total
 
   // Put all data her
   _queryHandlerResult = {}
@@ -22,7 +23,7 @@ class JobQueryHandler {
 
   // by cost [salcost]
   salaryCostHandler() {
-    // Add $ after all [gt, gte, lt, lte]
+    // Add $ after all [gt, gte, lt, lte] // not only for salaryCost
     this.queryString = this.queryString.replace(
       /\b(gte|gt|lte|lt)\b/g,
       (match) => `$${match}`
@@ -110,6 +111,7 @@ class JobQueryHandler {
   async pagination() {
     const queryObject = JSON.parse(this.queryString)
 
+    /* OLD VERSION =======
     // get page and limit from query, calculate skip
     this._page = parseInt(queryObject.page) || 1
     this._limit = parseInt(queryObject.limit) || 20
@@ -145,6 +147,29 @@ class JobQueryHandler {
         limit: limitForNext
       }
     }
+    // OLD VERSION ======= */
+    // get limit and offset
+    if (!parseInt(queryObject.limit)) {
+      // if no limit attribute in query
+      this._limit = 20 // default value
+    } else {
+      if (parseInt(queryObject.limit) > 100) {
+        // no more then 100 items
+        this._limit = 100
+      } else {
+        // limit count from frontend
+        this._limit = parseInt(queryObject.limit)
+      }
+    }
+
+    this._skip = parseInt(queryObject.offset) || 0
+
+    // delete offset and limit from queryObject
+    delete queryObject.limit
+    delete queryObject.offset
+
+    // Get data count to create next and previous objects
+    this._total = await this.DBmodel.countDocuments(queryObject)
 
     // parse object to string
     this.queryString = JSON.stringify(queryObject)
@@ -155,7 +180,9 @@ class JobQueryHandler {
   // get result from DB
   async getRequestResult() {
     const queryObject = JSON.parse(this.queryString)
-    console.log(queryObject, 'query object after filter [JobQueryHandler]')
+
+    // Total count of data  
+    this._queryHandlerResult.total = this._total
 
     // Get data from DB
     this._queryHandlerResult.data = await this.DBmodel.find(queryObject)
@@ -164,6 +191,7 @@ class JobQueryHandler {
       .limit(this._limit)
       .populate(this.populateFiled, this.populateSelect)
       .exec()
+
 
     return this._queryHandlerResult
   }
