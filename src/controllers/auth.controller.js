@@ -353,8 +353,8 @@ async function loginWithGoogle(req, res) {
     const availableRoles = getUserAvailableRoles(userFromDb)
 
     // Create JWT.(default role [activeRole])
-    const accessToken = JWTHandler.createAccessToken(user._id)
-    const refreshToken = JWTHandler.createRefreshToken(user._id)
+    const accessToken = JWTHandler.createAccessToken(userFromDb._id)
+    const refreshToken = JWTHandler.createRefreshToken(userFromDb._id)
 
     res.json({
       message: 'Login with google success.',
@@ -401,8 +401,8 @@ async function loginWithFacebook(req, res) {
     const availableRoles = getUserAvailableRoles(userFromDb)
 
     // Create JWT.(default role [activeRole])
-    const accessToken = JWTHandler.createAccessToken(user._id)
-    const refreshToken = JWTHandler.createRefreshToken(user._id)
+    const accessToken = JWTHandler.createAccessToken(userFromDb._id)
+    const refreshToken = JWTHandler.createRefreshToken(userFromDb._id)
 
     res.json({
       message: 'Login with facebook success.',
