@@ -333,11 +333,10 @@ async function loginWithGoogle(req, res) {
       audience: process.env.GOOGLE_CLIENT_ID,
     })
     const googleUserData = clientObject.payload
-    console.log(tokenId)
+    console.log(clientObject, '=========oki')
 
     // Get user data from db
     let userFromDb = await UserModel.findOne({ googleId: googleUserData.sub })
-    console.log(tokenId)
 
     // Check user exist in db or no
     if (!userFromDb) {
@@ -351,8 +350,6 @@ async function loginWithGoogle(req, res) {
         avatar: googleUserData.picture,
       })
     }
-    console.log(tokenId)
-
 
     // Get available roles
     const availableRoles = getUserAvailableRoles(userFromDb)
