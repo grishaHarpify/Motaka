@@ -327,14 +327,17 @@ async function loginWithGoogle(req, res) {
     const { tokenId } = req.body
 
     // Get user data from token
+    console.log(tokenId)
     const clientObject = await googleClient.verifyIdToken({
       idToken: tokenId,
       audience: process.env.GOOGLE_CLIENT_ID,
     })
     const googleUserData = clientObject.payload
+    console.log(tokenId)
 
     // Get user data from db
     let userFromDb = await UserModel.findOne({ googleId: googleUserData.sub })
+    console.log(tokenId)
 
     // Check user exist in db or no
     if (!userFromDb) {
@@ -348,6 +351,8 @@ async function loginWithGoogle(req, res) {
         avatar: googleUserData.picture,
       })
     }
+    console.log(tokenId)
+
 
     // Get available roles
     const availableRoles = getUserAvailableRoles(userFromDb)
