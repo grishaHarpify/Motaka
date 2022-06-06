@@ -4,14 +4,21 @@ const usersRouter = require('express').Router()
 const userController = require('../controllers/users.controller')
 
 // Import middlewares //
-// Validation
 
 // ID validation
 const { pathIdValidation } = require('../middlewares/IDValidation')
 
+// Verify JWT
+const verifyJWT = require('../middlewares/verifyJWT')
+
 // --- middlewares end --- //
 
 // Routes //
+// Get user with header token
+usersRouter.get('/',
+  verifyJWT,
+  userController.getUserDataWithToken)
+
 // Get user by id
 usersRouter.get('/:userId',
   pathIdValidation,

@@ -1,5 +1,24 @@
 const UserModel = require('../models/User')
 
+const _ = require('lodash')
+
+async function getUserDataWithToken(req, res) {
+  try {
+    const user = req.user
+
+    const data = _.pick(user, ['role', 'firstName', 'lastName', 'email', 'phone', 'activeRole', 'isEmailVerified', 'isPhoneVerified'])
+
+    res.json({ data })
+  } catch (e) {
+    console.log(`Error in file: ${__filename}!`)
+    console.log(e.message)
+    res.status(500).json({
+      errorType: 'Server side error!',
+      errorMessage: e.message,
+    })
+  }
+}
+
 async function getUserDataWithId(req, res) {
   try {
     const { userId } = req.params
@@ -25,5 +44,6 @@ async function getUserDataWithId(req, res) {
 }
 
 module.exports = {
-  getUserDataWithId,
+  getUserDataWithToken,
+  getUserDataWithId
 }
