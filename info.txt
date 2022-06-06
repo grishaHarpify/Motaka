@@ -2,6 +2,8 @@ export NODE_ENV=development
 export NODE_ENV=production
 
 
+
+
 /////// NOTES ///////
 
 Job Categories
@@ -20,8 +22,8 @@ error messages with provider name
 /////// TODO ///////
 service provider -> 5 astx
 pagination -> with offset limit 
+job description +
 
- 
 
 
 
