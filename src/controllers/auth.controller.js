@@ -327,13 +327,14 @@ async function loginWithGoogle(req, res) {
     const { tokenId } = req.body
 
     // Get user data from token
-    console.log(tokenId)
+    console.log(tokenId, '================================token id')
     const clientObject = await googleClient.verifyIdToken({
       idToken: tokenId,
       audience: process.env.GOOGLE_CLIENT_ID,
     })
-    const googleUserData = clientObject.payload
     console.log(clientObject, '=========oki')
+    const googleUserData = clientObject.payload
+    console.log(googleUserData, '151sad51sa5d15as1d5a1sd5')
 
     // Get user data from db
     let userFromDb = await UserModel.findOne({ googleId: googleUserData.sub })
