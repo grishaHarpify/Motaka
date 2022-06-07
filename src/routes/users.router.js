@@ -69,6 +69,9 @@ module.exports = usersRouter
  *          phone:
  *            type: string
  *            example: +374 77 594859
+ *          avatar:
+ *            type: string
+ *            example: href
  *
  *   MeDataSchema:
  *    type: object
@@ -109,6 +112,9 @@ module.exports = usersRouter
  *          isPhoneVerified:
  *            type: boolean
  *            example: false
+ *          avatar:
+ *            type: string
+ *            example: href
  *
  *   VerifyJwtSchema:
  *    type: object
