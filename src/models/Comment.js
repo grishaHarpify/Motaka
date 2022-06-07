@@ -16,7 +16,6 @@ const CommentSchema = new Schema({
     required: true
   }
 
-
 }, {
   collection: 'comments', strict: false, timestamps: true
 })

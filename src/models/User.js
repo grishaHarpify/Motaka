@@ -18,11 +18,10 @@ const userSchema = new Schema({
   password: { type: String },
   isEmailVerified: { type: Boolean, default: false },
   isPhoneVerified: { type: Boolean, default: false },
-  avatar: { type: String },
+  avatar: { type: String }
+
 }, {
-  collection: 'users',
-  strict: false,
-}
-)
+  collection: 'users', strict: false,
+})
 
 module.exports = model('User', userSchema)

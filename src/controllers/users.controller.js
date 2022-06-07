@@ -6,7 +6,7 @@ async function getUserDataWithToken(req, res) {
   try {
     const user = req.user
 
-    const data = _.pick(user, ['role', '_id', 'firstName', 'lastName', 'email', 'phone', 'activeRole', 'isEmailVerified', 'isPhoneVerified'])
+    const data = _.pick(user, ['role', '_id', 'firstName', 'lastName', 'email', 'phone', 'activeRole', 'isEmailVerified', 'isPhoneVerified', 'avatar'])
 
     res.json({ data })
   } catch (e) {
@@ -23,7 +23,7 @@ async function getUserDataWithId(req, res) {
   try {
     const { userId } = req.params
 
-    const userFromDb = await UserModel.findById(userId).select('role firstName lastName email phone')
+    const userFromDb = await UserModel.findById(userId).select('role firstName lastName email phone avatar')
 
     if (!userFromDb) {
       return res.status(404).json({
