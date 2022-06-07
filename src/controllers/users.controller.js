@@ -6,9 +6,30 @@ async function getUserDataWithToken(req, res) {
   try {
     const user = req.user
 
-    const data = _.pick(user, ['role', '_id', 'firstName', 'lastName', 'email', 'phone', 'activeRole', 'isEmailVerified', 'isPhoneVerified', 'avatar'])
+    const data = _.pick(user, ['role', '_id', 'firstName', 'lastName', 'email', 'phone', 'balance', 'activeRole', 'isEmailVerified', 'isPhoneVerified', 'avatar'])
 
     res.json({ data })
+  } catch (e) {
+    console.log(`Error in file: ${__filename}!`)
+    console.log(e.message)
+    res.status(500).json({
+      errorType: 'Server side error!',
+      errorMessage: e.message,
+    })
+  }
+}
+
+async function changeUserBalance(req, res) {
+  try {
+    const { money } = req.body
+    const user = req.user
+
+    user.balance += +money
+    await user.save()
+
+    res.json({
+      message: 'Balance successfully changed.'
+    })
   } catch (e) {
     console.log(`Error in file: ${__filename}!`)
     console.log(e.message)
@@ -45,5 +66,6 @@ async function getUserDataWithId(req, res) {
 
 module.exports = {
   getUserDataWithToken,
+  changeUserBalance,
   getUserDataWithId
 }

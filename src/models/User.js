@@ -7,6 +7,7 @@ const userSchema = new Schema({
   lastName: { type: String },
   email: { type: String },
   phone: { type: String },
+  balance: { type: Number, default: 1000000 }, // currency 'AMD'
   role: {
     isProvider: { type: Boolean, default: false },
     isUser: { type: Boolean, default: false },

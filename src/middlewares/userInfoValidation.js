@@ -90,6 +90,15 @@ const validateResetRole = body('role')
   .isIn(['user', 'provider'])
   .withMessage(`Role can be only 'user' or 'provider'.`)
 
+const validateBalanceMoney = body('money')
+  .not()
+  .isEmpty()
+  .withMessage('Money field cannot be left blank.')
+  .matches(/^([5-9]\d{2}|[1-9]\d{3,})$/)
+  .withMessage('Money must be positive number greater or equal than 500.')
+
+
+
 function validationErrorHandler(req, res, next) {
   const valErrors = validationResult(req).errors
 
@@ -128,5 +137,6 @@ module.exports = {
   validateResetRole,
   validateRoleUser,
   validateRoleProvider,
+  validateBalanceMoney,
   validationErrorHandler,
 }

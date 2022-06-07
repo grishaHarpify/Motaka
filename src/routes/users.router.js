@@ -4,6 +4,11 @@ const usersRouter = require('express').Router()
 const userController = require('../controllers/users.controller')
 
 // Import middlewares //
+// Data validation
+const {
+  validateBalanceMoney,
+  validationErrorHandler
+} = require('../middlewares/userInfoValidation')
 
 // ID validation
 const { pathIdValidation } = require('../middlewares/IDValidation')
@@ -19,10 +24,18 @@ usersRouter.get('/me',
   verifyJWT,
   userController.getUserDataWithToken)
 
+usersRouter.patch('/me/balance',
+  verifyJWT,
+  validateBalanceMoney,
+  validationErrorHandler,
+  userController.changeUserBalance)
+
 // Get user by id
 usersRouter.get('/:userId',
   pathIdValidation,
   userController.getUserDataWithId)
+
+
 
 module.exports = usersRouter
 
@@ -103,6 +116,9 @@ module.exports = usersRouter
  *          phone:
  *            type: string
  *            example: +374 77 594859
+ *          balance:
+ *            type: number
+ *            example: 150000
  *          activeRole:
  *            type: string
  *            example: provider
@@ -147,6 +163,75 @@ module.exports = usersRouter
  *	       application/json:
  *         schema:
  *          $ref: '#/components/schemas/MeDataSchema'
+ *     401:
+ *	     description: Unauthorized
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *          $ref: '#/components/schemas/VerifyJwtSchema'
+ *
+ *     500:
+ *	     description: Server side error
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *           properties:
+ *             errorType:
+ *              type: string
+ *              example: Server side error!
+ *             errorMessage:
+ *              type: string
+ *              example: ...
+ *
+ */
+
+// ===== users/me/balance =====
+/**
+ * @swagger
+ * /users/me/balance:
+ *  patch:
+ *   tags: [Users]
+ *   security:
+ *    - access-token: []
+ *   description: Change user balance
+ *	  requestBody:
+ *	   description: Money to add to balance
+ *	   required: true
+ *	   content:
+ *	    application/json:
+  *       schema:
+ *         properties:
+ *           money:
+ *            type: number
+ *            example: 15000
+ *   responses:
+ *     200:
+ *	     description: Balance successfully changed
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *          properties:
+ *            message:
+ *              type: string
+ *              example: Balance successfully changed.
+ *
+ *     400:
+ *	     description: Bad request
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *          properties:
+ *            errorType:
+ *              type: string
+ *              example: Validation error!
+ *            errorMessages:
+ *              type: array
+ *              example:
+ *                [
+ *                  Money field cannot be left blank.,
+ *                  Money must be positive number greater or equal than 500.,
+ *                ]
+ *
  *     401:
  *	     description: Unauthorized
  *	     content:

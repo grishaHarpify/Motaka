@@ -363,8 +363,23 @@ html
               span(style="color: black") [GET] 
         
             div Request Headers ==> {
-              div &emsp;&emsp;"Authorization": "Bearer accessToken" , 
-              div }
+            div &emsp;&emsp;"Authorization": "Bearer accessToken" , 
+            div }
+
+          //- Change user balance
+          div.content-data
+            div Description ==> Change user balance
+            div Request URI ==> URI/users/me/balance
+            div Request Method ==> 
+              span(style="color: black") [PATCH] 
+
+            div Request Body [JSON] ==> {
+            div &emsp;&emsp;"money": 42000 
+            div }
+        
+            div Request Headers ==> {
+            div &emsp;&emsp;"Authorization": "Bearer accessToken" , 
+            div }
 
           //- Get user data with Id
           div.content-data
