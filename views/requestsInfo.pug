@@ -159,7 +159,7 @@ html
           div.requestBlockName [ Verify ]
             
           //- Send code to phone number                
-          div.content-data(style="color: black")  
+          div.content-data
             div Description ==> Send code to phone number 
             div Request URI ==> URI/send_code_phone
             div Request Method ==> 
@@ -170,7 +170,7 @@ html
             div }
           
           //- Verify phone
-          div.content-data(style="color: black") 
+          div.content-data
             div Description ==> Verify phone
             div Request URI ==> URI/verify_phone
             div Request Method ==> 
@@ -182,7 +182,7 @@ html
             div }
 
           //- Send code to email               
-          div.content-data(style="color: black")   
+          div.content-data   
             div Description ==> Send code to email 
             div Request URI ==> URI/send_code_email
             div Request Method ==> 
@@ -193,7 +193,7 @@ html
             div }
 
           //- Verify email
-          div.content-data(style="color: black")   
+          div.content-data  
             div Description ==> Verify email
             div Request URI ==> URI/verify_email
             div Request Method ==> 
@@ -361,6 +361,10 @@ html
             div Request URI ==> URI/users/me
             div Request Method ==> 
               span(style="color: black") [GET] 
+        
+            div Request Headers ==> {
+              div &emsp;&emsp;"Authorization": "Bearer accessToken" , 
+              div }
 
           //- Get user data with Id
           div.content-data
@@ -369,9 +373,6 @@ html
             div Request Method ==> 
               span(style="color: black") [GET] 
 
-            div Request Headers ==> {
-            div &emsp;&emsp;"Authorization": "Bearer accessToken" , 
-            div }
 
 
 
