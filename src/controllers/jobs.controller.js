@@ -3,7 +3,6 @@ const JobModel = require('../models/Job')
 
 const { JobQueryHandler } = require('../services/queryHandler')
 
-// Get all jobs with filter
 async function getAllJobs(req, res) {
   try {
     // Get from query important info and paginate
@@ -35,7 +34,6 @@ async function getAllJobs(req, res) {
   }
 }
 
-// Get job data with id
 async function getJobDataWithId(req, res) {
   try {
     const { jobId } = req.params
@@ -64,7 +62,6 @@ async function getJobDataWithId(req, res) {
   }
 }
 
-// Create new job [USER]
 async function createNewJob(req, res) {
   try {
     const { startDate, startTime, duration, salary, address, description, category, subCategories } = req.body
@@ -98,7 +95,6 @@ async function createNewJob(req, res) {
   }
 }
 
-// Edit job data [USER]  
 async function editJobWithId(req, res) {
   try {
     const { jobId } = req.params
@@ -155,7 +151,6 @@ async function editJobWithId(req, res) {
   }
 }
 
-// Add job new candidate
 async function addJobNewCandidate(req, res) {
   try {
     const { jobId } = req.params
@@ -216,7 +211,6 @@ async function addJobNewCandidate(req, res) {
   }
 }
 
-// Cancel job
 async function cancelJob(req, res) {
   try {
     const { jobId } = req.params
