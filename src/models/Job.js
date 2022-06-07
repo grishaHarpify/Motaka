@@ -8,6 +8,7 @@ const jobSchema = new Schema({
     cost: { type: Number }
   },
   address: { type: String },
+  description: { type: String },
   category: {
     type: String,
     enum: ['cleaning', 'repairing', 'plumbing', 'petWalking', 'ironing']

@@ -12,6 +12,7 @@ const {
   validateDuration,
   validateSalaryCost,
   validateAddress,
+  validateDescription,
   validateCategory,
   validateSubCategories,
   jobValidationErrorHandler,
@@ -54,6 +55,7 @@ jobsRouter.post('/',
   validateDuration,
   validateSalaryCost,
   validateAddress,
+  validateDescription,
   validateCategory,
   validateSubCategories,
   jobValidationErrorHandler,
@@ -68,6 +70,7 @@ jobsRouter.patch('/:jobId',
   validateDuration,
   validateSalaryCost,
   validateAddress,
+  validateDescription,
   validateCategory,
   validateSubCategories,
   jobValidationErrorHandler,
@@ -146,6 +149,9 @@ module.exports = jobsRouter
  *            address:
  *              type: string
  *              example: Xanjyan
+ *            description:
+ *              type: string
+ *              example: Hi from arpify
  *            category:
  *              type: string
  *              example: petWalking
@@ -182,6 +188,9 @@ module.exports = jobsRouter
  *      address:
  *        type: string
  *        example: Xanjyan
+ *      description:
+ *        type: string
+ *        example: Hi from arpify
  *      category:
  *        type: string
  *        example: cleaning
@@ -221,6 +230,9 @@ module.exports = jobsRouter
  *          address:
  *            type: string
  *            example: Xanjyan
+ *          description:
+ *            type: string
+ *            example: Hi from arpify
  *          category:
  *            type: string
  *            example: petWalking

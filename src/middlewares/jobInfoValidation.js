@@ -51,11 +51,16 @@ const validateSalaryCost = body('salary')
   .matches(/^(?![0]\b)\d{0,}$/)
   .withMessage('Job salary must be positive number.')
 
-const validateAddress = body('address')
+const validateAddress = body('address') // ??
   .not()
   .isEmpty()
   .withMessage('Job address is required field.')
-// urish inch validation anel ?
+
+const validateDescription = body('description')
+  .trim()
+  .not()
+  .isEmpty()
+  .withMessage('Job description is required field.')
 
 const validateCategory = body('category')
   .not()
@@ -64,11 +69,11 @@ const validateCategory = body('category')
   .isIn(['cleaning', 'repairing', 'plumbing', 'petWalking', 'ironing'])
   .withMessage('Incorrect job category. Allowed job categories: ([cleaning] [repairing] [plumbing] [petWalking] [ironing])')
 
-const validateSubCategories = body('subCategories')
+const validateSubCategories = body('subCategories') // ??
   .not()
   .isEmpty()
   .withMessage('Job sub categories is required field.')
-// ??
+
 
 function jobValidationErrorHandler(req, res, next) {
   const valErrors = validationResult(req).errors
@@ -103,6 +108,7 @@ module.exports = {
   // validateSalaryCurrency,
   validateSalaryCost,
   validateAddress, // ??
+  validateDescription,
   validateCategory,
   validateSubCategories, // ??
   jobValidationErrorHandler

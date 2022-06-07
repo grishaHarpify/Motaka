@@ -11,7 +11,7 @@ async function getAllJobs(req, res) {
     const filteredQueryObject = await (new JobQueryHandler(
       req.query,
       JobModel,
-      'salary startDate duration address category subCategories status userId', // requestSelect
+      'salary startDate duration address description category subCategories status userId', // requestSelect
       //'userId', // populateField 
       //'firstName lastName email avatar' // populateSelect  
     ).salaryCostHandler()
@@ -41,7 +41,7 @@ async function getJobDataWithId(req, res) {
     const { jobId } = req.params
 
     // Find job with id
-    let jobData = await JobModel.findById(jobId).select('salary startDate duration address category subCategories userId status')
+    let jobData = await JobModel.findById(jobId).select('salary startDate duration address description category subCategories userId status')
 
     // Check job with such id exist or not
     if (!jobData) {
@@ -67,7 +67,7 @@ async function getJobDataWithId(req, res) {
 // Create new job [USER]
 async function createNewJob(req, res) {
   try {
-    const { startDate, startTime, duration, salary, address, category, subCategories } = req.body
+    const { startDate, startTime, duration, salary, address, description, category, subCategories } = req.body
     const user = req.user
 
     // Put job data to DB
@@ -78,6 +78,7 @@ async function createNewJob(req, res) {
         cost: salary // salary from FRONT we put in db with name salary.cost
       },
       address,
+      description,
       category,
       subCategories,
       userId: user._id,
