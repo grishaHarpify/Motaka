@@ -238,7 +238,7 @@ html
 
           //- Create new job                 
           div.content-data
-            div Description [&&] ==> Create new job 
+            div Description ==> Create new job 
             div Request URI ==> URI/jobs
             div Request Method ==> 
               span(style="color: black") [POST] 
@@ -259,7 +259,7 @@ html
 
           //- Edit job
           div.content-data 
-            div Description [&&] ==> Edit job 
+            div Description ==> Edit job 
             div Request URI ==> URI/jobs/:jobId
             div Request Method ==> 
               span(style="color: black") [PATCH] 
@@ -310,7 +310,7 @@ html
 
           //- Add new candidate in job
           div.content-data
-            div Description [&&] ==> Add new candidate in job [yourself]
+            div Description ==> Add new candidate in job [yourself]
             div Request URI ==> URI/jobs/:jobId/candidate
 
             div Request Method ==> 
@@ -322,7 +322,7 @@ html
 
           //- Cancel job
           div.content-data
-            div Description [&&] ==> Cancel job [set job status 'canceled']
+            div Description ==> Cancel job [set job status 'canceled']
             div Request URI ==> URI/jobs/:jobId
 
             div Request Method ==> 
@@ -353,6 +353,13 @@ html
           //- ============================ Users ============================
           div.requestBlockName [ Users ]
 
+          //- Get user data with token
+          div.content-data
+            div Description ==> Get data about user with token 
+            div Request URI ==> URI/users/me
+            div Request Method ==> 
+              span(style="color: black") [GET] 
+
           //- Get user data with Id
           div.content-data
             div Description ==> Get data about user with ID 
@@ -360,7 +367,9 @@ html
             div Request Method ==> 
               span(style="color: black") [GET] 
 
-
+            div Request Headers ==> {
+            div &emsp;&emsp;"Authorization": "Bearer accessToken" , 
+            div }
 
 
         //- Mamikon ==================================================

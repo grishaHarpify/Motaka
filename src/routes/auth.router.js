@@ -294,7 +294,6 @@ module.exports = authRouter
  *        - Authorization token date is expired.
  */
 
-
 // ===== register =====
 /**
  * @swagger

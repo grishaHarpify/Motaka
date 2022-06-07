@@ -15,7 +15,7 @@ const verifyJWT = require('../middlewares/verifyJWT')
 
 // Routes //
 // Get user with header token
-usersRouter.get('/',
+usersRouter.get('/me',
   verifyJWT,
   userController.getUserDataWithToken)
 
@@ -70,6 +70,46 @@ module.exports = usersRouter
  *            type: string
  *            example: +374 77 594859
  *
+ *   MeDataSchema:
+ *    type: object
+ *    properties:
+ *      data:
+ *        type: object
+ *        properties:
+ *          role:
+ *            type: object
+ *            properties:
+ *              isProvider:
+ *                type: boolean
+ *                example: true
+ *              isUser:
+ *                type: boolean
+ *                example: false
+ *          _id:
+ *            type: string
+ *            example: 627bc28ec41bad89e03a45cd
+ *          firstName:
+ *            type: string
+ *            example: Keanu
+ *          lastName:
+ *            type: string
+ *            example: Reeves
+ *          email:
+ *            type: string
+ *            example: example@mail.ru
+ *          phone:
+ *            type: string
+ *            example: +374 77 594859
+ *          activeRole:
+ *            type: string
+ *            example: provider
+ *          isEmailVerified:
+ *            type: boolean
+ *            example: true
+ *          isPhoneVerified:
+ *            type: boolean
+ *            example: false
+ *
  *   VerifyJwtSchema:
  *    type: object
  *    properties:
@@ -83,6 +123,44 @@ module.exports = usersRouter
  *        - Wrong authorization token.
  *        - Authorization token is not valid.
  *        - Authorization token date is expired.
+ */
+
+// ===== users/me =====
+/**
+ * @swagger
+ * /users/me:
+ *  get:
+ *   tags: [Users]
+ *   security:
+ *    - access-token: []
+ *   description: Get data about user with token
+ *   responses:
+ *     200:
+ *	     description: User data
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *          $ref: '#/components/schemas/MeDataSchema'
+ *     401:
+ *	     description: Unauthorized
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *          $ref: '#/components/schemas/VerifyJwtSchema'
+ *
+ *     500:
+ *	     description: Server side error
+ *	     content:
+ *	       application/json:
+ *         schema:
+ *           properties:
+ *             errorType:
+ *              type: string
+ *              example: Server side error!
+ *             errorMessage:
+ *              type: string
+ *              example: ...
+ *
  */
 
 // ===== users/:userId =====
@@ -131,7 +209,7 @@ module.exports = usersRouter
  *            example:
  *              error: ID does not match rules.
  *              errorMessage: ID passed in must be a string of 12 bytes or a string of 24 hex characters.
- * 
+ *
  *     500:
  *	     description: Server side error
  *	     content:

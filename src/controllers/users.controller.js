@@ -6,7 +6,7 @@ async function getUserDataWithToken(req, res) {
   try {
     const user = req.user
 
-    const data = _.pick(user, ['role', 'firstName', 'lastName', 'email', 'phone', 'activeRole', 'isEmailVerified', 'isPhoneVerified'])
+    const data = _.pick(user, ['role', '_id', 'firstName', 'lastName', 'email', 'phone', 'activeRole', 'isEmailVerified', 'isPhoneVerified'])
 
     res.json({ data })
   } catch (e) {
