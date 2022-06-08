@@ -3,6 +3,9 @@ const JobModel = require('../models/Job')
 
 const { JobQueryHandler } = require('../services/queryHandler')
 
+const { sendMessageToEmail } = require('../utils/sendMailMsg')
+const convertPugToHTML = require('../utils/convertPugToHTML')
+
 async function getAllJobs(req, res) {
   try {
     // Get from query important info and paginate
@@ -196,6 +199,18 @@ async function addJobNewCandidate(req, res) {
     // Add new candidate in DB
     jobFromDb.candidatesList.push(candidateId)
     await jobFromDb.save()
+
+    // Send message to user email
+    const candidateFromDb = await UserModel.findById(candidateId).select('firstName lastName')
+    const jobOwnerFromDb = await UserModel.findById(jobFromDb.userId)
+
+    const msgText = 'Job New Candidate'
+    const msgHtml = convertPugToHTML('newCandidate.pug', {
+      candidate: candidateFromDb,
+      appURL: process.env.FRONT_URL
+    })
+
+    sendMessageToEmail(jobOwnerFromDb.email, msgText, msgHtml)
 
     res.json({
       message: `Provider[${candidateId}] have been successfully added to the list of candidates for this job [${jobId}].`
