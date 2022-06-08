@@ -62,6 +62,14 @@ html
 
 
 
+
+
+
+
+
+
+
+
         //- Grisha ==================================================
         if isGrishaPage  
           //- ============================ JWT ============================
@@ -472,14 +480,22 @@ html
 
 
 
+
+
+
+
+
+
+
         //- Helper Requests ==================================================
         if isHelperRequestsPage  
           //- Delete User                  
           div.content-data  
             div Description ==> Delete user with phone number
-            div Request URI ==> URI/help/deleteUser
+            div Request URI ==> URI
+              span.request-path /help/deleteUser
             div Request Method ==> 
-              span(style="color: black") [DELETE] 
+              span(style="color: black") [ DELETE ] 
             div Request Body [JSON] ==> {
             div &emsp;&emsp;"phone": "+374 ** ******"
             div }
