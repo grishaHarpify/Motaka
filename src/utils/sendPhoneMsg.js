@@ -13,5 +13,5 @@ function sendCodeToPhone(to, code) {
   nexmo.message.sendSms(from, to, text)
 }
 
-module.exports = sendCodeToPhone
+module.exports = { sendCodeToPhone }
 // -------

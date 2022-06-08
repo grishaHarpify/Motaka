@@ -70,9 +70,10 @@ html
           //- Send refresh token => get new access and refresh                  
           div.content-data  
             div Description ==> Send refresh token and get new access and refresh  
-            div Request URI ==> URI/jwt/refresh
+            div Request URI ==> URI
+              span.request-path /jwt/refresh
             div Request Method ==> 
-              span(style="color: black") [POST] 
+              span(style="color: black") [ POST ] 
 
             div Request Body [JSON] ==> {
             div &emsp;&emsp;"refreshToken": "eyJhbGci.iLCJpYXQiOjE2NTM.RZnQGg_icRM"
@@ -84,9 +85,10 @@ html
           //- Login to the site                   
           div.content-data  
             div Description ==> Login to the site
-            div Request URI ==> URI/login
+            div Request URI ==> URI
+              span.request-path /login
             div Request Method ==> 
-              span(style="color: black") [POST] 
+              span(style="color: black") [ POST ] 
 
             div Request Body [JSON] ==> {
             div &emsp;&emsp;"phone": "+374 ** ******"
@@ -96,9 +98,10 @@ html
           //- Login with google
           div.content-data  
             div Description ==> Login with google
-            div Request URI ==> URI/googleLogin
+            div Request URI ==> URI
+              span.request-path /googleLogin
             div Request Method ==> 
-              span(style="color: black") [POST] 
+              span(style="color: black") [ POST ] 
 
             div Request Body [JSON] ==> {
             div &emsp;&emsp;"tokenId": "*******"
@@ -109,9 +112,10 @@ html
           //- Login with facebook
           div.content-data  
             div Description ==> Login with facebook
-            div Request URI ==> URI/facebookLogin
+            div Request URI ==> URI
+              span.request-path /facebookLogin
             div Request Method ==> 
-              span(style="color: black") [POST] 
+              span(style="color: black") [ POST ] 
 
             div Request Body [JSON] ==> {
             div &emsp;&emsp;"accessToken": "*******"
@@ -126,9 +130,10 @@ html
           //- Register
           div.content-data
             div Description ==> Register to the site
-            div Request URI ==> URI/register
+            div Request URI ==> URI
+              span.request-path /register
             div Request Method ==> 
-              span(style="color: black") [POST] 
+              span(style="color: black") [ POST ] 
 
             div Request Body [JSON] ==> {
             div &emsp;&emsp;"fistName": "*****" ,
@@ -144,9 +149,10 @@ html
           //- Reset new password 	                   
           div.content-data  
             div Description ==> Reset password [forgot password]
-            div Request URI ==> URI/reset_password
+            div Request URI ==> URI
+              span.request-path /reset_password
             div Request Method ==> 
-              span(style="color: black") [PATCH] 
+              span(style="color: black") [ PATCH ] 
 
             div Request Body [JSON] ==> {
             div &emsp;&emsp;"phone": "+374 ** ******" , // [!!]
@@ -161,9 +167,10 @@ html
           //- Send code to phone number                
           div.content-data
             div Description ==> Send code to phone number 
-            div Request URI ==> URI/send_code_phone
+            div Request URI ==> URI
+              span.request-path /send_code_phone
             div Request Method ==> 
-              span(style="color: black") [POST] 
+              span(style="color: black") [ POST ] 
 
             div Request Body [JSON] ==> {
             div &emsp;&emsp;"phone": "+374 ** ******"
@@ -172,9 +179,10 @@ html
           //- Verify phone
           div.content-data
             div Description ==> Verify phone
-            div Request URI ==> URI/verify_phone
+            div Request URI ==> URI
+              span.request-path /verify_phone
             div Request Method ==> 
-              span(style="color: black") [POST] 
+              span(style="color: black") [ POST ] 
 
             div Request Body [JSON] ==> {
             div &emsp;&emsp;"phone": "+374 ** ******"
@@ -184,9 +192,10 @@ html
           //- Send code to email               
           div.content-data   
             div Description ==> Send code to email 
-            div Request URI ==> URI/send_code_email
+            div Request URI ==> URI
+              span.request-path /send_code_email
             div Request Method ==> 
-              span(style="color: black") [POST] 
+              span(style="color: black") [ POST ] 
 
             div Request Body [JSON] ==> {
             div &emsp;&emsp;"email": "example@mail.ru"
@@ -195,9 +204,10 @@ html
           //- Verify email
           div.content-data  
             div Description ==> Verify email
-            div Request URI ==> URI/verify_email
+            div Request URI ==> URI
+              span.request-path /verify_email
             div Request Method ==> 
-              span(style="color: black") [POST] 
+              span(style="color: black") [ POST ] 
 
             div Request Body [JSON] ==> {
             div &emsp;&emsp;"email": "example@mail.ru"
@@ -210,9 +220,10 @@ html
           //- Change active role 
           div.content-data
             div Description ==> Change active role
-            div Request URI ==> URI/set_role
+            div Request URI ==> URI
+              span.request-path /set_role
             div Request Method ==> 
-              span(style="color: black") [POST] 
+              span(style="color: black") [ POST ] 
 
             div Request Body [JSON] ==> {
             div &emsp;&emsp;"role": "provider" , 
@@ -228,9 +239,10 @@ html
           //- Get job data with ID 
           div.content-data
             div Description ==> Get data about job with ID 
-            div Request URI ==> URI/jobs/:jobId
+            div Request URI ==> URI
+              span.request-path /jobs/:jobId
             div Request Method ==> 
-              span(style="color: black") [GET] 
+              span(style="color: black") [ GET ] 
 
             div Request Headers ==> {
             div &emsp;&emsp;"Authorization": "Bearer accessToken" , 
@@ -239,9 +251,10 @@ html
           //- Create new job                 
           div.content-data
             div Description ==> Create new job 
-            div Request URI ==> URI/jobs
+            div Request URI ==> URI
+              span.request-path /jobs
             div Request Method ==> 
-              span(style="color: black") [POST] 
+              span(style="color: black") [ POST ] 
 
             div Request Body [JSON] ==> {
             div &emsp;&emsp;"startDate": "2000-10-21" ,
@@ -261,9 +274,10 @@ html
           //- Edit job
           div.content-data 
             div Description ==> Edit job 
-            div Request URI ==> URI/jobs/:jobId
+            div Request URI ==> URI
+              span.request-path /jobs/:jobId
             div Request Method ==> 
-              span(style="color: black") [PATCH] 
+              span(style="color: black") [ PATCH ] 
 
             div Request Body [JSON] ==> {
             div &emsp;&emsp;"startDate": "2000-10-21" ,
@@ -283,7 +297,8 @@ html
           //- Get all jobs from DB with advanced search and pagination 
           div.content-data
             div Description ==> Get all jobs from DB with advanced search and pagination
-            div Request URI ==> URI/jobs
+            div Request URI ==> URI
+              span.request-path /jobs
 
             div Request Query ( URI/jobs?key1=value1&k2=v2 ) ==> {
             div &emsp;&emsp;Searching with job salary: salcost[gte]=1000&salcost[lte]=10000
@@ -294,7 +309,7 @@ html
             div }
 
             div Request Method ==> 
-              span(style="color: black") [GET] 
+              span(style="color: black") [ GET ] 
             
             div Request Headers ==> {
             div &emsp;&emsp;"Authorization": "Bearer accessToken" , 
@@ -313,10 +328,11 @@ html
           //- Add new candidate in job
           div.content-data
             div Description ==> Add new candidate in job [yourself]
-            div Request URI ==> URI/jobs/:jobId/candidate
+            div Request URI ==> URI
+              span.request-path /jobs/:jobId/candidate
 
             div Request Method ==> 
-              span(style="color: black") [POST] 
+              span(style="color: black") [ POST ] 
             
             div Request Headers ==> {
             div &emsp;&emsp;"Authorization": "Bearer accessToken" , 
@@ -325,10 +341,11 @@ html
           //- Cancel job
           div.content-data
             div Description ==> Cancel job [set job status 'canceled']
-            div Request URI ==> URI/jobs/:jobId
+            div Request URI ==> URI
+              span.request-path /jobs/:jobId
 
             div Request Method ==> 
-              span(style="color: black") [DELETE] 
+              span(style="color: black") [ DELETE ] 
             
             div Request Headers ==> {
             div &emsp;&emsp;"Authorization": "Bearer accessToken" , 
@@ -340,16 +357,18 @@ html
           //- Get all categories 
           div.content-data
             div Description ==> Get all categories
-            div Request URI ==> URI/categories
+            div Request URI ==> URI
+              span.request-path /categories
             div Request Method ==> 
-              span(style="color: black") [GET]
+              span(style="color: black") [ GET ]
 
           //- Get category data with ID 
           div.content-data
             div Description ==> Get data about category with ID 
-            div Request URI ==> URI/categories/:categoryId
+            div Request URI ==> URI
+              span.request-path /categories/:categoryId
             div Request Method ==> 
-              span(style="color: black") [GET]
+              span(style="color: black") [ GET ]
 
 
           //- ============================ Users ============================
@@ -358,9 +377,10 @@ html
           //- Get user data with token
           div.content-data
             div Description ==> Get data about user with token 
-            div Request URI ==> URI/users/me
+            div Request URI ==> URI
+              span.request-path /users/me
             div Request Method ==> 
-              span(style="color: black") [GET] 
+              span(style="color: black") [ GET ] 
         
             div Request Headers ==> {
             div &emsp;&emsp;"Authorization": "Bearer accessToken" , 
@@ -369,9 +389,10 @@ html
           //- Change user balance
           div.content-data
             div Description ==> Change user balance
-            div Request URI ==> URI/users/me/balance
+            div Request URI ==> URI
+              span.request-path /users/me/balance
             div Request Method ==> 
-              span(style="color: black") [PATCH] 
+              span(style="color: black") [ PATCH ] 
 
             div Request Body [JSON] ==> {
             div &emsp;&emsp;"money": 42000 
@@ -384,9 +405,10 @@ html
           //- Get user data with Id
           div.content-data
             div Description ==> Get data about user with ID 
-            div Request URI ==> URI/users/:userId
+            div Request URI ==> URI
+              span.request-path /users/:userId
             div Request Method ==> 
-              span(style="color: black") [GET] 
+              span(style="color: black") [ GET ] 
 
 
 

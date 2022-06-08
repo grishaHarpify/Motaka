@@ -79,6 +79,11 @@ button {
   padding: 4px;
 }
 
+/* Request span */
+.request-path {
+  color: darkblue;
+}
+
 /* Images */
 
 img {

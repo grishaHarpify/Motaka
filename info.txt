@@ -3,34 +3,22 @@ export NODE_ENV=production
 
 
 
-
-/////// NOTES ///////
-
-Job Categories
-1) cleaning (maqrutyun)
-2) repairing (norogum)
-3) plumbing (santexnik)
-4) petWalking (kendanineri zbosanq)
-5) ironing (arduk)
+////////////// NOTES //////////////
 
 
 
-/////// BUGS ///////
-error messages with provider name 
 
-
-/////// TODO ///////
-service provider -> 5 astx
+////////////// BUGS //////////////
 
 
 
-/////// Questions ///////
-1) commentnery websocket-nerov ?? 
+////////////// TODO //////////////
+service provider gnahatum -> 5 astx
 
-2) erb uzum enq stanal provider-i masin info kam bolor providernerin 
-/users/providers
-u erb usernerin 
-/users/users ****
+
+
+////////////// Questions //////////////
+
 
 
 
