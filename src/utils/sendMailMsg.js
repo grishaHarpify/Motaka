@@ -34,7 +34,7 @@ async function sendCodeToEmail(mailAddress, code) {
   console.log('Mail sended [info]: ' + info.response)
 }
 
-async function sendSomethingToEmail() {
+async function sendMessageToEmail(mailAddress, text, html) {
   const transporter = nodemailer.createTransport({
     host: 'smtp.mail.ru',
     port: 465,
@@ -50,14 +50,15 @@ async function sendSomethingToEmail() {
     from: senderAddress,
     to: mailAddress,
     subject: 'Motaka',
-    text: '',
-    html: `
-      <div></div>
-    `,
+    text: text,
+    html: html,
   })
 
   console.log('Mail sended [info]: ' + info.response)
 }
 
 
-module.exports = { sendCodeToEmail }
+module.exports = {
+  sendCodeToEmail,
+  sendMessageToEmail
+}
