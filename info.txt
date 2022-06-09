@@ -12,13 +12,28 @@ export NODE_ENV=production
 
 
 
+
 ////////////// TODO //////////////
 service provider gnahatum -> 5 astx
-ete gorci vra canidadate avelanum uxarkel mail
+
 
 
 
 ////////////// Questions //////////////
+
+
+
+
+
+////////////// INFO //////////////
+MAIL_SENDER_ADDRESS = your email
+MAIL_SENDER_PASSWORD = password from settings [Passwords for external applications]
+FB_CLIENT_ID and FB_CLIENT_SECRET = IN => https://developers.facebook.com/
+
+GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET = IN => https://play.google.com/console/about/?utm_source=google&utm_medium=cpc&utm_campaign=Console2020-Branded&utm_term=google%20developer%20console%7ce&utm_content=502500544543&gclid=CjwKCAjwtIaVBhBkEiwAsr7-c5eHlZpZlIEXm8cVbkw8_gbyeOyKGH4K5txI3uIyxqYJtOa73-kFURoCtw8QAvD_BwE
+
+NEXMO_KEY and NEXMO_SECRET = IN => https://identity.nexmo.com/
+
 
 
 
